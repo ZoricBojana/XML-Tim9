@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.uns.ac.rs/MSB" xmlns="http://www.uns.ac.rs/MSB" id="AI">
+    <xs:include schemaLocation="paragraph.xsd"/>
+    <xs:include schemaLocation="Articelnfo.xsd"/>
+    <xs:include schemaLocation="Author.xsd"/>
+    <xs:element name="scientific_article">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="article_info"/>
+                <xs:element name="authors">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="author"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="key_words">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="key_word" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="abstract"/>
+                <xs:element name="introduction">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="paragraph"/>
+                        </xs:sequence>
+                        <xs:attribute ref="ID" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="chapters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="chapter"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="conclusion">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="paragraph" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute ref="ID" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="references">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="reference" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="type">
+                                            <xs:complexType>
+                                                <xs:choice>
+                                                  <xs:element name="book" type="Treference_data"/>
+                                                  <xs:element name="link"/>
+                                                  <xs:element name="paper" type="Treference_data"/>
+                                                </xs:choice>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="refNumber" type="xs:positiveInteger"/>
+                                    </xs:sequence>
+                                    <xs:attribute ref="ID" use="required"/>
+                                    <xs:attribute ref="text_style"/>
+                                    <xs:attribute ref="text_size"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute ref="ID" use="required"/>
+            <xs:attribute name="version" type="xs:double" use="required"/>
+            <xs:attribute name="paper_type" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="Treference_data">
+        <xs:sequence>
+            <xs:element name="authors">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="author_of_work" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="first_name" type="xs:string"/>
+                                    <xs:element name="last_name" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="publisher" type="xs:string"/>
+            <xs:element name="publish_date" type="xs:date"/>
+            <xs:element name="article_name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="abstract">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="paragraph" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute ref="ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="chapter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title" type="chapter_title"/>
+                <xs:element name="header" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute ref="ID"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="footer" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute ref="ID"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="chapter_paragraph" maxOccurs="unbounded"/>
+                <xs:element ref="new_page" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="chapter"/>
+            </xs:sequence>
+            <xs:attribute ref="ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attribute name="paper_type">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="general_review"/>
+                <xs:enumeration value="research-paper"/>
+                <xs:enumeration value="technical_paper"/>
+                <xs:enumeration value="literature_review"/>
+                <xs:enumeration value="viewpoint"/>
+                <xs:enumeration value="case_study"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+</xs:schema>

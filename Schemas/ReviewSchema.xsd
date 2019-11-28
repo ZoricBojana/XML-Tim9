@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.uns.ac.rs/MSB" xmlns="http://www.uns.ac.rs/MSB">
+    <xs:include schemaLocation="paragraph.xsd"/>
+    <xs:include schemaLocation="Articelnfo.xsd"/>
+    <xs:element name="review">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="article_info"/>
+                <xs:element name="review_form">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="technical_grade" type="Tgrade"/>
+                            <xs:element name="language_grade" type="Tgrade"/>
+                            <xs:element name="general_impression" type="Tform_item"/>
+                            <xs:element name="good_sides" type="Tform_item"/>
+                            <xs:element name="bad_sides" type="Tform_item"/>
+                        </xs:sequence>
+                        <xs:attribute ref="ID"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="questionnaire">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="item">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="1" name="question" type="xs:string"/>
+                                        <xs:element name="response">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="strongly disagree"/>
+                                                  <xs:enumeration value="disagree"/>
+                                                  <xs:enumeration value="neutral"/>
+                                                  <xs:enumeration value="agree"/>
+                                                  <xs:enumeration value="strongly agree"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="comments">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="comment" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType mixed="true">
+                                    <xs:sequence>
+                                        <xs:element name="element_id" type="xs:IDREF"/>
+                                    </xs:sequence>
+                                    <xs:attribute ref="ID" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="secret_comments">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="secret_comment">
+                                <xs:complexType mixed="true">
+                                    <xs:sequence>
+                                        <xs:element name="password" type="xs:string"/>
+                                    </xs:sequence>
+                                    <xs:attribute ref="ID"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="recommendation">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="accept"/>
+                            <xs:enumeration value="reject"/>
+                            <xs:enumeration value="major_revisions"/>
+                            <xs:enumeration value="minor_revisions"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="Tgrade" mixed="true">
+        <xs:sequence>
+            <xs:element name="grade_value" type="xs:positiveInteger"/>
+        </xs:sequence>
+        <xs:attribute ref="ID" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Tform_item">
+        <xs:sequence>
+            <xs:element ref="paragraph"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

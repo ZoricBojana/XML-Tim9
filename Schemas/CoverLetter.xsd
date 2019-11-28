@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.uns.ac.rs/MSB" xmlns="http://www.uns.ac.rs/MSB">
+    <xs:include schemaLocation="Articelnfo.xsd"/>
+    <xs:include schemaLocation="Author.xsd"/>
+    <xs:element name="cover_letter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="article_info"/>
+                <xs:element ref="author"/>
+                <xs:element name="editor">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name"/>
+                            <xs:element name="surname"/>
+                            <xs:element name="title" type="title_of_author"/>
+                            <xs:element name="journal" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="body">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" ref="paragraph"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="send_date" type="xs:date"/>
+            </xs:sequence>
+            <xs:attribute ref="ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
