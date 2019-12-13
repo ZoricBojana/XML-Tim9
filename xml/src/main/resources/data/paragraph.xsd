@@ -42,13 +42,13 @@
     <xs:element name="list">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="list_item">
+                <xs:element name="list_item" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element ref="b"/>
-                            <xs:element ref="i"/>
-                            <xs:element ref="u"/>
-                        </xs:sequence>
+                        <xs:choice minOccurs="0">
+                            <xs:element ref="b" minOccurs="1"/>
+                            <xs:element ref="i" minOccurs="1"/>
+                            <xs:element ref="u" minOccurs="1"/>
+                        </xs:choice>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
