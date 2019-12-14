@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.uns.ac.rs/MSB" xmlns="http://www.uns.ac.rs/MSB">
+    <xs:include schemaLocation="ScienceArticleSchema.xsd"/>
+    <xs:include schemaLocation="Author.xsd"/>
+    <xs:element name="person">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="author"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="scientific_article"/>
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required"/>
+            <xs:attribute name="username" type="xs:string" use="required"/>
+            <xs:attribute name="password" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

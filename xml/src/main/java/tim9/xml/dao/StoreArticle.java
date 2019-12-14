@@ -1,4 +1,4 @@
-package tim9.xml.service;
+package tim9.xml.dao;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
