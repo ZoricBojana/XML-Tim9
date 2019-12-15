@@ -11,6 +11,7 @@ package rs.ac.uns.msb;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -1011,5 +1012,20 @@ public class Review {
         }
 
     }
+    
+    @Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("");
+			builder.append("\nArticle info: ");
+			builder.append("\n\tTitle: " + articleInfo.getTitle().getValue());
+			builder.append("\n\tPublish date: " + articleInfo.getPublishDate());
+			builder.append("\n\tPublisher: " + articleInfo.getPublisher());
+
+			builder.append("\n***dodati ostalo");
+	
+			
+			builder.append("\n");
+		return builder.toString();
+	}
 
 }

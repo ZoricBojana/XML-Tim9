@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msb:review xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns:msb="http://www.uns.ac.rs/MSB"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.uns.ac.rs/MSB file:/E:/Fakultet/Sedmi_semestar/XML/Projekat/XML-Tim9/xml/src/main/resources/data/ReviewSchema.xsd">
+    <msb:article_info msb:ID="ID000">
+        <msb:title>w7</msb:title>
+        <msb:publish_date>2020-05-26Z</msb:publish_date>
+        <msb:publisher>Wu-1HV_ItKYvL9i4oC9</msb:publisher>
+    </msb:article_info>
+    <msb:review_form>
+        <msb:technical_grade msb:ID="ID002">
+            <msb:grade_value>743227610</msb:grade_value>
+        </msb:technical_grade>
+        <msb:language_grade msb:ID="ID003">
+            <msb:grade_value>1525497513</msb:grade_value>
+        </msb:language_grade>
+        <msb:general_impression>
+            <msb:paragraph msb:ID="ID004"/>
+        </msb:general_impression>
+        <msb:good_sides>
+            <msb:paragraph msb:ID="ID005"/>
+        </msb:good_sides>
+        <msb:bad_sides>
+            <msb:paragraph msb:ID="ID006"/>
+        </msb:bad_sides>
+    </msb:review_form>
+    <msb:questionnaire>
+        <msb:item>
+            <msb:question>rsyGJVrrfejhM</msb:question>
+            <msb:response>agree</msb:response>
+        </msb:item>
+        <msb:item>
+            <msb:question>I0YXK2AeDkvm4_XdVR0fAhG5</msb:question>
+            <msb:response>disagree</msb:response>
+        </msb:item>
+    </msb:questionnaire>
+    <msb:comments>
+    </msb:comments>
+    <msb:secret_comments>
+    </msb:secret_comments>
+    <msb:recommendation>accept</msb:recommendation>
+</msb:review>

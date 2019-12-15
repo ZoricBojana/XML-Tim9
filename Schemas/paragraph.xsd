@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
-    targetNamespace="http://www.uns.ac.rs/MSBParagraph"
-    xmlns:par="http://www.uns.ac.rs/MSBParagraph">
+    targetNamespace="http://www.uns.ac.rs/MSB" xmlns="http://www.uns.ac.rs/MSB">
 
 
     <xs:element name="quote">
         <xs:complexType mixed="true">
             <xs:attribute name="refID" type="xs:IDREF" use="required"/>
-            <xs:attribute ref="par:ID" use="required"/>
+            <xs:attribute ref="ID" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="table">
@@ -24,9 +23,9 @@
                 <xs:element minOccurs="1" name="description" type="xs:string"/>
                 <xs:element minOccurs="0" name="th"/>
             </xs:sequence>
-            <xs:attribute ref="par:ID" use="required"/>
-            <xs:attribute ref="par:width"/>
-            <xs:attribute ref="par:height"/>
+            <xs:attribute ref="ID" use="required"/>
+            <xs:attribute ref="width"/>
+            <xs:attribute ref="height"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="picture">
@@ -34,10 +33,10 @@
             <xs:sequence>
                 <xs:element name="picture_description" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute ref="par:ID" use="required"/>
+            <xs:attribute ref="ID" use="required"/>
             <xs:attribute name="src" type="xs:anyURI" use="required"/>
-            <xs:attribute ref="par:height"/>
-            <xs:attribute ref="par:width"/>
+            <xs:attribute ref="height"/>
+            <xs:attribute ref="width"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="list">
@@ -46,39 +45,39 @@
                 <xs:element name="list_item" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:choice minOccurs="0">
-                            <xs:element ref="par:b" minOccurs="1"/>
-                            <xs:element ref="par:i" minOccurs="1"/>
-                            <xs:element ref="par:u" minOccurs="1"/>
+                            <xs:element ref="b" minOccurs="1"/>
+                            <xs:element ref="i" minOccurs="1"/>
+                            <xs:element ref="u" minOccurs="1"/>
                         </xs:choice>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute ref="par:ID" use="required"/>
+            <xs:attribute ref="ID" use="required"/>
             <xs:attribute default="false" name="ordered_list" type="xs:boolean"/>
-            <xs:attribute ref="par:text_style"/>
+            <xs:attribute ref="text_style"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="b">
         <xs:complexType mixed="true">
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element minOccurs="0" ref="par:i"/>
-                <xs:element minOccurs="0" ref="par:u"/>
+                <xs:element minOccurs="0" ref="i"/>
+                <xs:element minOccurs="0" ref="u"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="i">
         <xs:complexType mixed="true">
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element minOccurs="0" ref="par:b"/>
-                <xs:element minOccurs="0" ref="par:u"/>
+                <xs:element minOccurs="0" ref="b"/>
+                <xs:element minOccurs="0" ref="u"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="u">
         <xs:complexType mixed="true">
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element minOccurs="0" ref="par:b"/>
-                <xs:element minOccurs="0" ref="par:i"/>
+                <xs:element minOccurs="0" ref="b"/>
+                <xs:element minOccurs="0" ref="i"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -87,42 +86,42 @@
             <xs:sequence>
                 <xs:element name="element_id" type="xs:IDREF"/>
             </xs:sequence>
-            <xs:attribute ref="par:ID" use="required"/>
+            <xs:attribute ref="ID" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="paragraph">
         <xs:complexType mixed="true">
             <xs:choice maxOccurs="unbounded" minOccurs="0">
-                <xs:element minOccurs="0" ref="par:b"/>
-                <xs:element minOccurs="0" ref="par:i"/>
-                <xs:element minOccurs="0" ref="par:u"/>
-                <xs:element minOccurs="0" ref="par:list"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="par:new_lline"/>
+                <xs:element minOccurs="0" ref="b"/>
+                <xs:element minOccurs="0" ref="i"/>
+                <xs:element minOccurs="0" ref="u"/>
+                <xs:element minOccurs="0" ref="list"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="new_lline"/>
             </xs:choice>
-            <xs:attribute ref="par:ID" use="required"/>
-            <xs:attribute ref="par:text_style"/>
+            <xs:attribute ref="ID" use="required"/>
+            <xs:attribute ref="text_style"/>
             <xs:attribute name="text_size" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="chapter_paragraph">
         <xs:complexType mixed="true">
             <xs:choice maxOccurs="unbounded" minOccurs="0">
-                <xs:element maxOccurs="1" minOccurs="0" ref="par:b"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="par:i"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="par:u"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="par:picture"/>
-                <xs:element minOccurs="0" ref="par:table"/>
-                <xs:element minOccurs="0" ref="par:list"/>
-                <xs:element maxOccurs="1" minOccurs="0" ref="par:new_lline"/>
-                <xs:element minOccurs="0" ref="par:ref"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="b"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="i"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="u"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="picture"/>
+                <xs:element minOccurs="0" ref="table"/>
+                <xs:element minOccurs="0" ref="list"/>
+                <xs:element maxOccurs="1" minOccurs="0" ref="new_lline"/>
+                <xs:element minOccurs="0" ref="ref"/>
                 <xs:element minOccurs="0" name="formula">
                     <xs:annotation>
                         <xs:documentation>Dodato</xs:documentation>
                     </xs:annotation>
                 </xs:element>
             </xs:choice>
-            <xs:attribute ref="par:ID" use="required"/>
-            <xs:attribute ref="par:text_style"/>
+            <xs:attribute ref="ID" use="required"/>
+            <xs:attribute ref="text_style"/>
             <xs:attribute name="text_size" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
@@ -137,9 +136,9 @@
     <xs:complexType name="chapter_title">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute ref="par:ID" use="required"/>
-                <xs:attribute ref="par:depth"/>
-                <xs:attribute ref="par:text_style"/>
+                <xs:attribute ref="ID" use="required"/>
+                <xs:attribute ref="depth"/>
+                <xs:attribute ref="text_style"/>
                 <xs:attribute name="text_size" type="xs:positiveInteger"/>
             </xs:extension>
         </xs:simpleContent>
