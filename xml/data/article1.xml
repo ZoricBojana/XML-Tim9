@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scientific_article xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns="http://www.uns.ac.rs/MSB"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.uns.ac.rs/MSB file:/E:/Fakultet/Sedmi_semestar/XML/Projekat/XML-Tim9/xml/src/main/resources/data/ScienceArticleSchema.xsd" xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID001" version="2062066187.446" paper_type="elWZj_L2R0t">
+    <article_info msb:ID="ID003">
+        <title>P9ewrojrqalkGkTfkY8MJin9_n</title>
+        <publish_date>2019-12-18Z</publish_date>
+        <publisher>tHWoCmTuhb.</publisher>
+    </article_info>
+    <authors>
+        <author>
+            <first_name>vZxQ_</first_name>
+            <last_name>n2xbujDQn9F7K0mCiSYClMH</last_name>
+            <institution>
+                <country>eabxlx</country>
+                <city>TZ-B6IV</city>
+                <institution_name>vclB</institution_name>
+            </institution>
+            <email_address>BOlWgt1y-1oTCvfpye</email_address>
+            <title>w4K5w</title>
+        </author>
+        <author>
+            <first_name>fv.fSHW</first_name>
+            <last_name>bUIU.DDAqY</last_name>
+            <institution>
+                <country>j.YtqxtIay.ihk1WaJoYXBO</country>
+                <city>uH8wZ3RlbaRpzFwBle5gOrQis.C2H4</city>
+                <institution_name>esKBmzfxg7WA</institution_name>
+            </institution>
+            <email_address>T8z73nP4.aDIbMv5i</email_address>
+            <title>ccxcFnU8JMoWYH0WRv1j</title>
+        </author>
+    </authors>
+    <key_words>
+        <key_word>z45O7Rs2vNV6tMSY0MNIQDmVhAy</key_word>
+        <key_word>_VQ9Jn9f1rsawr6</key_word>
+    </key_words>
+    <abstract msb:ID="ID005">
+        <paragraph msb:ID="ID007"/>
+        <paragraph msb:ID="ID009"/>
+    </abstract>
+    <introduction msb:ID="ID011">
+        <paragraph msb:ID="ID013"/>
+        <paragraph msb:ID="ID015"/>
+    </introduction>
+    <chapters>
+        <chapter msb:ID="ID017">
+            <title msb:ID="ID019">TQ4_KnH0IMx8i</title>
+            <chapter_paragraph msb:ID="ID021"/>
+            <chapter_paragraph msb:ID="ID023"/>
+        </chapter>
+        <chapter msb:ID="ID025">
+            <title msb:ID="ID027">NvWqOq9aaU4G</title>
+            <chapter_paragraph msb:ID="ID029"/>
+            <chapter_paragraph msb:ID="ID031"/>
+        </chapter>
+    </chapters>
+    <conclusion msb:ID="ID033">
+        <paragraph msb:ID="ID035"/>
+        <paragraph msb:ID="ID037"/>
+    </conclusion>
+    <references>
+        <reference msb:ID="ID039">
+            <type>
+                <paper>
+                    <authors>
+                        <author_of_work>
+                            <first_name>pbwKelJptg.vT_GWvVb</first_name>
+                            <last_name>BAj</last_name>
+                        </author_of_work>
+                        <author_of_work>
+                            <first_name>nPITSNKlNOGHtO7pQYCQPQGM-XjuEs</first_name>
+                            <last_name>rnoGoWZ8eI7PW9gOM46EpllhQ</last_name>
+                        </author_of_work>
+                    </authors>
+                    <publisher>vuVSB72P-iErIaR0rlHw_qAPLjJWF</publisher>
+                    <publish_date>2021-05-08Z</publish_date>
+                    <article_name>R3JzsZuPg96GeosnkM</article_name>
+                </paper>
+            </type>
+            <refNumber>1970494221</refNumber>
+        </reference>
+        <reference msb:ID="ID041">
+            <type>
+                <book>
+                    <authors>
+                        <author_of_work>
+                            <first_name>H5PRDLkSSSyz7dSoMBs_JHV</first_name>
+                            <last_name>Yzbev</last_name>
+                        </author_of_work>
+                        <author_of_work>
+                            <first_name>XEOD2QjO7l</first_name>
+                            <last_name>sTkLMePD00D-</last_name>
+                        </author_of_work>
+                    </authors>
+                    <publisher>tTuGA_whwK6RYpKj-_</publisher>
+                    <publish_date>2021-03-08</publish_date>
+                    <article_name>PxQuc-PGC</article_name>
+                </book>
+            </type>
+            <refNumber>723098411</refNumber>
+        </reference>
+    </references>
+</scientific_article>

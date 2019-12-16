@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<msb:review xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
- xmlns:msb="http://www.uns.ac.rs/MSB"
+<review xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns="http://www.uns.ac.rs/MSB"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.uns.ac.rs/MSB file:/E:/Fakultet/Sedmi_semestar/XML/Projekat/XML-Tim9/xml/src/main/resources/data/ReviewSchema.xsd">
-    <msb:article_info msb:ID="ID000">
-        <msb:title>w7</msb:title>
-        <msb:publish_date>2020-05-26Z</msb:publish_date>
-        <msb:publisher>Wu-1HV_ItKYvL9i4oC9</msb:publisher>
-    </msb:article_info>
-    <msb:review_form>
-        <msb:technical_grade msb:ID="ID002">
-            <msb:grade_value>743227610</msb:grade_value>
-        </msb:technical_grade>
-        <msb:language_grade msb:ID="ID003">
-            <msb:grade_value>1525497513</msb:grade_value>
-        </msb:language_grade>
-        <msb:general_impression>
-            <msb:paragraph msb:ID="ID004"/>
-        </msb:general_impression>
-        <msb:good_sides>
-            <msb:paragraph msb:ID="ID005"/>
-        </msb:good_sides>
-        <msb:bad_sides>
-            <msb:paragraph msb:ID="ID006"/>
-        </msb:bad_sides>
-    </msb:review_form>
-    <msb:questionnaire>
-        <msb:item>
-            <msb:question>rsyGJVrrfejhM</msb:question>
-            <msb:response>agree</msb:response>
-        </msb:item>
-        <msb:item>
-            <msb:question>I0YXK2AeDkvm4_XdVR0fAhG5</msb:question>
-            <msb:response>disagree</msb:response>
-        </msb:item>
-    </msb:questionnaire>
-    <msb:comments>
-    </msb:comments>
-    <msb:secret_comments>
-    </msb:secret_comments>
-    <msb:recommendation>accept</msb:recommendation>
-</msb:review>
+    <article_info xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID001">
+        <title>vhLQ5wMVBTP</title>
+        <publish_date>2020-12-07Z</publish_date>
+        <publisher>j.htD-MgEpc0.</publisher>
+    </article_info>
+    <review_form>
+        <technical_grade xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID005">
+            <grade_value>1988209009</grade_value>
+        </technical_grade>
+        <language_grade xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID007">
+            <grade_value>1458165714</grade_value>
+        </language_grade>
+        <general_impression>
+            <paragraph xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID009"/>
+        </general_impression>
+        <good_sides>
+            <paragraph xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID011"/>
+        </good_sides>
+        <bad_sides>
+            <paragraph xmlns:msb="http://www.uns.ac.rs/MSB" msb:ID="ID013"/>
+        </bad_sides>
+    </review_form>
+    <questionnaire>
+        <item>
+            <question>GxUrN</question>
+            <response>agree</response>
+        </item>
+        <item>
+            <question>L55Y2jaPkx3Jb</question>
+            <response>disagree</response>
+        </item>
+    </questionnaire>
+    <comments>
+    </comments>
+    <secret_comments>
+    </secret_comments>
+    <recommendation>minor_revisions</recommendation>
+</review>

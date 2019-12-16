@@ -26,7 +26,7 @@ public class StoreArticle {
 	private static ConnectionProperties conn;
 	
 	public static void main(String[] args) throws Exception {
-		StoreArticle.run(conn = AuthenticationUtilities.loadProperties(), "/db/sample/articles", "1.xml", "data/instance1.xml");
+		StoreArticle.run(conn = AuthenticationUtilities.loadProperties(), "/db/sample/articles", "1.xml", "data/article1.xml");
 	}
 	
     /**
@@ -101,7 +101,7 @@ public class StoreArticle {
 			
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
-			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(new File("data/instance1.xml"));
+			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(new File(filePath));
 			//bookstore.getBook().add(createTestBook());
 			System.out.println(article);
 			

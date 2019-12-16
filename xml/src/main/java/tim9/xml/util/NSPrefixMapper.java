@@ -30,7 +30,7 @@ public class NSPrefixMapper extends NamespacePrefixMapper {
 		clear();
 
 		// Za default namespace prefiks postaviti na "" 
-		addMapping("http://www.ftn.uns.ac.rs/MSB", "msb"); 
+		addMapping("http://www.uns.ac.rs/MSB", ""); 
 		addMapping("http://www.w3.org/2001/XMLSchema-instance", "xsi"); 
 		addMapping("http://java.sun.com/xml/ns/jaxb", "jaxb"); 
 	}
