@@ -3,7 +3,7 @@
     targetNamespace="http://www.uns.ac.rs/MSB" xmlns="http://www.uns.ac.rs/MSB">
     <xs:include schemaLocation="Articelnfo.xsd"/>
     <xs:include schemaLocation="Author.xsd"/>
-    <xs:element name="cover_letter">
+    <xs:element name="coverLetter">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="article_info"/>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ID
+    xmlns="http://www.uns.ac.rs/Tim1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    
+   	<person>1</person>
+    <scienceArticle>1</scienceArticle>
+    <review>1</review>
+    <coverLetter>1</coverLetter>
+    
+</ID>
