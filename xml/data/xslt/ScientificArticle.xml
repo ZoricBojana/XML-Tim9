@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ScientificArticle.xsl"?>
+<scientific_article>
+    
+    <article_info>
+        <title>Document phenomenology: a framework for holistic analysis </title>
+        <recieved> 21 January 2016 </recieved>
+        <revised> 15 April 2016 </revised>
+        <accepted> 15 April 2016
+        </accepted>
+        <name></name>
+        <city></city>
+    </article_info>
+    
+    <authors>
+        <author>
+            <id></id>
+            <first_name>marko</first_name>
+            <last_name>maric</last_name>
+            <university>
+                <name></name>
+                <region></region>
+                <country></country>
+            </university>
+        </author>   
+        
+        <author>
+            <id></id>
+            <first_name>janko</first_name>
+            <last_name>jaric</last_name>
+            <university>
+                <name></name>
+                <region></region>
+                <country></country>
+            </university>
+        </author> 
+    </authors>   
+    
+    <abstract>
+        <bold_text></bold_text>
+        <paragraph></paragraph>
+        <ref>
+            <source></source>
+        </ref>
+    </abstract>
+    
+    <chapter>
+        <title></title>
+        <body>
+            <paragraph>
+                <italic>a</italic>
+                <box id="" name="" title="" image=""></box>
+                <ref></ref>
+            </paragraph>
+        </body>
+        
+        
+    </chapter>
+    
+    
+    <table>
+        <table_description></table_description>
+        <table_row>
+            <table_cell>first cell</table_cell>
+            <table_cell>sec cell</table_cell>
+        </table_row>
+    </table>
+    
+    <list id="" title="ordered">
+        <item>nesto</item>
+    </list>
+    
+    <references>
+        <reference>
+            <author></author>
+            <year></year>
+            <magazine></magazine>
+            <article></article>
+            <publisher></publisher>
+        </reference>
+    </references>
+    
+</scientific_article>   
