@@ -1,8 +1,8 @@
 package tim9.xml.dao;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.OutputStream;
+import java.io.StringReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -22,29 +22,21 @@ import tim9.xml.util.AuthenticationUtilities.ConnectionProperties;
 import tim9.xml.util.NSPrefixMapper;
 
 public class StoreReview {
+	
 	private static ConnectionProperties conn;
-
-	public static void main(String[] args) throws Exception {
-		StoreReview.run(conn = AuthenticationUtilities.loadProperties(), "/db/sample/reviews", "2.xml",
-				"data/review1.xml");
-	}
 
 	/**
 	 * conn XML DB connection properties collectionId Should be the collection ID to
 	 * access documentId Should be the document ID to store in the collection
-	 * filePath Should be the document file path
+	 * review should be XML review
 	 */
-	public static void run(ConnectionProperties conn, String collectionId, String documentId, String filePath)
+	public static void run( String collectionId, String documentId, String reviewString)
 			throws Exception {
-
-		System.out.println("[INFO] " + StoreReview.class.getSimpleName());
-
-		System.out.println("\t- collection ID: " + collectionId);
-		System.out.println("\t- document ID: " + documentId);
-		System.out.println("\t- file path: " + filePath + "\n");
+		
+		conn = AuthenticationUtilities.loadProperties();
 
 		// initialize database driver
-		System.out.println("[INFO] Loading driver class: " + conn.driver);
+		
 		Class<?> cl = Class.forName(conn.driver);
 
 		// encapsulation of the database driver functionality
@@ -61,22 +53,21 @@ public class StoreReview {
 
 		try {
 
-			System.out.println("[INFO] Retrieving the collection: " + collectionId);
 			col = getOrCreateCollection(collectionId);
 
 			/*
 			 * create new XMLResource with a given id an id is assigned to the new resource
 			 * if left empty (null)
 			 */
-			System.out.println("[INFO] Inserting the document: " + documentId);
 			res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
 
-			System.out.println("[INFO] Unmarshalling XML document to an JAXB instance: ");
 			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 
-			Review review = (Review) unmarshaller.unmarshal(new File(filePath));
+			StringReader sr = new StringReader(reviewString);
+			
+			Review review = (Review) unmarshaller.unmarshal(sr);
 
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
@@ -87,10 +78,8 @@ public class StoreReview {
 
 			// link the stream to the XML resource
 			res.setContent(os);
-			System.out.println("[INFO] Storing the document: " + res.getId());
 
 			col.storeResource(res);
-			System.out.println("[INFO] Done.");
 
 		} finally {
 
@@ -150,7 +139,6 @@ public class StoreReview {
 					CollectionManagementService mgt = (CollectionManagementService) parentCol
 							.getService("CollectionManagementService", "1.0");
 
-					System.out.println("[INFO] Creating the collection: " + pathSegments[pathSegmentOffset]);
 					col = mgt.createCollection(pathSegments[pathSegmentOffset]);
 
 					col.close();
