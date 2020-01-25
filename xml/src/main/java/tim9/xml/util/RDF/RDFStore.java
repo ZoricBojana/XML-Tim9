@@ -12,6 +12,7 @@ import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 
+import tim9.xml.util.RDF.SparqlUtil;
 import tim9.xml.util.AuthenticationUtilities;
 import tim9.xml.util.AuthenticationUtilities.ConnectionPropertiesFusekiJena;
 
@@ -27,12 +28,13 @@ public class RDFStore {
         prw.flush();
 
         ConnectionPropertiesFusekiJena conn = AuthenticationUtilities.loadPropertiesFusekiJena();
-        
+
         Model model = ModelFactory.createDefaultModel();
         model.read(rdfFilePath);
         
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		model.write(out, SparqlUtil.NTRIPLES);
+		
 				
 		// Writing the named graph
 		String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + SPARQL_NAMED_GRAPH_URI, new String(out.toByteArray()));
@@ -40,6 +42,7 @@ public class RDFStore {
 		// UpdateRequest represents a unit of execution
 		UpdateRequest update = UpdateFactory.create(sparqlUpdate);
 
+		System.out.println("Update " + update + " ** " + conn.updateEndpoint);
 		UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
 		processor.execute();
 		

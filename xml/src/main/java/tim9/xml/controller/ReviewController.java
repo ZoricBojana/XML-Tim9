@@ -33,6 +33,7 @@ public class ReviewController {
 		} catch (UnmarshalException e) {
 			return new ResponseEntity<String>("Review is not formatted well", HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>("Something went wrong", HttpStatus.PRECONDITION_FAILED);
 		}
 		return new ResponseEntity<>("Review is successfully saved! ID is: " + id, HttpStatus.OK);

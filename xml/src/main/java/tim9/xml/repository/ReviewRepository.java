@@ -2,6 +2,8 @@ package tim9.xml.repository;
 
 import static tim9.xml.util.template.XUpdateTemplate.TARGET_NAMESPACE;
 
+import java.io.StringWriter;
+
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceIterator;
@@ -11,6 +13,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import tim9.xml.dao.RetrieveReview;
 import tim9.xml.dao.StoreReview;
+import tim9.xml.util.RDF.RDFStore;
 import tim9.xml.util.exist.RetriveData;
 import tim9.xml.util.exist.StoreData;
 import tim9.xml.util.exist.UpdateData;
@@ -79,6 +82,14 @@ public class ReviewRepository {
             throw new Exception(String.format("Review with documentId %s", id));
         }
     }
+    
+    // Metadata
+    
+    public void saveMetadata(StringWriter metadata, String reviewId) throws Exception {
+		RDFStore.store(metadata, "/example/review/" + reviewId);
+	}
+    
+    /// ID
     
     public String generateID() throws Exception{
     	// TODO popraviti

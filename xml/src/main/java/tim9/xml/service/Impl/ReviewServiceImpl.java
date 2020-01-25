@@ -1,10 +1,14 @@
 package tim9.xml.service.Impl;
 
+import java.io.StringReader;
+import java.io.StringWriter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tim9.xml.repository.ReviewRepository;
 import tim9.xml.service.ReviewService;
+import tim9.xml.util.RDF.MetadataExtractor;
 import tim9.xml.util.XSLFOTransformer.XSLFOTransformer;
 
 @Service
@@ -18,10 +22,20 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepository;
 	
+	@Autowired
+	private MetadataExtractor metadataExtractor;
+	
 	@Override
 	public String save(String review) throws Exception{
 		// TODO save metadata!
+		
+		StringWriter out = new StringWriter();
+		StringReader in = new StringReader(review);
+		
+		metadataExtractor.extractMetadata(in, out);
+		
 		String ID = reviewRepository.save(review);
+		reviewRepository.saveMetadata(out, ID);
 		return ID;
 	}
 
