@@ -53,6 +53,11 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		return reviewHTML;
 	}
+
+	@Override
+	public void delete(String id) throws Exception {
+		reviewRepository.delete(id);
+	}
 	
 	
 

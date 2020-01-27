@@ -13,6 +13,8 @@ import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
@@ -25,21 +27,67 @@ import tim9.xml.util.AuthenticationUtilities.ConnectionProperties;
 import tim9.xml.util.NSPrefixMapper;
 import tim9.xml.util.template.XUpdateTemplate;
 
-public class StorePerson {
+public class PersonDAO {
+	/*
+	 * Methods store getByUsername
+	 */
+
+	public static Person getByUsername(String username, String collectionId) throws Exception {
+
+		ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+		// initialize database driver
+		Class<?> cl = Class.forName(conn.driver);
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		XMLResource res = null;
+
+		String xPathExp = String.format("doc(\"persons\")//person[@username='%s']", username);
+
+		ResourceSet resultSet = XPath.run(AuthenticationUtilities.loadProperties(), collectionId, xPathExp);
+
+		if (resultSet == null) {
+			return null;
+		}
+
+		ResourceIterator i = resultSet.getIterator();
+
+		if (i.hasMoreResources()) {
+			res = (XMLResource) i.nextResource();
+
+			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			Person person = (Person) unmarshaller.unmarshal(res.getContentAsDOM());
+
+			if (person == null) {
+				throw new Exception("Unmarshaling failed");
+			}
+
+			return person;
+		} else {
+			return null;
+		}
+	}
+
 	private static ConnectionProperties conn;
 
 	/**
 	 * conn XML DB connection properties collectionId Should be the collection ID to
-	 * access documentId Should be the document ID to store in the collection
-	 * review should be XML review
+	 * access documentId Should be the document ID to store in the collection review
+	 * should be XML review
 	 */
-	public static void save( String collectionId, String documentId, String personString)
-			throws Exception {
-		
+	public static void store(String collectionId, String documentId, String personString) throws Exception {
+
 		conn = AuthenticationUtilities.loadProperties();
 
 		// initialize database driver
-		
+
 		Class<?> cl = Class.forName(conn.driver);
 
 		// encapsulation of the database driver functionality
@@ -62,14 +110,15 @@ public class StorePerson {
 			 * create new XMLResource with a given id an id is assigned to the new resource
 			 * if left empty (null)
 			 */
-			//res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
+			// res = (XMLResource) col.createResource(documentId,
+			// XMLResource.RESOURCE_TYPE);
 
 			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 
 			StringReader sr = new StringReader(personString);
-			
+
 			Person person = (Person) unmarshaller.unmarshal(sr);
 
 			Marshaller marshaller = context.createMarshaller();
@@ -80,23 +129,25 @@ public class StorePerson {
 			marshaller.marshal(person, os);
 
 			// link the stream to the XML resource
-			//res.setContent(os);
-			//if (UpdateData.update(collectionId, "persons", "persons", personString, INSERT_AFTER) == 0L)
-                //throw new RepositoryException("Failed to save person");
-            col.setProperty("indent", "yes");
-            
-            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
-            xupdateService.setProperty("indent", "yes");
-            
-            //dodaj na kraj
-            
-            String contextXPath = "/persons";
-            System.out.println(String.format(XUpdateTemplate.APPEND, contextXPath, os));
-            System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
-            long mods = xupdateService.updateResource(documentId, String.format(XUpdateTemplate.APPEND, contextXPath, os));
-            System.out.println("[INFO] " + mods + " modifications processed.");
+			// res.setContent(os);
+			// if (UpdateData.update(collectionId, "persons", "persons", personString,
+			// INSERT_AFTER) == 0L)
+			// throw new RepositoryException("Failed to save person");
+			col.setProperty("indent", "yes");
 
-			//col.storeResource(res);
+			XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+			xupdateService.setProperty("indent", "yes");
+
+			// dodaj na kraj
+
+			String contextXPath = "/persons";
+			System.out.println(String.format(XUpdateTemplate.APPEND, contextXPath, os));
+			System.out.println("[INFO] Appending fragments as last child of " + contextXPath + " node.");
+			long mods = xupdateService.updateResource(documentId,
+					String.format(XUpdateTemplate.APPEND, contextXPath, os));
+			System.out.println("[INFO] " + mods + " modifications processed.");
+
+			// col.storeResource(res);
 
 		} finally {
 
@@ -123,7 +174,8 @@ public class StorePerson {
 		return getOrCreateCollection(collectionUri, 0);
 	}
 
-	private static Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset) throws XMLDBException, JAXBException {
+	private static Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset)
+			throws XMLDBException, JAXBException {
 
 		Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
 
@@ -159,9 +211,9 @@ public class StorePerson {
 					col = mgt.createCollection(pathSegments[pathSegmentOffset]);
 
 					// dokumnet
-					
+
 					OutputStream os = new ByteArrayOutputStream();
-					
+
 					JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 					Marshaller marshaller = context.createMarshaller();
 					marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
@@ -169,7 +221,7 @@ public class StorePerson {
 					Persons persons = new Persons();
 					// marshal the contents to an output stream
 					marshaller.marshal(persons, os);
-					
+
 					XMLResource res = (XMLResource) col.createResource("persons", XMLResource.RESOURCE_TYPE);
 					res.setContent(os);
 
@@ -181,9 +233,7 @@ public class StorePerson {
 					startCol.close();
 				}
 			}
-			
-			
-			
+
 			return getOrCreateCollection(collectionUri, ++pathSegmentOffset);
 		} else {
 			return col;

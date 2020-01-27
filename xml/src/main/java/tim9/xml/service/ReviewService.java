@@ -7,4 +7,6 @@ public interface ReviewService {
 	public String findById(String id) throws Exception;
 
 	public String findByIdHTML(String id) throws Exception;
+	
+	public void delete(String id) throws Exception;
 }

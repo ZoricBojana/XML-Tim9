@@ -12,8 +12,7 @@ import javax.xml.bind.Unmarshaller;
 import org.springframework.stereotype.Repository;
 
 import rs.ac.uns.msb.Person;
-import tim9.xml.dao.RetrievePerson;
-import tim9.xml.dao.StorePerson;
+import tim9.xml.dao.PersonDAO;
 import tim9.xml.exception.RepositoryException;
 import tim9.xml.exception.UsernameAlreadyExist;
 import tim9.xml.util.exist.UpdateData;
@@ -28,7 +27,7 @@ public class PersonRepository {
         	
         	Person retVal = null;
         	
-        	retVal = RetrievePerson.getByUsername(username, personCollectionId);
+        	retVal = PersonDAO.getByUsername(username, personCollectionId);
           
             return retVal;
         } catch (Exception e) {
@@ -54,7 +53,7 @@ public class PersonRepository {
                 throw new UsernameAlreadyExist();
 
             
-            StorePerson.save(personCollectionId, "persons", personString);
+            PersonDAO.store(personCollectionId, "persons", personString);
 
             return findOneByUsername(person.getUsername());
 

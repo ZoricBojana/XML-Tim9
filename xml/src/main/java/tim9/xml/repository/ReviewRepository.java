@@ -11,8 +11,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import tim9.xml.dao.RetrieveReview;
-import tim9.xml.dao.StoreReview;
+import tim9.xml.dao.ReviewDAO;
 import tim9.xml.util.RDF.RDFStore;
 import tim9.xml.util.exist.RetriveData;
 import tim9.xml.util.exist.StoreData;
@@ -26,13 +25,13 @@ public class ReviewRepository {
 	
 	public String save(String review) throws Exception {
 		String ID = generateID();
-		StoreReview.run(reviewCollectionId, ID, review);
+		ReviewDAO.store(reviewCollectionId, ID, review);
 		return ID;
 	}
 	
 	public String findById(String id) throws Exception {
 		
-		return RetrieveReview.run(reviewCollectionId, id);
+		return ReviewDAO.retrieve(reviewCollectionId, id);
 	}
 
    /* public String findOne(String id) throws Exception {
@@ -77,7 +76,7 @@ public class ReviewRepository {
         return id;
     }
 
-    // TODO testirati
+    
     public void delete(String id) throws Exception {
         String xPathExp = "/review";
         long mods = UpdateData.delete(reviewCollectionId, id, xPathExp);
