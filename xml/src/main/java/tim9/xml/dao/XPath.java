@@ -1,13 +1,9 @@
 package tim9.xml.dao;
 
-import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XPathQueryService;
 
 import tim9.xml.util.AuthenticationUtilities;
@@ -18,7 +14,7 @@ public class XPath {
 
 	public static void main(String[] args) throws Exception {
 		//XPath.run(AuthenticationUtilities.loadProperties(), "/db/sample/articles", "doc(\"1.xml\")//author");
-		XPath.run(AuthenticationUtilities.loadProperties(), "/db/sample/reviews", "doc(\"2.xml\")//question/text()");
+		XPath.run(AuthenticationUtilities.loadProperties(), "/db/sample/persons", "doc(\"persons\")//person");
 
 	}
 
@@ -26,7 +22,7 @@ public class XPath {
 	 * conn XML DB connection properties args[0] Should be the collection ID to
 	 * access
 	 */
-	public static void run(ConnectionProperties conn, String collectionId, String xpathExp) throws Exception {
+	public static ResourceSet run(ConnectionProperties conn, String collectionId, String xpathExp) throws Exception {
 
 		System.out.println("[INFO] " + XPath.class.getSimpleName());
 
@@ -59,7 +55,7 @@ public class XPath {
 
 		Collection col = null;
 
-		try {
+		//try {
 
 			// get the collection
 			System.out.println("[INFO] Retrieving the collection: " + collectionId);
@@ -82,8 +78,10 @@ public class XPath {
 			// execute xpath expression
 			System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
 			ResourceSet result = xpathService.query(xpathExp);
+			
+			return result;
 			// handle the results
-			System.out.println("[INFO] Handling the results... ");
+			/*System.out.println("[INFO] Handling the results... ");
 
 			ResourceIterator i = result.getIterator();
 			Resource res = null;
@@ -104,8 +102,8 @@ public class XPath {
 					}
 				}
 			}
-
-		} finally {
+			 */
+		/*} finally {
 
 			// don't forget to cleanup
 			if (col != null) {
@@ -115,7 +113,7 @@ public class XPath {
 					xe.printStackTrace();
 				}
 			}
-		}
+		}*/
 	}
 
 }

@@ -1,76 +1,63 @@
 package tim9.xml.repository;
 
+import static tim9.xml.util.template.XUpdateTemplate.UPDATE;
+
 import java.io.ByteArrayOutputStream;
+import java.io.StringReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
-import org.exist.xmldb.EXistResource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-import org.xmldb.api.base.ResourceIterator;
-import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.modules.XMLResource;
 
 import rs.ac.uns.msb.Person;
+import tim9.xml.dao.RetrievePerson;
+import tim9.xml.dao.StorePerson;
 import tim9.xml.exception.RepositoryException;
-import tim9.xml.util.exist.RetriveData;
+import tim9.xml.exception.UsernameAlreadyExist;
 import tim9.xml.util.exist.UpdateData;
-
-import static tim9.xml.util.template.XUpdateTemplate.TARGET_NAMESPACE;
-import static tim9.xml.util.template.XUpdateTemplate.INSERT_AFTER;
-import static tim9.xml.util.template.XUpdateTemplate.UPDATE;
 
 @Repository
 public class PersonRepository {
 	//@Value("${person-collection-id}")
-    private String personCollectionId;
+    private String personCollectionId = "/db/sample/persons";
 
     public Person findOneByUsername(String username) throws RepositoryException {
         try {
-            String xPathExp = String.format("persons/person[username='%s']", username);
-            ResourceSet resultSet = RetriveData.executeXPathExpression(personCollectionId, xPathExp, TARGET_NAMESPACE);
-
-            if (resultSet == null)
-                return null;
-
-            ResourceIterator i = resultSet.getIterator();
-            XMLResource res = null;
-            Person retVal = null;
-
-            if (i.hasMoreResources()) {
-                res = (XMLResource) i.nextResource();
-                retVal = (Person) res.getContent();
-            }
-
-            if (res != null)
-                try {
-                    ((EXistResource) res).freeResources();
-                } catch (XMLDBException exception) {
-                    exception.printStackTrace();
-                }
-
+        	
+        	Person retVal = null;
+        	
+        	retVal = RetrievePerson.getByUsername(username, personCollectionId);
+          
             return retVal;
         } catch (Exception e) {
+        	e.printStackTrace();
             throw new RepositoryException("Error in repository");
         }
     }
 
-    public Person save(Person person) throws RepositoryException {
-        try {
+    public Person save(String personString) throws Exception {
+        //try {
+        	JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			StringReader sr = new StringReader(personString);
+			
+			Person person = null;
+			System.out.println(personString);
+			person = (Person) unmarshaller.unmarshal(sr);
+			
+			
             if (findOneByUsername(person.getUsername()) != null)
-                throw new RepositoryException("Person already exists");
+                throw new UsernameAlreadyExist();
 
-            String xmlElement = marshallUser(person);
+            
+            StorePerson.save(personCollectionId, "persons", personString);
 
-            if (UpdateData.update(personCollectionId, "persons", "persons", xmlElement, INSERT_AFTER) == 0L)
-                throw new RepositoryException("Failed to save person");
-            else
-                return findOneByUsername(person.getUsername());
-        } catch (Exception e) {
-            throw new RepositoryException(e.getMessage());
-        }
+            return findOneByUsername(person.getUsername());
+
     }
 
     public Person update(Person person) throws RepositoryException {

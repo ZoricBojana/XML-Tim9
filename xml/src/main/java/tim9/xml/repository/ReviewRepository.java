@@ -58,13 +58,15 @@ public class ReviewRepository {
             }
 
         return retVal;
-    }*/
+    }
 
     public String create(String id, String review) throws Exception {
         StoreData.store(reviewCollectionId, id, review);
         return id;
     }
-
+    */
+	
+	// TODO testirati
     public String update(String id, String review) throws Exception {
         String oldReviewData = this.findById(id);
         if (oldReviewData == null) {
@@ -75,6 +77,7 @@ public class ReviewRepository {
         return id;
     }
 
+    // TODO testirati
     public void delete(String id) throws Exception {
         String xPathExp = "/review";
         long mods = UpdateData.delete(reviewCollectionId, id, xPathExp);
@@ -102,7 +105,6 @@ public class ReviewRepository {
 				TARGET_NAMESPACE);
     	
     	if (result == null) {
-    		System.out.println("NUMM");
 			return null;
 		}
     	

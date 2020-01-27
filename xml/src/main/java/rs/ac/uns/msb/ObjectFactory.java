@@ -391,6 +391,13 @@ public class ObjectFactory {
         return new Author();
     }
 
+    public Person createPerson() {
+    	return new Person();
+    }
+    
+    public Persons createPersons() {
+    	return new Persons();
+    }
     /**
      * Create an instance of {@link TreferenceData.Authors }
      * 
