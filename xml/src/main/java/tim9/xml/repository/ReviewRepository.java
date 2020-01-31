@@ -3,6 +3,8 @@ package tim9.xml.repository;
 import static tim9.xml.util.template.XUpdateTemplate.TARGET_NAMESPACE;
 
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Repository;
@@ -72,7 +74,7 @@ public class ReviewRepository {
             throw new Exception("Review with id: " + id);
         }
         this.delete(id);
-        StoreData.store(reviewCollectionId, id, review);
+        ReviewDAO.store(reviewCollectionId, id, review);
         return id;
     }
 
@@ -91,38 +93,9 @@ public class ReviewRepository {
 		RDFStore.store(metadata, "/example/review/" + reviewId);
 	}
     
-    /// ID
-    
     public String generateID() throws Exception{
-    	// TODO popraviti
-    	String retVal = "Review";
-    	int i = 2;
-    	String expression = "//review";
-    	ResourceSet result = RetriveData.executeXPathExpression(
-				reviewCollectionId,
-				expression,
-				TARGET_NAMESPACE);
-    	
-    	if (result == null) {
-			return null;
-		}
-    	
-    	ResourceIterator iterator = result.getIterator();
-		XMLResource resource = null;
-		
-		while (iterator.hasMoreResources()) {
-			try {
-				resource = (XMLResource) iterator.nextResource();
-				i++;
-			} finally {
-				// don't forget to cleanup resources
-				try {
-					((EXistResource) resource).freeResources();
-				} catch (XMLDBException xe) {
-					xe.printStackTrace();
-				}
-			}
-		}
-		return retVal + i + ".xml";
+    	SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmssSS");
+    	String ID = "RW_" + sdf.format(new Date());
+    	return ID;
     }
 }

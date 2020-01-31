@@ -4,11 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.msb.Author;
+import rs.ac.uns.msb.CoverLetter;
+import rs.ac.uns.msb.ScientificArticle;
 import tim9.xml.exception.EntityNotFound;
+import tim9.xml.exception.Unauthorized;
 import tim9.xml.repository.CoverLetterRepository;
 import tim9.xml.service.CoverLetterService;
 import tim9.xml.util.RDF.MetadataExtractor;
@@ -41,19 +47,52 @@ public class CoverLetterServiceImpl implements CoverLetterService{
 	}
 	
 	@Override
-	public String update(String coverLetter) throws Exception {
+	public String update(String ID, String coverLetter, String personID) throws Exception {
 		// extract metadata
+		String old = coverLetterRepository.findById(ID);
+		JAXBContext jaxbContext;
+        boolean allowed = false;
+        try {
+        	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
+        	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        	CoverLetter _cl = (CoverLetter) jaxbUnmarshaller.unmarshal(new StringReader(old));
+			if(personID.equals(_cl.getAuthor().getID())){
+				allowed = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        if(!allowed){
+			throw new Unauthorized();
+		}
+		
 		StringWriter out = new StringWriter(); 
 		StringReader in = new StringReader(coverLetter); 
 		metadataExtractor.extractMetadata(in, out);
 		
-		String ID = coverLetterRepository.update(coverLetter);
+		String id = coverLetterRepository.update(ID, coverLetter);
 		coverLetterRepository.updateMetadata(out, ID);
-		return ID;
+		return id;
 	}
 
 	@Override
-	public void delete(String id) {
+	public void delete(String id, String personID) throws Exception {
+		String old = coverLetterRepository.findById(id);
+		JAXBContext jaxbContext;
+        boolean allowed = false;
+        try {
+        	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
+        	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        	CoverLetter _cl = (CoverLetter) jaxbUnmarshaller.unmarshal(new StringReader(old));
+			if(personID.equals(_cl.getAuthor().getID())){
+				allowed = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        if(!allowed){
+			throw new Unauthorized();
+		}
 		try {
 			coverLetterRepository.delete(id);
 		} catch (Exception e) {

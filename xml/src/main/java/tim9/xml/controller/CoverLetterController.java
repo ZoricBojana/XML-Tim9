@@ -26,19 +26,25 @@ public class CoverLetterController {
 	
 	@PostMapping(value="/saveCoverLetter", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> save(@RequestBody String coverLetter) throws Exception {
+		// PREUZETI AUTOROV ID SECURITIJEM I PREPRAVITI OVO
+		String authorID = "aaa";
 		String id = coverLetterService.save(coverLetter);
 		return new ResponseEntity<>("Cover letter is successfully saved! ID is: " + id, HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/updateCoverLetter", consumes = MediaType.APPLICATION_XML_VALUE,produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> update(@RequestBody String coverLetter) throws Exception {
-		String coverLetter_ = coverLetterService.update(coverLetter);
+	@PutMapping(value="/updateCoverLetter/{id}", consumes = MediaType.APPLICATION_XML_VALUE,produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> update(@RequestBody String coverLetter, @PathVariable("id") String id) throws Exception {
+		// PREUZETI AUTOROV ID SECURITIJEM I PREPRAVITI OVO
+		String authorID = "aaa";
+		String coverLetter_ = coverLetterService.update(id, coverLetter, authorID);
 		return new ResponseEntity<>(coverLetter_, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value="/deleteCoverLetter/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> delete(@PathVariable("id") String id) throws Exception{
-		coverLetterService.delete(id);
+		// PREUZETI AUTOROV ID SECURITIJEM I PREPRAVITI OVO
+		String authorID = "aaa";
+		coverLetterService.delete(id, authorID);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

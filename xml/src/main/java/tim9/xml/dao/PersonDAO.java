@@ -74,6 +74,49 @@ public class PersonDAO {
 			return null;
 		}
 	}
+	
+	public static Person getByID(String ID, String collectionId) throws Exception {
+
+		ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+		// initialize database driver
+		Class<?> cl = Class.forName(conn.driver);
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		XMLResource res = null;
+
+		String xPathExp = String.format("doc(\"persons\")//person[@id='%s']", ID);
+
+		ResourceSet resultSet = XPath.run(AuthenticationUtilities.loadProperties(), collectionId, xPathExp);
+
+		if (resultSet == null) {
+			return null;
+		}
+
+		ResourceIterator i = resultSet.getIterator();
+
+		if (i.hasMoreResources()) {
+			res = (XMLResource) i.nextResource();
+
+			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+
+			Person person = (Person) unmarshaller.unmarshal(res.getContentAsDOM());
+
+			if (person == null) {
+				throw new Exception("Unmarshaling failed");
+			}
+
+			return person;
+		} else {
+			return null;
+		}
+	}
 
 	private static ConnectionProperties conn;
 
