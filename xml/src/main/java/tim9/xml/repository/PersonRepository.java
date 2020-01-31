@@ -35,6 +35,20 @@ public class PersonRepository {
             throw new RepositoryException("Error in repository");
         }
     }
+    
+    public Person findOneByID(String ID) throws RepositoryException {
+        try {
+        	
+        	Person retVal = null;
+        	
+        	retVal = PersonDAO.getByID(ID, personCollectionId);
+          
+            return retVal;
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new RepositoryException("Error in repository");
+        }
+    }
 
     public Person save(String personString) throws Exception {
         //try {

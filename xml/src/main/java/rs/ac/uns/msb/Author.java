@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
     "title"
 })
 @XmlRootElement(name = "author")
-public class Author {
+public class Author extends Person{
 
     @XmlElement(name = "first_name", required = true)
     protected String firstName;

@@ -1,8 +1,151 @@
 package tim9.xml.service.Impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class ScientificArticleServiceImpl {
+import rs.ac.uns.msb.Author;
+import rs.ac.uns.msb.Person;
+import rs.ac.uns.msb.ScientificArticle;
+import tim9.xml.exception.EntityNotFound;
+import tim9.xml.exception.Unauthorized;
+import tim9.xml.repository.PersonRepository;
+import tim9.xml.repository.ScientificArticleRepository;
+import tim9.xml.service.ScientificArticleService;
+import tim9.xml.util.RDF.MetadataExtractor;
+import tim9.xml.util.XSLFOTransformer.XSLFOTransformer;
 
+@Service
+public class ScientificArticleServiceImpl implements ScientificArticleService{
+
+	@Autowired
+	private XSLFOTransformer xslFoTransformer;
+
+	@Autowired
+	private MetadataExtractor metadataExtractor;
+	
+	@Autowired
+	private ScientificArticleRepository scientificArticleRepository;
+	
+	@Autowired
+	private PersonRepository personRepository;
+	
+	
+
+	@Override
+	public String save(String article) throws Exception {
+		// extract metadata
+		StringWriter out = new StringWriter(); 
+		StringReader in = new StringReader(article); 
+		metadataExtractor.extractMetadata(in, out);
+		
+		String ID = scientificArticleRepository.save(article);
+		scientificArticleRepository.saveMetadata(out, ID);
+		return ID;
+	}
+	
+	@Override
+	public String update(String ID, String article, String authorID) throws Exception {
+		// extract metadata
+		Person person = personRepository.findOneByID(authorID);
+		if(person == null){
+			throw new EntityNotFound(authorID);
+		}
+		
+		String oldArticle = scientificArticleRepository.findById(ID);
+		JAXBContext jaxbContext;
+        boolean allowed = false;
+        try {
+        	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
+        	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        	ScientificArticle _article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(oldArticle));
+    		for(Author author : _article.getAuthors().getAuthor()){
+    			if(author.getID().equals(authorID)){
+    				allowed = true;
+    			}
+    		}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        if(!allowed){
+			throw new Unauthorized();
+		}
+		
+		StringWriter out = new StringWriter(); 
+		StringReader in = new StringReader(article); 
+		metadataExtractor.extractMetadata(in, out);
+		
+		String id = scientificArticleRepository.update(ID, article, authorID);
+		scientificArticleRepository.updateMetadata(out, ID);
+		return id;
+	}
+
+	@Override
+	public void delete(String id, String authorID) throws Exception {
+		Person person = personRepository.findOneByID(authorID);
+		if(person == null){
+			throw new EntityNotFound(authorID);
+		}
+		
+		String article = scientificArticleRepository.findById(id);
+		JAXBContext jaxbContext;
+        boolean allowed = false;
+        try {
+        	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
+        	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        	ScientificArticle _article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(article));
+    		for(Author author : _article.getAuthors().getAuthor()){
+    			if(author.getID().equals(authorID)){
+    				allowed = true;
+    			}
+    		}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        if(!allowed){
+			throw new Unauthorized();
+		}
+		
+		try {
+			scientificArticleRepository.delete(id, authorID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public String findById(String id) throws Exception {
+		String coverLetter = scientificArticleRepository.findById(id);
+		if(coverLetter == null){
+			throw new EntityNotFound(id);
+		}
+		return coverLetter;
+	}
+
+	@Override
+	public String findByIdHTML(String id) throws Exception {
+		String coverLetter = scientificArticleRepository.findById(id);
+		if(coverLetter == null){
+			throw new EntityNotFound(id);
+		}
+		String clHTML = xslFoTransformer.generateHTML(coverLetter, "src/main/resources/data/xslt/coverLetter.xsl");
+		return clHTML;
+	}
+
+	@Override
+	public ByteArrayOutputStream findByIdPDF(String id) throws Exception {
+		String coverLetter = scientificArticleRepository.findById(id);
+		if(coverLetter == null){
+			throw new EntityNotFound(id);
+		}
+		ByteArrayOutputStream clPDF = xslFoTransformer.generatePDF(coverLetter,
+				"src/main/resources/data/xsl-fo/scientificArticle_fo.xsl");
+		return clPDF;
+	}
 }
