@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scientific_article xmlns="https://github.com/ZoricBojana/XML-Tim9"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="">
+    <metadata>
+        <received>2020-03-11</received>
+        <revised>2019-04-12</revised>
+        <accepted>2019-09-03</accepted>
+        <version>1.0</version>
+        <status>uploaded</status>
+        <category>research-paper</category>
+        <keywords>
+            <keyword>rad</keyword>
+            <keyword>radd</keyword>
+        </keywords>
+    </metadata>
+    <title>Document phenomenology:<br/>a framework for holistic analysis</title>
+    <authors>
+        <author id="">
+            <name>
+                <first-name>Tim</first-name>
+                <middle-name>B</middle-name>
+                <last-name>Tim Gorichanaz </last-name>
+            </name>
+            <email>tim@mail.com</email>
+            <affiliation>
+                <university>Drexel University</university>
+                <city>Philadelfia</city>
+                <state>USA</state>
+                <country>Pennsylvania</country>
+            </affiliation>
+        </author>
+        <author id="">
+            <name>
+                <first-name>Kiersten</first-name>
+                <middle-name>F.</middle-name>
+                <last-name>Latham</last-name>
+            </name>
+            <email>latham@mail.com</email>
+            <affiliation>
+                <university>Kent State University</university>
+                <city>Ohio</city>
+                <state>USA</state>
+                <country>Kent</country>
+            </affiliation>
+        </author>
+    </authors>
+    <abstract id="">
+        <abstract-item title="Purpose">aaa</abstract-item>
+        <abstract-item title="Findings">bbbb</abstract-item>
+        <abstract-item title="Originality">cc</abstract-item>
+        <abstract-item title="Methodology">dd</abstract-item>
+        <abstract-item title="Social Implications">eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</abstract-item>
+        <abstract-item title="Implications">fffffffff</abstract-item>
+    </abstract>
+    <content>
+        <section id="/oi">
+            <title>Titllll</title>
+            <paragraph id=" #~">
+                <figure type="equation" id="">
+                <image></image>
+                 <image></image>
+                    </figure>
+                <quote>
+                    <quote-text>2345ffdgdq</quote-text>
+                    <publication>
+                        <title>aaaaa</title>
+                        <publisher>adsfvdgf6</publisher>
+                        <place>newy</place>
+                        <url>http://www.f.com</url>
+                    </publication>
+                </quote>
+            </paragraph>
+            <paragraph id="">
+                <table title="Tbellaa" id="Q+://=">
+                    <header>
+                        <row>
+                            <column>ttt1</column>
+                        </row>
+                    </header>
+                    <body>
+                        <row>
+                            <column>t2222</column>
+                        </row>
+                        <row>
+                            <column>t333</column>
+                        </row>
+                        <row>
+                            <column>t44444</column>
+                        </row>
+                    </body>
+                </table>
+                <quote>
+                    <quote-text>aaaaa333333</quote-text>
+                    <publication>
+                        <title>rrrrrrrrrrrr</title>
+                        <publisher>tttuyjxd</publisher>
+                        <place>Vdijdsdsdffdf</place>
+                        <url>http://www.f.com</url>
+                    </publication>
+                </quote>
+            </paragraph>
+        </section>
+        <section id="">
+            <title>Titttttl2</title>
+            <paragraph id="">
+                <table title="titl2" id="">
+                    <header>
+                        <row>
+                            <column>aaa</column>
+                        </row>
+                    </header>
+                    <body>
+                        <row>
+                            <column>bbb</column>
+                        </row>
+                        <row>
+                            <column>cc</column>
+                        </row>
+                        <row>
+                            <column>hhhhhhh</column>
+                        </row>
+                    </body>
+                </table>
+                <decorator>
+                    <italic>t
+                        <underline>AAAA
+                            <bold>iII
+                            </bold>
+                            <bold>sS
+                            </bold>
+                        </underline>SADADi
+                        <bold>s
+                            <underline>gSDF
+                            </underline>
+                            <underline>oSDSDF
+                            </underline>
+                        </bold>oD
+                    </italic>dSD
+                    <italic>sD
+                        <underline>tD
+                            <bold>uD
+                            </bold>
+                            <bold>
+                            </bold>f
+                        </underline>
+                        <bold>f
+                            <underline>
+                            </underline>
+                            <underline>z
+                            </underline>
+                        </bold>
+                    </italic>
+                </decorator>
+            </paragraph>
+            <paragraph id="P:/\!q. #~">
+                <figure type="figure" id="">
+                    <image></image>
+                    <image></image>
+                </figure>
+                <figure type="equation" id="">
+                    <image></image>
+                    <image></image>
+                </figure>
+            </paragraph>
+        </section>
+    </content>
+    <references>
+        <reference>
+            <authors>
+                <name>
+                    <first-name>Autor</first-name>
+                    <middle-name>A</middle-name>
+                    <middle-name>Autoric</middle-name>
+                    <last-name>Aut</last-name>
+                </name>
+                <name>
+                    <first-name>A1</first-name>
+                    <middle-name>A1</middle-name>
+                    <middle-name>aaa</middle-name>
+                    <last-name>A1</last-name>
+                </name>
+            </authors>
+            <publication>
+                <title>Rad1</title>
+                <year>1500</year>
+                <publisher>Publise1</publisher>
+                <place>Berlin</place>
+                <url>http://www.f.com</url>
+            </publication>
+        </reference>
+        <reference>
+            <authors>
+                <name>
+                    <first-name>Bojana</first-name>
+                    <middle-name>M</middle-name>
+                    <last-name>Zoric</last-name>
+                </name>
+                <name>
+                    <first-name>Marinaa</first-name>
+                    <last-name>Simmm</last-name>
+                </name>
+                <name>
+                    <first-name>Sonjaa</first-name>
+                    <last-name>Josanov</last-name>
+                </name>
+            </authors>
+            <publication>
+                <title>Rad1</title>
+                <year>1980</year>
+                <publisher>Mario</publisher>
+                <place>Paris</place>
+                <url>http://www.f.com</url>
+            </publication>
+        </reference>
+    </references>
+</scientific_article>
