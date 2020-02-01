@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<review xmlns="https://github.com/ZoricBojana/XML-Tim9"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/ZoricBojana/XML-Tim9">
+    <review-metadata>
+        <reviewer>
+            <name>
+                <first-name>ime</first-name>
+                <last-name>prezime</last-name>
+            </name>
+            <email>mail@kk.com</email>
+            <affiliation>
+                <university>univerzite</university>
+                <city>grad</city>
+                <state>drzava</state>
+                <country>zemlja</country>
+            </affiliation>
+        </reviewer>
+        <date>2010-05-03</date>
+        <recommendation>prihvacen</recommendation>
+        <scientific-paper-id>id1</scientific-paper-id>
+    </review-metadata>
+    <questionnaire>
+        <question>
+            <question-text>pitanje1</question-text>
+        </question>
+        <question>
+            <question-text>pitanje2</question-text>
+        </question>
+    </questionnaire>
+    <author-comments>
+        <author-comment>
+            <review-reference>referenca rec1</review-reference>
+            <comment-text>komenatar1</comment-text>
+        </author-comment>
+        <author-comment>
+            <review-reference>referenca rec2</review-reference>
+            <comment-text>komenatar2</comment-text>
+        </author-comment>
+    </author-comments>
+    <editor-comments>
+        <editor-comment>
+            <review-reference>referenca rec3</review-reference>
+            <comment-text>komenatar3</comment-text>
+        </editor-comment>
+        <editor-comment>
+            <review-reference>recenzija refer 3</review-reference>
+            <comment-text>komenatar4</comment-text>
+        </editor-comment>
+    </editor-comments>
+</review>

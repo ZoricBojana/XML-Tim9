@@ -31,13 +31,13 @@ public class PDFTransformer {
 	
 	private static TransformerFactory transformerFactory;   //primena xml transform nad xml fajlom
 	
-	public static final String INPUT_FILE = "src/main/resources/data/xslt/ScientificArticle.xml";
+	public static final String INPUT_FILE = "src/main/resources/data/xslt/rad pismo rec/rad.xml";
 	
-	public static final String XSL_FILE = "src/main/resources/data/xslt/ScientificArticle.xsl";
+	public static final String XSL_FILE = "src/main/resources/data/xslt/rad pismo rec/radToHTML.xsl";
 	
-	public static final String HTML_FILE = "src/main/resources/gen/itext/ScientificArticle.html";
+	public static final String HTML_FILE = "src/main/resources/gen/itext/rad.html";
 	
-	public static final String OUTPUT_FILE = "src/main/resources/gen/itext/ScientificArticle.pdf";  //generisanje pdf izlaz
+	public static final String OUTPUT_FILE = "src/main/resources/gen/itext/rad.pdf";  //generisanje pdf izlaz
 
 	static {
 
