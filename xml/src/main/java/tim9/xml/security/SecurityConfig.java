@@ -22,7 +22,6 @@ import tim9.xml.service.Impl.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired

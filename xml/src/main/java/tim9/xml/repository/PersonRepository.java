@@ -59,7 +59,6 @@ public class PersonRepository {
 			StringReader sr = new StringReader(personString);
 			
 			Person person = null;
-			System.out.println(personString);
 			person = (Person) unmarshaller.unmarshal(sr);
 			
 			

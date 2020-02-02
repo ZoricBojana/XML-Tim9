@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
+import tim9.xml.security.auth.TokenBasedAuthentication;
 import tim9.xml.service.Impl.UserDetailsServiceImpl;
 
 public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
@@ -28,7 +29,7 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		/*HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String authToken = httpRequest.getHeader("X-Auth-Token");
 		String email = tokenUtils.getEmailFromToken(authToken);
 
@@ -39,6 +40,27 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
 				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
+		}*/
+		
+		String username;
+		String authToken = tokenUtils.getToken((HttpServletRequest)request);
+		System.out.println("Token received " + authToken);
+		if (authToken != null) {
+			// uzmi username iz tokena
+			username = tokenUtils.getUsernameFromToken(authToken);
+			System.out.println("username " + username);
+			if (username != null) {
+				// uzmi user-a na osnovu username-a
+				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+				
+				// proveri da li je prosledjeni token validan
+				if (tokenUtils.validateToken(authToken, userDetails)) {
+					// kreiraj autentifikaciju
+					TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
+					authentication.setToken(authToken);
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+				}
 			}
 		}
 

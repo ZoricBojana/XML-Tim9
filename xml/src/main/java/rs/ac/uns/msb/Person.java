@@ -9,7 +9,10 @@
 package rs.ac.uns.msb;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -20,6 +23,9 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 /**
@@ -48,10 +54,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "author",
-    "scientificArticle"
+    "scientificArticle",
+    "roles"
 })
 @XmlRootElement(name = "person")
-public class Person {
+public class Person implements UserDetails{
 
     @XmlElement(required = true)
     protected Author author;
@@ -66,6 +73,23 @@ public class Person {
     protected String username;
     @XmlAttribute(name = "password", required = true)
     protected String password;
+    @XmlElement(name = "roles", required = true)
+    protected Roles roles;
+    
+    public class Authority implements GrantedAuthority {
+
+    	private String name;
+    	
+    	public Authority(String name) {
+    		this.name = name;
+		}
+    	
+		@Override
+		public String getAuthority() {
+			return name;
+		}
+    	
+    }
 
     /**
      * Gets the value of the author property.
@@ -191,5 +215,42 @@ public class Person {
     public void setPassword(String value) {
         this.password = value;
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.roles.getRole().stream().map(Authority::new).collect(Collectors.toList());
+	}
+	
+	public void addRole(String name) {
+		if (this.roles == null) {
+			this.roles = new Roles();
+		}
+		
+		this.roles.getRole().add(name);
+	}
+
+	public void setRoles(Roles roles) {
+		this.roles = roles;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }

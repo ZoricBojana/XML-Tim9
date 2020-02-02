@@ -398,6 +398,10 @@ public class ObjectFactory {
     public Persons createPersons() {
     	return new Persons();
     }
+    
+    public Roles createRoles() {
+    	return new Roles();
+    }
     /**
      * Create an instance of {@link TreferenceData.Authors }
      * 

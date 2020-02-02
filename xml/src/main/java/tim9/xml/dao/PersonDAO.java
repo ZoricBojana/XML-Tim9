@@ -1,6 +1,7 @@
 package tim9.xml.dao;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 
@@ -10,6 +11,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.exist.xmldb.EXistResource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -48,6 +51,7 @@ public class PersonDAO {
 
 		String xPathExp = String.format("doc(\"persons\")//person[@username='%s']", username);
 
+		getOrCreateCollection(collectionId);
 		ResourceSet resultSet = XPath.run(AuthenticationUtilities.loadProperties(), collectionId, xPathExp);
 
 		if (resultSet == null) {
@@ -74,7 +78,7 @@ public class PersonDAO {
 			return null;
 		}
 	}
-	
+
 	public static Person getByID(String ID, String collectionId) throws Exception {
 
 		ConnectionProperties conn = AuthenticationUtilities.loadProperties();
@@ -163,6 +167,10 @@ public class PersonDAO {
 			StringReader sr = new StringReader(personString);
 
 			Person person = (Person) unmarshaller.unmarshal(sr);
+			person.addRole("USER_ROLE");
+			
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			person.setPassword(passwordEncoder.encode(person.getPassword()));
 
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
@@ -213,13 +221,19 @@ public class PersonDAO {
 		}
 	}
 
-	private static Collection getOrCreateCollection(String collectionUri) throws XMLDBException, JAXBException {
+	private static Collection getOrCreateCollection(String collectionUri)
+			throws XMLDBException, JAXBException, IOException {
 		return getOrCreateCollection(collectionUri, 0);
 	}
 
 	private static Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset)
-			throws XMLDBException, JAXBException {
+			throws XMLDBException, JAXBException, IOException {
 
+		conn = AuthenticationUtilities.loadProperties();
+		System.out.println(conn.uri);
+		System.out.println(conn.user);
+		System.out.println(conn.password);
+		System.out.println(DatabaseManager.getDatabases());
 		Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
 
 		// create the collection if it does not exist
