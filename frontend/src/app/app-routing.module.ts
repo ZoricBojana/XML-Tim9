@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { SubmitSAComponent } from './submit-sa/submit-sa.component';
 const routes: Routes = [
   {
     path: '',
@@ -21,8 +22,12 @@ const routes: Routes = [
   {
     path : 'login',
     component : LoginComponent
+  },
+  {
+    path : 'submitPost',
+    component : SubmitSAComponent
   }
- 
+
 ];
 
 @NgModule({

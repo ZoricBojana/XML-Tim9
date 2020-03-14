@@ -2,10 +2,12 @@ package tim9.xml.controller;
 
 import java.io.ByteArrayOutputStream;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import tim9.xml.service.ScientificArticleService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ScientificArticleController {
 
 	@Autowired
@@ -29,6 +32,7 @@ public class ScientificArticleController {
 		// ovo se koristi kada se generise sasvim novi xml fajl
 		// SECURITIJEM PROVERITI DA LI JE U PITANJU KORISNIK
 		String id = scientificArticleService.save(article);
+		System.out.println("Cover letter is successfully saved! ID is: " + id);
 		return new ResponseEntity<>("Cover letter is successfully saved! ID is: " + id, HttpStatus.OK);
 	}
 	

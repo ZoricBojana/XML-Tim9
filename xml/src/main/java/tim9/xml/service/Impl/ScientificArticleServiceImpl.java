@@ -46,7 +46,9 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		metadataExtractor.extractMetadata(in, out);
 		
 		String ID = scientificArticleRepository.save(article);
+		System.out.println("Sacuvan rad");
 		scientificArticleRepository.saveMetadata(out, ID);
+		System.out.println("Sacuvani metapodaci");
 		return ID;
 	}
 	

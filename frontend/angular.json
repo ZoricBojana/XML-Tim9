@@ -25,10 +25,12 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/js/xonomy/xonomy.css"
             ],
             "scripts": [
-              
+              "src/assets/js/xonomy/xonomy.js",
+              "src/assets/js/xonomy/jquery-3.4.1.js"
             ]
           },
           "configurations": {
