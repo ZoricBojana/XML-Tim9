@@ -17,4 +17,8 @@ export class ServiceSaService {
   add(newArticle: string): Observable<any> {
     return this.http.post('http://localhost:8000/api/saveScientificArticle', newArticle, {headers: this.headers, responseType: 'text'});
   }
+
+  searchByText(value: string): Observable<any> {
+    return this.http.post('http://localhost:8000/api/searchArticles', value, {headers: this.headers, responseType: 'json'});
+  }
 }

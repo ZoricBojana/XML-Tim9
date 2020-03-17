@@ -4,9 +4,11 @@ package tim9.xml.repository;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import rs.ac.uns.msb.ScientificArticle;
 import tim9.xml.dao.CoverLetterDAO;
 import tim9.xml.dao.ScientificArticleDAO;
 import tim9.xml.exception.EntityNotFound;
@@ -70,5 +72,13 @@ public class ScientificArticleRepository {
     	SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmssSS");
     	String ID = "SA_" + sdf.format(new Date());
     	return ID;
+    }
+    
+    public List<ScientificArticle> searchByText(String value) throws Exception {
+    	return ScientificArticleDAO.searchAllPublished(value);
+    }
+    
+    public List<ScientificArticle> searchByMetadate(String title, String author, String keyWord, String publisher) throws Exception {
+    	return ScientificArticleDAO.searchPublishedByMetadata(title, author, keyWord, publisher);
     }
 }

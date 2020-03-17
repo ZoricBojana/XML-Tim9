@@ -1,6 +1,7 @@
 package tim9.xml.controller;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.msb.ScientificArticle;
 import tim9.xml.service.ScientificArticleService;
 
 @RestController
@@ -71,5 +73,19 @@ public class ScientificArticleController {
 	public ResponseEntity<byte[]> getPDF(@PathVariable("id") String id) throws Exception{
 		ByteArrayOutputStream coverLetter = scientificArticleService.findByIdPDF(id);
 		return new ResponseEntity<>(coverLetter.toByteArray(), HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/searchArticles", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScientificArticle>> searchByText(@RequestBody String value){
+		
+		List<ScientificArticle> articles = null;
+		try {
+			articles = scientificArticleService.searchByText(value);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
 }

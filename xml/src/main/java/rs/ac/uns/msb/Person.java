@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -85,6 +87,7 @@ public class Person implements UserDetails{
 		}
     	
 		@Override
+		@JsonIgnore
 		public String getAuthority() {
 			return name;
 		}
@@ -217,6 +220,7 @@ public class Person implements UserDetails{
     }
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles.getRole().stream().map(Authority::new).collect(Collectors.toList());
 	}

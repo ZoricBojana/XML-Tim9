@@ -1,10 +1,15 @@
 package tim9.xml.dao;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.OutputKeys;
@@ -12,10 +17,16 @@ import javax.xml.transform.OutputKeys;
 import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
+import org.xmldb.api.modules.XQueryService;
 
 import rs.ac.uns.msb.Author;
 import rs.ac.uns.msb.ScientificArticle;
@@ -29,8 +40,39 @@ public class ScientificArticleDAO {
 	// methods: 
 		//	-retrieve
 		//  -store
+		//  -search all published
+			// TODO dodati proveru da je published
+		// search by title, author, key_word, publisher
 	    
 		private static ConnectionProperties conn;
+		private static final String TARGET_NAMESPACE = "http://www.uns.ac.rs/MSB";
+		
+		public static void main(String[] args) {
+			try {
+				List<ScientificArticle> articles = ScientificArticleDAO.searchPublishedByMetadata("naSLov", "", "", "");
+				
+				for (ScientificArticle scientificArticle : articles) {
+					System.out.println(scientificArticle.getArticleInfo().getTitle().getValue());
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (XMLDBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	    /**
 	     * args[0] Should be the collection ID to access
 	     * args[1] Should be the document ID to store in the collection
@@ -143,6 +185,7 @@ public class ScientificArticleDAO {
 				StringReader sr = new StringReader(articleString);
 				
 				ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(sr);
+				article.setPublished(false);
 				
 				Marshaller marshaller = context.createMarshaller();
 				marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
@@ -175,6 +218,255 @@ public class ScientificArticleDAO {
 					}
 				}
 			}
+		}
+		
+		// pretraga po TEKSTU
+		public static List<ScientificArticle> searchAllPublished(String value) throws Exception{
+			
+			List<ScientificArticle> articles = new ArrayList<ScientificArticle>();
+			
+			ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+			String collectionId = "/db/sample/scientificArticle";
+			
+			Class<?> cl = Class.forName(conn.driver);
+	        
+	        Database database = (Database) cl.newInstance();
+	        database.setProperty("create-database", "true");
+	        
+	        DatabaseManager.registerDatabase(database);
+	        
+	        Collection col = null;
+	        
+	        if(value == null) {
+	        	value = "";
+	        }
+
+	        try { 
+
+	            col = DatabaseManager.getCollection(conn.uri + collectionId);
+	        	
+	         // get an instance of xquery service
+	            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+	            xqueryService.setProperty("indent", "yes");
+	            
+	            // make the service aware of namespaces, using the default one
+	            xqueryService.setNamespace("", TARGET_NAMESPACE);
+	         
+	            String xqueryExpression = null;
+	            
+	            if (!value.trim().equals("")) {
+	            	xqueryExpression =
+		            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
+		            		"for $article in $col//scientific_article\r\n" + 
+		            		// uslov da je published
+		            		"where contains(lower-case(string($article)), \""+ value.toLowerCase() +"\")" + 
+		            		"return <scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
+	            }else {
+	            	xqueryExpression =
+		            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
+		            		"for $article in $col//scientific_article\r\n" +
+		            		//"where $article[@published=true]" +
+		            		// uslov da je published
+		            		"return <scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
+	            }
+	            
+	         // compile and execute the expression
+	            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+	            ResourceSet result = xqueryService.execute(compiledXquery);
+	            
+	            // handle the results
+	            System.out.println("[INFO] Handling the results... ");
+	            
+	            ResourceIterator i = result.getIterator();
+	            Resource res = null;
+	            
+	            while(i.hasMoreResources()) {
+	            
+	            	try {
+	                    res = i.nextResource();
+	                    //System.out.println(res.getContent());
+	                    
+	                    JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+		    			
+		    			Unmarshaller unmarshaller = context.createUnmarshaller();
+		    			
+		    			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(((XMLResource)res).getContentAsDOM());
+		    			
+		    			if(article == null) {
+		    				throw new Exception("Unmarshaling failed");
+		    			}
+		    			
+		    			articles.add(article);
+	                    
+	                } finally {
+	                    
+	                	// don't forget to cleanup resources
+	                    try { 
+	                    	((EXistResource)res).freeResources(); 
+	                    } catch (XMLDBException xe) {
+	                    	xe.printStackTrace();
+	                    }
+	                }
+	            }
+	            
+	        } finally {
+	        	
+	            // don't forget to cleanup
+	            if(col != null) {
+	                try { 
+	                	col.close();
+	                } catch (XMLDBException xe) {
+	                	xe.printStackTrace();
+	                }
+	            }
+	        }
+			
+			return articles;
+		}
+		
+		// pretraga po autoru, kljucnim recima, izdavacu
+		public static List<ScientificArticle> searchPublishedByMetadata(String title, String author, String keyWord, String publisher) throws Exception{
+			
+			List<ScientificArticle> articles = new ArrayList<ScientificArticle>();
+			
+			ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+			String collectionId = "/db/sample/scientificArticle";
+			
+			Class<?> cl = Class.forName(conn.driver);
+	        
+	        Database database = (Database) cl.newInstance();
+	        database.setProperty("create-database", "true");
+	        
+	        DatabaseManager.registerDatabase(database);
+	        
+	        Collection col = null;
+	        
+	        if(title == null) {
+	        	title = "";
+	        }
+	        
+	        if(author == null) {
+	        	author = "";
+	        }
+	        
+	        if(keyWord == null) {
+	        	keyWord = "";
+	        }
+	        
+	        if(publisher == null) {
+	        	publisher = "";
+	        }
+
+	        try { 
+
+	            col = DatabaseManager.getCollection(conn.uri + collectionId);
+	        	
+	         // get an instance of xquery service
+	            XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+	            xqueryService.setProperty("indent", "yes");
+	            
+	            // make the service aware of namespaces, using the default one
+	            xqueryService.setNamespace("", TARGET_NAMESPACE);
+	         
+	            String xqueryExpression = null;
+	            
+	            String condition = "";
+	            
+	            if(title.trim().equals("") && author.trim().equals("") && keyWord.trim().equals("") && publisher.trim().equals("")) {
+	            	condition = "";
+	            }else {
+	            	condition += "where ";
+	            	boolean prev = false;
+	            	//"where contains(string($article), \""+ value +"\")" + 
+	            	if(!title.trim().equals("")) {
+	            		condition += "contains(lower-case(string($article/article_info/title)), \"" + title.toLowerCase() + "\") ";
+	            		prev = true;
+	            	}
+	            	if(!author.trim().equals("")) {
+	            		if(prev == true) {
+	            			condition += "and ";
+	            		}
+	            		condition += "contains(lower-case(string($article/authors)), \"" + author.toLowerCase() + "\") ";
+	            		prev = true;
+	            	} 
+	            	if(!keyWord.trim().equals("")) {
+	            		if(prev == true) {
+	            			condition += "and ";
+	            		}
+	            		condition += "contains(lower-case(string($article/key_words)), \"" + keyWord.toLowerCase() + "\")";
+	            		prev = true;
+	            	} 
+	            	if(!publisher.trim().equals("")) {
+	            		if(prev == true) {
+	            			condition += "and ";
+	            		}
+	            		condition += "contains(lower-case(string($article/article_info/publisher)), \"" + publisher.toLowerCase() + "\")";
+	            	}
+	            	
+	            }
+	            
+	            System.out.println("Condition " + condition);
+	            
+            	xqueryExpression =
+	            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
+	            		"for $article in $col//scientific_article\r\n" +
+	            		condition +
+	            		// uslov da je published
+	            		"return <scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
+            
+	            
+	         // compile and execute the expression
+	            CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+	            ResourceSet result = xqueryService.execute(compiledXquery);
+	            
+	            // handle the results
+	            System.out.println("[INFO] Handling the results... ");
+	            
+	            ResourceIterator i = result.getIterator();
+	            Resource res = null;
+	            
+	            while(i.hasMoreResources()) {
+	            
+	            	try {
+	                    res = i.nextResource();
+	                    //System.out.println(res.getContent());
+	                    
+	                    JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+		    			
+		    			Unmarshaller unmarshaller = context.createUnmarshaller();
+		    			
+		    			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(((XMLResource)res).getContentAsDOM());
+		    			
+		    			if(article == null) {
+		    				throw new Exception("Unmarshaling failed");
+		    			}
+		    			
+		    			articles.add(article);
+	                    
+	                } finally {
+	                    
+	                	// don't forget to cleanup resources
+	                    try { 
+	                    	((EXistResource)res).freeResources(); 
+	                    } catch (XMLDBException xe) {
+	                    	xe.printStackTrace();
+	                    }
+	                }
+	            }
+	            
+	        } finally {
+	        	
+	            // don't forget to cleanup
+	            if(col != null) {
+	                try { 
+	                	col.close();
+	                } catch (XMLDBException xe) {
+	                	xe.printStackTrace();
+	                }
+	            }
+	        }
+			
+			return articles;
 		}
 
 		private static Collection getOrCreateCollection(String collectionUri) throws XMLDBException {

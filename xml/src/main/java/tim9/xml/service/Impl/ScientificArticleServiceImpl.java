@@ -3,6 +3,7 @@ package tim9.xml.service.Impl;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -149,5 +150,11 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		ByteArrayOutputStream clPDF = xslFoTransformer.generatePDF(coverLetter,
 				"src/main/resources/data/xsl-fo/scientificArticle_fo.xsl");
 		return clPDF;
+	}
+
+	@Override
+	public List<ScientificArticle> searchByText(String value) throws Exception {
+	
+		return scientificArticleRepository.searchByText(value);
 	}
 }

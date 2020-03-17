@@ -179,6 +179,8 @@ public class ScientificArticle {
     protected double version;
     @XmlAttribute(name = "paper_type", required = true)
     protected String paperType;
+    @XmlAttribute(name = "published", required = true)
+    protected boolean published;
 
     /**
      * Gets the value of the articleInfo property.
@@ -1170,5 +1172,14 @@ public class ScientificArticle {
         }
 
     }
+
+
+	public boolean isPublished() {
+		return published;
+	}
+
+	public void setPublished(boolean published) {
+		this.published = published;
+	}
 
 }
