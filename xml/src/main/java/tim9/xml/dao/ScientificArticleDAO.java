@@ -42,6 +42,7 @@ public class ScientificArticleDAO {
 		//  -store
 		//  -search all published
 			// TODO dodati proveru da je published
+			// TODO zasto ne deserijalizuje ID?
 		// search by title, author, key_word, publisher
 	    
 		private static ConnectionProperties conn;
@@ -49,7 +50,7 @@ public class ScientificArticleDAO {
 		
 		public static void main(String[] args) {
 			try {
-				List<ScientificArticle> articles = ScientificArticleDAO.searchPublishedByMetadata("naSLov", "", "", "");
+				List<ScientificArticle> articles = ScientificArticleDAO.searchAllPublished("prvog");
 				
 				for (ScientificArticle scientificArticle : articles) {
 					System.out.println(scientificArticle.getArticleInfo().getTitle().getValue());
@@ -290,12 +291,14 @@ public class ScientificArticleDAO {
 		    			
 		    			Unmarshaller unmarshaller = context.createUnmarshaller();
 		    			
+		    			System.out.println(res.getContent().toString());
+		    			// zasto ne deserializuje ID?
 		    			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(((XMLResource)res).getContentAsDOM());
 		    			
 		    			if(article == null) {
 		    				throw new Exception("Unmarshaling failed");
 		    			}
-		    			
+		    			System.out.println(article.getArticleInfo().getTitle().getTextStyle() + " id");
 		    			articles.add(article);
 	                    
 	                } finally {

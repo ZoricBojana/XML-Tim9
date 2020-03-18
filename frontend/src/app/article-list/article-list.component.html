@@ -1,10 +1,14 @@
-<div class="container" style="background-color: aliceblue;">
-    <div class="card">
-        <h3>Ovo je naslov</h3>
-        <h6>by Autori</h6>
-    </div>
-    <div style="display: block;">
-        <h3>Ovo je naslov</h3>
-        <h6>by Autori</h6>
+<div class="container grid-wrapper" style="background-color: aliceblue;" *ngIf="articles">
+    <div class="card grid-item" *ngFor="let art of articles">
+        <h2><strong>{{art.articleInfo.title.value}}</strong></h2>
+        <h6><i>by</i></h6>
+        <div *ngFor="let a of art.authors.author">
+
+            <h6>{{a.firstName + ' ' + a.lastName}}</h6>
+        </div>
+        <div>
+            <button class="button btnHTML">View</button>
+            <button class="button btnPDF">PDF</button>
+        </div>
     </div>
 </div>

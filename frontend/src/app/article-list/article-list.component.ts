@@ -10,27 +10,16 @@ import { Author } from '../model/author';
 })
 export class ArticleListComponent implements OnInit {
 
-  articles: ScientificArticle[];
+  articles: any;
   constructor(private articleService: ServiceSaService) { }
 
   ngOnInit() {
-    this.articles = new Array<ScientificArticle>();
-    this.articleService.searchByText('prvog')
+
+    this.articleService.searchByText(' ')
     .subscribe (res => {
-      console.log(res[0]);
-      for (const art of res) {
-        const article = new ScientificArticle();
-        article.id = art.articleInfo.id;
-        article.publishDate = art.articleInfo.publishDate;
-        article.publisher = art.articleInfo.publisher;
-        article.keyWords = art.keyWords;
-        article.authors = (art.authors as Author[]);
 
-        this.articles.push(article);
-      }
+      this.articles = res;
     });
-
-    console.log(this.articles);
   }
 
 }
