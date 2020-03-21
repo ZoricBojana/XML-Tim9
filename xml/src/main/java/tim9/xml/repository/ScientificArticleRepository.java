@@ -9,7 +9,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import rs.ac.uns.msb.ScientificArticle;
-import tim9.xml.dao.CoverLetterDAO;
 import tim9.xml.dao.ScientificArticleDAO;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.util.RDF.RDFStore;
@@ -51,7 +50,7 @@ public class ScientificArticleRepository {
 	}
     
     public String findById(String id) throws Exception {
-    	return CoverLetterDAO.retrieve(scientificArticleCollectionId, id);
+    	return ScientificArticleDAO.retrieve(scientificArticleCollectionId, id);
 	}
     
     public void saveMetadata(StringWriter metadata, String id) throws Exception {

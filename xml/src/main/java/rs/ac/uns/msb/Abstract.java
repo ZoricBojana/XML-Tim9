@@ -52,8 +52,8 @@ public class Abstract {
     @XmlElement(required = true)
     protected List<Paragraph> paragraph;
     @XmlAttribute(name = "ID", namespace = "http://www.uns.ac.rs/MSB", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
+    //@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    //@XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
 

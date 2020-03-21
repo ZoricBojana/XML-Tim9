@@ -133,11 +133,11 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 
 	@Override
 	public String findByIdHTML(String id) throws Exception {
-		String coverLetter = scientificArticleRepository.findById(id);
-		if(coverLetter == null){
+		String article = scientificArticleRepository.findById(id);
+		if(article == null){
 			throw new EntityNotFound(id);
 		}
-		String clHTML = xslFoTransformer.generateHTML(coverLetter, "src/main/resources/data/xslt/coverLetter.xsl");
+		String clHTML = xslFoTransformer.generateHTML(article, "src/main/resources/data/xslt/ScientificArticle.xsl");
 		return clHTML;
 	}
 
@@ -148,7 +148,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 			throw new EntityNotFound(id);
 		}
 		ByteArrayOutputStream clPDF = xslFoTransformer.generatePDF(coverLetter,
-				"src/main/resources/data/xsl-fo/scientificArticle_fo.xsl");
+				"src/main/resources/data/xslt/article_fo.xsl");
 		return clPDF;
 	}
 

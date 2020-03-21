@@ -68,8 +68,8 @@ public class Paragraph {
     @XmlMixed
     protected java.util.List<Object> content;
     @XmlAttribute(name = "ID", namespace = "http://www.uns.ac.rs/MSB", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
+    //@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    //@XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
     @XmlAttribute(name = "text_style", namespace = "http://www.uns.ac.rs/MSB")

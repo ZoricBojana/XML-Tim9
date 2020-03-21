@@ -170,9 +170,9 @@ public class ScientificArticle {
     protected ScientificArticle.Conclusion conclusion;
     @XmlElement(required = true)
     protected ScientificArticle.References references;
-    @XmlAttribute(name = "ID", namespace = "http://www.uns.ac.rs/MSB", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
+    @XmlAttribute(name = "ID"/*, namespace = "http://www.uns.ac.rs/MSB"*/, required = true)
+    //@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    //@XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
     @XmlAttribute(name = "version", required = true)
@@ -588,8 +588,8 @@ public class ScientificArticle {
         @XmlElement(required = true)
         protected List<Paragraph> paragraph;
         @XmlAttribute(name = "ID", namespace = "http://www.uns.ac.rs/MSB", required = true)
-        @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-        @XmlID
+        //@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+        //@XmlID
         @XmlSchemaType(name = "ID")
         protected String id;
 
@@ -678,8 +678,8 @@ public class ScientificArticle {
         @XmlElement(required = true)
         protected List<Paragraph> paragraph;
         @XmlAttribute(name = "ID", namespace = "http://www.uns.ac.rs/MSB", required = true)
-        @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-        @XmlID
+        //@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+        //@XmlID
         @XmlSchemaType(name = "ID")
         protected String id;
 
@@ -1174,7 +1174,7 @@ public class ScientificArticle {
     }
 
 
-	public boolean isPublished() {
+	public boolean getPublished() {
 		return published;
 	}
 

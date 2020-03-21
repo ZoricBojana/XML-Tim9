@@ -29,7 +29,12 @@ import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
 import rs.ac.uns.msb.Author;
+import rs.ac.uns.msb.Chapter;
+import rs.ac.uns.msb.ChapterParagraph;
+import rs.ac.uns.msb.Paragraph;
+import rs.ac.uns.msb.Picture;
 import rs.ac.uns.msb.ScientificArticle;
+import rs.ac.uns.msb.Table;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.util.AuthenticationUtilities;
 import tim9.xml.util.NSPrefixMapper;
@@ -41,16 +46,15 @@ public class ScientificArticleDAO {
 		//	-retrieve
 		//  -store
 		//  -search all published
-			// TODO dodati proveru da je published
-			// TODO zasto ne deserijalizuje ID?
 		// search by title, author, key_word, publisher
 	    
 		private static ConnectionProperties conn;
 		private static final String TARGET_NAMESPACE = "http://www.uns.ac.rs/MSB";
+		//private static final String pattern = "<scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
 		
 		public static void main(String[] args) {
 			try {
-				List<ScientificArticle> articles = ScientificArticleDAO.searchAllPublished("prvog");
+				List<ScientificArticle> articles = ScientificArticleDAO.searchAllPublished("");
 				
 				for (ScientificArticle scientificArticle : articles) {
 					System.out.println(scientificArticle.getArticleInfo().getTitle().getValue());
@@ -186,8 +190,85 @@ public class ScientificArticleDAO {
 				StringReader sr = new StringReader(articleString);
 				
 				ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(sr);
+				
+				// ************* setovanje ID-eva *********
+				article.setID(documentId);
 				article.setPublished(false);
 				
+				article.getAbstract().setID(documentId + "/abstract");
+				int i = 1;
+				for (Paragraph par : article.getAbstract().getParagraph()) {
+					par.setID(documentId + "/abstract/par" + i);
+					int j = 1;
+					for (Object o: par.getContent()) {
+						if (o instanceof rs.ac.uns.msb.List) {
+							((rs.ac.uns.msb.List)o).setID(documentId + "/abstract/par" + i + "/list" + j);
+							j++;
+						}
+					}
+					i++;
+				}
+				
+				article.getIntroduction().setID(documentId + "/introduction");
+				i = 1;
+				for (Paragraph par : article.getIntroduction().getParagraph()) {
+					par.setID(documentId + "/introduction/par" + i);
+					i++;
+					
+					int j = 1;
+					for (Object o: par.getContent()) {
+						if (o instanceof rs.ac.uns.msb.List) {
+							((rs.ac.uns.msb.List)o).setID(documentId + "/introduction/par" + i + "/list" + j);
+							j++;
+						}
+					}
+				}
+				
+				i = 1;
+				for (Chapter ch : article.getChapters().getChapter()) {
+					ch.setID(documentId + "/chapter/" + i);
+					i++;
+					
+					int j = 1;
+					for (ChapterParagraph cp : ch.getChapterParagraph()) {
+						cp.setID(documentId + "/chapter" + i + "/par" + j);
+						j++;
+						
+						int listNum = 1;
+						int tableNum = 1;
+						int pictureNum = 1;
+						for (Object o: cp.getContent()) {
+							if (o instanceof rs.ac.uns.msb.List) {
+								((rs.ac.uns.msb.List)o).setID(documentId + "/chapter" + i + "/par" + j + "/list" + listNum);
+								listNum++;
+							} else if (o instanceof Table) {
+								((Table)o).setID(documentId + "/chapter" + i + "/par" + j + "/table" + tableNum);
+								tableNum++;
+							}else if (o instanceof Picture) {
+								((Picture)o).setID(documentId + "/chapter" + i + "/par" + j + "/picture" + pictureNum);
+								pictureNum++;
+							}
+						}
+
+					}
+				}
+				
+				article.getConclusion().setID(documentId + "/conclusion");
+				i = 1;
+				for (Paragraph par : article.getConclusion().getParagraph()) {
+					par.setID(documentId + "/conclusion/par" + i);
+					i++;
+					
+					int j = 1;
+					for (Object o: par.getContent()) {
+						if (o instanceof rs.ac.uns.msb.List) {
+							((rs.ac.uns.msb.List)o).setID(documentId + "/conclusion/par" + i + "/list" + j);
+							j++;
+						}
+					}
+				}
+				
+				// ************* END setovanje ID-eva ********
 				Marshaller marshaller = context.createMarshaller();
 				marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -259,16 +340,18 @@ public class ScientificArticleDAO {
 	            	xqueryExpression =
 		            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
 		            		"for $article in $col//scientific_article\r\n" + 
-		            		// uslov da je published
 		            		"where contains(lower-case(string($article)), \""+ value.toLowerCase() +"\")" + 
-		            		"return <scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
+		            		"and $article[@published='true'] " +
+		            		"return $article";
 	            }else {
+	            	
+	            	System.out.println("Prazan");
 	            	xqueryExpression =
 		            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
-		            		"for $article in $col//scientific_article\r\n" +
-		            		//"where $article[@published=true]" +
-		            		// uslov da je published
-		            		"return <scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
+		            		"for $article in $col//scientific_article\r\n" + 
+		            		"where $article[@published='true'] " +
+		            		"and 2=2 " +
+		            		"return $article";
 	            }
 	            
 	         // compile and execute the expression
@@ -277,12 +360,12 @@ public class ScientificArticleDAO {
 	            
 	            // handle the results
 	            System.out.println("[INFO] Handling the results... ");
+	            System.out.println(xqueryExpression);
 	            
 	            ResourceIterator i = result.getIterator();
 	            Resource res = null;
 	            
 	            while(i.hasMoreResources()) {
-	            
 	            	try {
 	                    res = i.nextResource();
 	                    //System.out.println(res.getContent());
@@ -290,15 +373,14 @@ public class ScientificArticleDAO {
 	                    JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 		    			
 		    			Unmarshaller unmarshaller = context.createUnmarshaller();
-		    			
 		    			System.out.println(res.getContent().toString());
-		    			// zasto ne deserializuje ID?
+		    			
 		    			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(((XMLResource)res).getContentAsDOM());
 		    			
 		    			if(article == null) {
 		    				throw new Exception("Unmarshaling failed");
 		    			}
-		    			System.out.println(article.getArticleInfo().getTitle().getTextStyle() + " id");
+		    			System.out.println(article.getID() + " id");
 		    			articles.add(article);
 	                    
 	                } finally {
@@ -414,8 +496,8 @@ public class ScientificArticleDAO {
 	            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
 	            		"for $article in $col//scientific_article\r\n" +
 	            		condition +
-	            		// uslov da je published
-	            		"return <scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
+	            		"where $article[@published='true']" +
+	            		"return $article";
             
 	            
 	         // compile and execute the expression
