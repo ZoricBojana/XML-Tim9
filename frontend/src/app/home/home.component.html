@@ -1,62 +1,10 @@
-<div class="container-full">
-    <div class="row home-splash d-flex align-content-center justify-content-center">
-        <div class="home-splash-bg-holder">
-            <div #homeBg1 class="home-splash-bg"></div>
-        </div>
-        <div class="dark-layer"></div>
+
+<div class="home-splash-bg">
+    <div class="bg">
+        <ul>
+            <li>Prikaz rada</li>
+              <li><app-article-list></app-article-list></li>  
+        </ul>
         
-       <!--<div class="splash-text" style="width: 100%;text-align: center;"><span style="font-size: 0px;">&nbsp;</span>search</div>
-       -->
-        <div class="center-screen" style="min-width: 100%; min-height: 100%;">
-            <app-article-list></app-article-list>
-        </div>
     </div>
-
-    <div class="blank-row overflow-hidden">
-        <div #scrollAmount class="scroll-amount-indicator"></div>
-    </div>
-
-
-    <div class="row categories-holder">
-        <div (mouseenter)="enter($event)" (mouseleave)="leave($event)" class="col-lg-4 category-holder d-flex align-items-center overflow-hidden p-0 noselect">
-            <div class="category-background-holder">
-                
-                <div class="dark-layer-blue"></div>
-            </div>
-            <div class="category-content-holder">
-                <h1 class="category-title">NATURAL SCIENCES</h1>
-                <p class="category-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nam placerat tellus sed eros consequat, sit amet ultrices eros fermentum.
-                    Nullam sed diam pharetra, sollicitudin libero quis, venenatis nisi.</p>
-            </div>
-        </div>
-
-        <div (mouseenter)="enter($event)" (mouseleave)="leave($event)" class="col-lg-4 category-holder d-flex align-items-center overflow-hidden p-0 noselect">
-            <div class="category-background-holder">
-                
-                <div class="dark-layer-blue"></div>
-            </div>
-            <div class="category-content-holder">
-                <h1 class="category-title">HUMAN AND SOCIAL</h1>
-                <p class="category-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nam placerat tellus sed eros consequat, sit amet ultrices eros fermentum.
-                    Nullam sed diam pharetra, sollicitudin libero quis, venenatis nisi.</p>
-            </div>
-        </div>
-
-        <div (mouseenter)="enter($event)" (mouseleave)="leave($event)" class="col-lg-4 category-holder d-flex align-items-center overflow-hidden p-0 noselect">
-            <div class="category-background-holder">
-                <div class="dark-layer-blue"></div>
-            </div>
-            <div class="category-content-holder">
-                <h1 class="category-title">OTHERS</h1>
-                <p class="category-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nam placerat tellus sed eros consequat, sit amet ultrices eros fermentum.
-                    Nullam sed diam pharetra, sollicitudin libero quis, venenatis nisi. 
-                    </p>
-            </div>
-        </div>
-    </div>
-
-   
-  
+</div>  
