@@ -1,6 +1,7 @@
 .card {
     display: block;
     border: 1px solid black;
+    color: black;
 }
 
 h2 {
@@ -27,3 +28,11 @@ h2 {
     cursor: pointer;
   }
 
+.author {
+    color:darkslategray;
+    display: inline;
+}
+
+.title {
+    color: firebrick;
+}

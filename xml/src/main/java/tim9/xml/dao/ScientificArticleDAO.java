@@ -226,7 +226,7 @@ public class ScientificArticleDAO {
 				
 				i = 1;
 				for (Chapter ch : article.getChapters().getChapter()) {
-					ch.setID(documentId + "/chapter/" + i);
+					ch.setID(documentId + "/chapter" + i);
 					i++;
 					
 					int j = 1;

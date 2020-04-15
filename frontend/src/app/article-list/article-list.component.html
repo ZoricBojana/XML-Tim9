@@ -1,11 +1,12 @@
 <div class="container grid-wrapper" style="background-color: aliceblue;" *ngIf="articles">
     <div class="card grid-item" *ngFor="let art of articles">
-        <h2><strong>{{art.articleInfo.title.value}}</strong></h2>
-        {{art.id}}
+        <span class="title">
+            <h2><strong>{{art.articleInfo.title.value}}</strong></h2>
+        </span>
         <h6><i>by</i></h6>
-        <div *ngFor="let a of art.authors.author">
+        <span class="author" *ngFor="let a of art.authors.author">
             <h6>{{a.firstName + ' ' + a.lastName}}</h6>
-        </div>
+        </span>
         <div>
             <button class="button btnHTML" (click)="getHTML(art.id)">View</button>
             <button class="button btnPDF" (click)="getPDF(art.id)">PDF</button>

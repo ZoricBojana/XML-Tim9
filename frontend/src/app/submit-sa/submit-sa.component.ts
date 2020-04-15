@@ -345,6 +345,9 @@ export class SubmitSAComponent implements OnInit {
       picture_description: {
         hasText: true
       },
+      table_description: {
+        hasText: true
+      },
       table: {
         attributes: {
           width: {
