@@ -2,6 +2,7 @@
     display: block;
     border: 1px solid black;
     color: black;
+    background-color: lightgoldenrodyellow;
 }
 
 h2 {
@@ -29,10 +30,17 @@ h2 {
   }
 
 .author {
-    color:darkslategray;
-    display: inline;
+    color:darkslategrey;
+    font-weight: bold;
+
 }
 
 .title {
-    color: firebrick;
+    color: #000080;
+}
+
+.by {
+    color: lightslategray;
+    font-style: italic;
+    font-size: smaller;
 }

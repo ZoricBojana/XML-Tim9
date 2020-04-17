@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ServiceSaService } from '../services/service-sa.service';
 import { ScientificArticle } from '../model/scientific-article';
 import { Author } from '../model/author';
@@ -11,16 +11,11 @@ import { Router } from '@angular/router';
 })
 export class ArticleListComponent implements OnInit {
 
+  @Input()
   articles: any;
   constructor(private articleService: ServiceSaService, private router: Router) { }
 
   ngOnInit() {
-
-    this.articleService.searchByText(' ')
-    .subscribe (res => {
-      console.log(res);
-      this.articles = res;
-    });
   }
 
   getHTML(id: string) {

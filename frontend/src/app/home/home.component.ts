@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { ServiceSaService } from '../services/service-sa.service';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +9,13 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  articles: any;
+
   @ViewChild('homeBg1', {static : false}) homeBg1: ElementRef;
 
   @ViewChild('scrollAmount', {static : false}) scrollAmount: ElementRef;
 
-  constructor(private router: Router) {
+  constructor(private articleService: ServiceSaService, private router: Router) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.resetNavbar();
@@ -23,6 +26,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.setNavbar();
+    this.articleService.searchByText(' ')
+    .subscribe (res => {
+      console.log(res);
+      this.articles = res;
+    });
   }
 
   ngAfterViewInit() {

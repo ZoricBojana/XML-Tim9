@@ -6,10 +6,8 @@ import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.OutputKeys;
@@ -25,10 +23,8 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
-import rs.ac.uns.msb.Author;
 import rs.ac.uns.msb.Chapter;
 import rs.ac.uns.msb.ChapterParagraph;
 import rs.ac.uns.msb.Paragraph;
@@ -37,8 +33,8 @@ import rs.ac.uns.msb.ScientificArticle;
 import rs.ac.uns.msb.Table;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.util.AuthenticationUtilities;
-import tim9.xml.util.NSPrefixMapper;
 import tim9.xml.util.AuthenticationUtilities.ConnectionProperties;
+import tim9.xml.util.NSPrefixMapper;
 
 public class ScientificArticleDAO {
 
@@ -50,8 +46,9 @@ public class ScientificArticleDAO {
 	    
 		private static ConnectionProperties conn;
 		private static final String TARGET_NAMESPACE = "http://www.uns.ac.rs/MSB";
-		//private static final String pattern = "<scientific_article>{$article/article_info}{$article/authors}{$article/key_words}</scientific_article>";
 		
+		
+		// za testiranje, obrisati ovo na kraju
 		public static void main(String[] args) {
 			try {
 				List<ScientificArticle> articles = ScientificArticleDAO.searchAllPublished("");
@@ -345,7 +342,6 @@ public class ScientificArticleDAO {
 		            		"return $article";
 	            }else {
 	            	
-	            	System.out.println("Prazan");
 	            	xqueryExpression =
 		            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
 		            		"for $article in $col//scientific_article\r\n" + 
@@ -359,8 +355,6 @@ public class ScientificArticleDAO {
 	            ResourceSet result = xqueryService.execute(compiledXquery);
 	            
 	            // handle the results
-	            System.out.println("[INFO] Handling the results... ");
-	            System.out.println(xqueryExpression);
 	            
 	            ResourceIterator i = result.getIterator();
 	            Resource res = null;
@@ -368,19 +362,16 @@ public class ScientificArticleDAO {
 	            while(i.hasMoreResources()) {
 	            	try {
 	                    res = i.nextResource();
-	                    //System.out.println(res.getContent());
 	                    
 	                    JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 		    			
 		    			Unmarshaller unmarshaller = context.createUnmarshaller();
-		    			System.out.println(res.getContent().toString());
 		    			
 		    			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(((XMLResource)res).getContentAsDOM());
 		    			
 		    			if(article == null) {
 		    				throw new Exception("Unmarshaling failed");
 		    			}
-		    			System.out.println(article.getID() + " id");
 		    			articles.add(article);
 	                    
 	                } finally {
@@ -490,7 +481,6 @@ public class ScientificArticleDAO {
 	            	
 	            }
 	            
-	            System.out.println("Condition " + condition);
 	            
             	xqueryExpression =
 	            		"let $col := collection(\"/db/sample/scientificArticle\")\r\n" + 
@@ -505,7 +495,6 @@ public class ScientificArticleDAO {
 	            ResourceSet result = xqueryService.execute(compiledXquery);
 	            
 	            // handle the results
-	            System.out.println("[INFO] Handling the results... ");
 	            
 	            ResourceIterator i = result.getIterator();
 	            Resource res = null;
@@ -514,7 +503,6 @@ public class ScientificArticleDAO {
 	            
 	            	try {
 	                    res = i.nextResource();
-	                    //System.out.println(res.getContent());
 	                    
 	                    JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 		    			

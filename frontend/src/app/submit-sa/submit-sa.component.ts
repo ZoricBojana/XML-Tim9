@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceSaService } from '../services/service-sa.service';
+import { Router } from '@angular/router';
 
 declare var Xonomy: any;
 
@@ -11,15 +12,16 @@ declare var Xonomy: any;
 export class SubmitSAComponent implements OnInit {
 
   constructor(
-    private SAservice: ServiceSaService
+    private SAservice: ServiceSaService,
+    private router: Router
   ) { }
 
   docSpec = {
     onchange() {
-      console.log('I been changed now!');
+      // console.log('I been changed now!');
     },
     validate(obj) {
-      console.log('I be validatin\' now!');
+      // console.log('I be validatin\' now!');
     },
     elements: {
       scientific_article: {
@@ -30,51 +32,6 @@ export class SubmitSAComponent implements OnInit {
         hasText: true
       },
       publisher: {
-        hasText: true
-      },
-      authors: {
-        menu: [{
-          caption: 'Append a <author>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<author><first_name/><last_name/>' +
-          '<institution><country/><city/><institution_name/></institution><email_address/><title/></author>'
-          }]
-      },
-      author: {
-        menu: [{
-          caption: 'Delete this <author>',
-          action: Xonomy.deleteElement
-          }, {
-            caption: 'New <author> before this',
-            action: Xonomy.newElementBefore,
-            actionParameter: '<author> <first_name/><last_name/>' +
-            '<institution><country/><city/><institution_name/></institution><email_address/><title/></author>'
-            }, {
-            caption: 'New <author> after this',
-            action: Xonomy.newElementAfter,
-            actionParameter: '<author> <first_name/><last_name/>' +
-            '<institution><country/><city/><institution_name/></institution><email_address/><title/></author>'
-            }
-        ]
-      },
-      first_name: {
-        hasText: true
-      },
-      last_name: {
-        hasText: true
-      },
-      institution: {
-      },
-      country: {
-        hasText: true
-      },
-      city: {
-        hasText: true
-      },
-      institution_name: {
-        hasText: true
-      },
-      email_address: {
         hasText: true
       },
       key_words: {
@@ -465,12 +422,9 @@ start() {
 
     const xml = '<scientific_article xmlns="http://www.uns.ac.rs/MSB" xmlns:msb="http://www.uns.ac.rs/MSB">' +
                   '<article_info><title></title><publisher></publisher></article_info>' +
-                  '<authors></authors><key_words></key_words><abstract></abstract><introduction></introduction>' +
+                  '<key_words></key_words><abstract></abstract><introduction></introduction>' +
                   '<chapters></chapters><conclusion></conclusion></scientific_article>';
     const editor = document.getElementById('editor');
-    console.log(editor);
-    console.log(xml);
-    console.log(this.docSpec);
     Xonomy.render(xml, editor, this.docSpec);
     }
 submit() {
@@ -479,7 +433,7 @@ submit() {
     console.log(xml);
     this.SAservice.add(xml as string).subscribe(
       result => {
-        console.log(result.body);
+        this.router.navigate(['home']);
       }
     );
     }

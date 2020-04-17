@@ -3,9 +3,14 @@
         <span class="title">
             <h2><strong>{{art.articleInfo.title.value}}</strong></h2>
         </span>
-        <h6><i>by</i></h6>
+        <span class="by">by</span>
         <span class="author" *ngFor="let a of art.authors.author">
-            <h6>{{a.firstName + ' ' + a.lastName}}</h6>
+            {{a.firstName + ' ' + a.lastName}}
+        </span>
+        <hr />
+        <span class="by">Key Words:</span>
+        <span *ngFor="let kw of art.keyWords.keyWord">
+            {{kw + ' '}}
         </span>
         <div>
             <button class="button btnHTML" (click)="getHTML(art.id)">View</button>
