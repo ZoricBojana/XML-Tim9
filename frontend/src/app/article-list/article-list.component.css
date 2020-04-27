@@ -44,3 +44,7 @@ h2 {
     font-style: italic;
     font-size: smaller;
 }
+
+.keywords a {
+    color: black;
+}

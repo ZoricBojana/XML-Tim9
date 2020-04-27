@@ -391,7 +391,7 @@ public class ScientificArticleDAO {
 		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
 				+ "for $article in $col//scientific_article\r\n" + "where $article[@published='true'] and " + condition
 				+ "\r\n" + "return $article";
-
+		
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
 	}
 

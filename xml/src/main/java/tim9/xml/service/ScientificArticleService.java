@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import rs.ac.uns.msb.ScientificArticle;
+import tim9.xml.dto.SearchDTO;
 import tim9.xml.exception.RepositoryException;
 
 public interface ScientificArticleService {
@@ -16,5 +17,6 @@ public interface ScientificArticleService {
 	public void delete(String id, String authorID) throws Exception;
 	
 	public List<ScientificArticle> searchByText(String value) throws Exception;
+	public List<ScientificArticle> searchByMetadata(SearchDTO dto) throws Exception;
 	public List<ScientificArticle> searchByAuthorsTitle(String value) throws Exception;
 }

@@ -13,6 +13,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleHtmlComponent } from './article-html/article-html.component';
 import { ArticlePdfComponent } from './article-pdf/article-pdf.component';
 import { AuthorInfoComponent } from './author-info/author-info.component';
+import { KeyWordInfoComponent } from './key-word-info/key-word-info.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AuthorInfoComponent } from './author-info/author-info.component';
     ArticleListComponent,
     ArticleHtmlComponent,
     ArticlePdfComponent,
-    AuthorInfoComponent
+    AuthorInfoComponent,
+    KeyWordInfoComponent
   ],
   imports: [
     BrowserModule,

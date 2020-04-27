@@ -9,8 +9,8 @@
         </span>
         <hr />
         <span class="by">Key Words:</span>
-        <span *ngFor="let kw of art.keyWords.keyWord">
-            {{kw + ' '}}
+        <span *ngFor="let kw of art.keyWords.keyWord" class="keywords">
+            <a [routerLink]="['/articles/keyword', kw]">{{' ' + kw + ' '}}</a>
         </span>
         <div>
             <button class="button btnHTML" (click)="getHTML(art.id)">View</button>

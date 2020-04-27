@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.msb.ScientificArticle;
+import tim9.xml.dto.SearchDTO;
 import tim9.xml.service.ScientificArticleService;
 
 @RestController
@@ -81,6 +82,20 @@ public class ScientificArticleController {
 		List<ScientificArticle> articles = null;
 		try {
 			articles = scientificArticleService.searchByText(value);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/searchArticlesMetadata", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScientificArticle>> searchByMetadata(@RequestBody SearchDTO dto){
+
+		List<ScientificArticle> articles = null;
+		try {
+			articles = scientificArticleService.searchByMetadata(dto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

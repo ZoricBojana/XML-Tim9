@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.msb.Author;
 import rs.ac.uns.msb.Person;
 import rs.ac.uns.msb.ScientificArticle;
+import tim9.xml.dto.SearchDTO;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.exception.Unauthorized;
 import tim9.xml.repository.PersonRepository;
@@ -162,5 +163,11 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 	public List<ScientificArticle> searchByAuthorsTitle(String value) throws Exception {
 
 		return scientificArticleRepository.searchAuthorsArticles(value);
+	}
+
+	@Override
+	public List<ScientificArticle> searchByMetadata(SearchDTO dto) throws Exception {
+		
+		return scientificArticleRepository.searchByMetadate(dto.getTitle(), dto.getAuthor(), dto.getKey_word(), dto.getPublisher());
 	}
 }

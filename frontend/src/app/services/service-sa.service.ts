@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientModule, HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { SearchDTO } from '../model/search-dto';
 
 
 @Injectable({
@@ -21,6 +22,15 @@ export class ServiceSaService {
 
   searchByText(value: string): Observable<any> {
     return this.http.post('http://localhost:8000/api/searchArticles', value, {headers: this.headers, responseType: 'json'});
+  }
+
+  searchByKeyword(value: string): Observable<any> {
+
+    const dto = new SearchDTO();
+    dto.key_word = value;
+    console.log(dto);
+    return this.http.post('http://localhost:8000/api/searchArticlesMetadata', dto,
+    {headers: new HttpHeaders({'Content-Type': 'application/json'}), responseType: 'json'});
   }
 
   searchByAuthorTitle(value: string): Observable<any> {

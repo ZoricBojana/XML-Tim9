@@ -7,6 +7,7 @@ import { SubmitSAComponent } from './submit-sa/submit-sa.component';
 import { ArticleHtmlComponent } from './article-html/article-html.component';
 import { ArticlePdfComponent } from './article-pdf/article-pdf.component';
 import { AuthorInfoComponent } from './author-info/author-info.component';
+import { KeyWordInfoComponent } from './key-word-info/key-word-info.component';
 const routes: Routes = [
   {
     path: '',
@@ -38,6 +39,9 @@ const routes: Routes = [
   }, {
     path : 'articles/author/:id',
     component : AuthorInfoComponent
+  }, {
+    path : 'articles/keyword/:kw',
+    component : KeyWordInfoComponent
   }
 
 ];
