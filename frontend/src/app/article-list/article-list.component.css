@@ -29,7 +29,7 @@ h2 {
     cursor: pointer;
   }
 
-.author {
+.author a{
     color:darkslategrey;
     font-weight: bold;
 

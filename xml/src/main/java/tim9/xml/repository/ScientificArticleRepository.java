@@ -80,4 +80,9 @@ public class ScientificArticleRepository {
     public List<ScientificArticle> searchByMetadate(String title, String author, String keyWord, String publisher) throws Exception {
     	return ScientificArticleDAO.searchPublishedByMetadata(title, author, keyWord, publisher);
     }
+    
+    public List<ScientificArticle> searchAuthorsArticles(String value) throws Exception{
+    	return ScientificArticleDAO.searchByAuthorTitle(value, true);
+    }
+    
 }

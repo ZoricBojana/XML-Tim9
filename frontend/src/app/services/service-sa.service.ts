@@ -23,6 +23,10 @@ export class ServiceSaService {
     return this.http.post('http://localhost:8000/api/searchArticles', value, {headers: this.headers, responseType: 'json'});
   }
 
+  searchByAuthorTitle(value: string): Observable<any> {
+    return this.http.post('http://localhost:8000/api/searchAuthorsArticles', value, {headers: this.headers, responseType: 'json'});
+  }
+
   getHTML(id: string): Observable<any> {
 
 

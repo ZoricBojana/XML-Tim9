@@ -157,4 +157,10 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 	
 		return scientificArticleRepository.searchByText(value);
 	}
+
+	@Override
+	public List<ScientificArticle> searchByAuthorsTitle(String value) throws Exception {
+
+		return scientificArticleRepository.searchAuthorsArticles(value);
+	}
 }

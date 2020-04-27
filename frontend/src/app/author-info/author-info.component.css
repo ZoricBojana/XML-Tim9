@@ -1,0 +1,24 @@
+.image {
+    padding-top: 150px;
+    padding-left: 10px;
+}
+
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:rgb(9, 54, 54);
+    background-size: cover;
+    color:white;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    width: 75%;
+    height: 75%;
+    transform: translate(-50%, -50%);
+    overflow-y: scroll;
+}

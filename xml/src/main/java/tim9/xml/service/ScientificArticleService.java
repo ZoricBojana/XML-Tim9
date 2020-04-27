@@ -16,4 +16,5 @@ public interface ScientificArticleService {
 	public void delete(String id, String authorID) throws Exception;
 	
 	public List<ScientificArticle> searchByText(String value) throws Exception;
+	public List<ScientificArticle> searchByAuthorsTitle(String value) throws Exception;
 }

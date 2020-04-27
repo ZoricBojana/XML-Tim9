@@ -88,4 +88,18 @@ public class ScientificArticleController {
 		
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/searchAuthorsArticles", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScientificArticle>> searchByAuthorsTitle(@RequestBody String value){
+		
+		List<ScientificArticle> articles = null;
+		try {
+			articles = scientificArticleService.searchByAuthorsTitle(value);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
+	}
 }

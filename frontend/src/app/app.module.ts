@@ -12,6 +12,7 @@ import { SubmitSAComponent } from './submit-sa/submit-sa.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleHtmlComponent } from './article-html/article-html.component';
 import { ArticlePdfComponent } from './article-pdf/article-pdf.component';
+import { AuthorInfoComponent } from './author-info/author-info.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ArticlePdfComponent } from './article-pdf/article-pdf.component';
     SubmitSAComponent,
     ArticleListComponent,
     ArticleHtmlComponent,
-    ArticlePdfComponent
+    ArticlePdfComponent,
+    AuthorInfoComponent
   ],
   imports: [
     BrowserModule,
