@@ -164,10 +164,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jaxb2-maven-plugin</artifactId> 
-				<version>1.5</version> <executions> <execution> <id>xjc</id> <goals> <goal>xjc</goal> 
-				</goals> </execution> </executions> <configuration> <schemaDirectory>src/main/resources/data</schemaDirectory> 
-				</configuration> </plugin> -->
+			<!-- 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>src/main/resources/data</schemaDirectory>
+				</configuration>
+			</plugin>
+			 -->
 		</plugins>
 	</build>
 

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
+import { LoginDto } from '../model/login-dto';
+import { PersonService } from '../services/person.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +14,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private personService: PersonService
     ) { }
 
   ngOnInit() {
@@ -22,4 +25,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    const dto = new LoginDto();
+    this.personService.login(this.loginForm.value as LoginDto).subscribe(
+      result => {
+        console.log(result);
+        this.router.navigate(['home']);
+      }
+    );
+  }
 }

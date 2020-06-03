@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.uns.ac.rs/MSB" xmlns:msb="http://www.uns.ac.rs/MSB">
+    <xs:element name="bussiness_process">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+                <xs:element name="article_id" type="xs:string"/>
+                <xs:element name="author_id" type="xs:string"/>
+                <xs:element name="reviews">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="review_data">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="reviewer_id" type="xs:string"/>
+                                        <xs:element name="review_id" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="phase" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
