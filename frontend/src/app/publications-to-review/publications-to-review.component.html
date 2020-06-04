@@ -1,0 +1,29 @@
+<div class="bg">
+ 
+    <div class="review-page">
+        <table class="table table-striped">
+            <thead>
+                <th>Title</th>
+                <th>Authors</th>
+             
+            </thead>     
+            <tr *ngFor="let article of publicationsToReview" >
+                <td>{{article.title}}</td>
+                <td>
+                   <tr *ngFor="let author of article.authorsDTO">
+                        {{author.name}} 
+                        {{" "}}
+                        {{author.lastname}}
+                   </tr> 
+               </td></tr>
+                  <tr>
+                    <td><button id = "button"class="btn btn-primary" (click)="download(article)">Download</button></td>
+                    <td><button style="background-color: green;" id = "button"class="btn btn-primary" (click)="accept(article)">Accept</button></td>
+                    <td><button style="background-color: red;" id = "button"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
+                    <td><button routerLink="/formRew" id = "button"class="btn btn-primary" (click)="makeReview(article)">Make a review</button></td>
+                
+                </tr>
+                
+        </table>
+    </div>
+</div> 

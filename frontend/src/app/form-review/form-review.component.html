@@ -1,0 +1,195 @@
+<div class="bg">
+ 
+    <div class="formRev-page">
+        <div class="container">
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <form class="formR">
+                 
+                  <h2>{{scientificArticle.title}}</h2>
+                 
+                  <h2 *ngFor="let author of scientificArticle.authorsDTO">
+                    {{author.name}} {{" "}} {{author.surname}}
+                  </h2>
+                  <br>
+                
+                  <p><b>Purpose: </b><input type="text"/>{{scientificArticle.abstractDTO.purpose}}</p>
+                  <p><b>Design: </b> <input type="text"/> {{scientificArticle.abstractDTO.design}}</p>
+                  
+                  <p><b>Findings: </b><input type="text"/>{{scientificArticle.abstractDTO.findings}}</p>
+                  <p><b>Limitations: </b>{{scientificArticle.abstractDTO.limitations}}</p>
+                  <p><b>Originality: </b>{{scientificArticle.abstractDTO.originality}}</p>
+                  <p><b>Type: </b>{{scientificArticle.abstractDTO.type}}</p>
+                  <b>Keywords: </b> 
+                    <p *ngFor="let key of scientificArticle.abstractDTO.keywords; let i = index" [attr.data-index]="i">
+                        {{key}}
+                    </p>
+                
+        
+                  <p *ngFor="let parag of scientificArticle.paragraphs; let i = index" [attr.data-index]="i">
+                      <b>{{parag}}</b>
+                      <textarea id= {{i}} class="form-control" name="comment"  rows="4" cols="50" placeholder="Comment"></textarea>
+                      <button class="btn btn-primary btn-block" (click)="addComment(i)" >Add comment</button>
+                    
+                  </p>
+        
+        
+                <table>
+                    <tr>
+                        <td>
+                            <b>Purpose: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "uniqueness" name="uniqueness">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Keywords: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "keywords" name="keywords">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Abstract: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "abstract" name="abstract">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Conclusion: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "conclusion" name="conclusion">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Experiments: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "experiments" name="experiments">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Layout: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "layout" name="layout">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Formality: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "formality" name="formality">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>General grade: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "generalGrade" name="generalGrade">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>References: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "references" name="references">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Headings: </b>
+                        </td>
+                        <td>
+                            <select  [(ngModel)] = "headings" name="headings">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="4">4</option>
+                                <option [ngValue]="3">3</option>
+                                <option [ngValue]="2">2</option>
+                                <option [ngValue]="1">1</option>
+                              </select>
+                        </td>
+                    </tr>
+                </table>
+                <textarea [(ngModel)]="summaryContent" class="form-control" name="summaryContent"  rows="4" cols="50" placeholder="Summary content"></textarea>
+                <button (click)="submitReview()" class="btn btn-primary btn-block">Submit</button>
+                   
+                </form>
+          
+              
+              </div>
+             
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+        
+        
+
+    </div>
+</div> 

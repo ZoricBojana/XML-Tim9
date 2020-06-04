@@ -1,0 +1,15 @@
+.bg{
+  background: rgb(9, 54, 54);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100vh;
+}
+.review-page {
+    width: 500px;
+  padding: 10% 0 0;
+  margin: auto;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; 
+}
