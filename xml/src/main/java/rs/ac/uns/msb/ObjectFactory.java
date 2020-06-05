@@ -481,4 +481,19 @@ public class ObjectFactory {
         return new JAXBElement<BigInteger>(_TgradeGradeValue_QNAME, BigInteger.class, Tgrade.class, value);
     }
 
+    /**
+     * Create an instance of {@link BussinessProcess }
+     * 
+     */
+    public BussinessProcess createBussinessProcess() {
+        return new BussinessProcess();
+    }
+
+    /**
+     * Create an instance of {@link BussinessProcess.Reviews.ReviewData }
+     * 
+     */
+    public BussinessProcess.Reviews.ReviewData createBussinessProcessReviewsReviewData() {
+        return new BussinessProcess.Reviews.ReviewData();
+    }
 }
