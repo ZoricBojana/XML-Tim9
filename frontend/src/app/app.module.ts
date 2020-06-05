@@ -15,6 +15,13 @@ import { ArticlePdfComponent } from './article-pdf/article-pdf.component';
 import { AuthorInfoComponent } from './author-info/author-info.component';
 import { KeyWordInfoComponent } from './key-word-info/key-word-info.component';
 
+import { FormReviewComponent } from './form-review/form-review.component';
+import { ReviewedPublicationsComponent } from './reviewed-publications/reviewed-publications.component';
+import { UnreviewedPublicationsComponent } from './unreviewed-publications/unreviewed-publications.component';
+import { PublicationsToReviewComponent } from './publications-to-review/publications-to-review.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +33,12 @@ import { KeyWordInfoComponent } from './key-word-info/key-word-info.component';
     ArticleHtmlComponent,
     ArticlePdfComponent,
     AuthorInfoComponent,
-    KeyWordInfoComponent
+    KeyWordInfoComponent,
+    
+    FormReviewComponent,
+    ReviewedPublicationsComponent,
+    UnreviewedPublicationsComponent,
+    PublicationsToReviewComponent
   ],
   imports: [
     BrowserModule,
