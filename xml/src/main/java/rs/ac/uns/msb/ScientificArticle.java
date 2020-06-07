@@ -181,6 +181,8 @@ public class ScientificArticle {
     protected String paperType;
     @XmlAttribute(name = "published", required = true)
     protected boolean published;
+    @XmlAttribute(name = "status", required = true)
+    protected String status;
 
     /**
      * Gets the value of the articleInfo property.
@@ -1180,6 +1182,14 @@ public class ScientificArticle {
 
 	public void setPublished(boolean published) {
 		this.published = published;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

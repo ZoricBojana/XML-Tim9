@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,12 +17,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XQueryService;
 import org.xmldb.api.modules.XUpdateQueryService;
 
 import rs.ac.uns.msb.Person;
@@ -32,8 +37,24 @@ import tim9.xml.util.template.XUpdateTemplate;
 
 public class PersonDAO {
 	/*
-	 * Methods store getByUsername
+	 * Methods store getByUsername getByID find reviewers
 	 */
+	
+	private static final String TARGET_NAMESPACE = "http://www.uns.ac.rs/MSB";
+	
+	
+	// za tstiranje - obrisati na kraju
+	public static void main(String[] args) {
+		try {
+			for (Person p : PersonDAO.findAllReviewers()) {
+				System.out.println(p.getUsername());
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException | XMLDBException
+				| JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static Person getByUsername(String username, String collectionId) throws Exception {
 
@@ -77,6 +98,16 @@ public class PersonDAO {
 		} else {
 			return null;
 		}
+	}
+
+	public static List<Person> findAllReviewers() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
+		
+		String 		xqueryExpression = "let $col := collection(\"/db/sample/persons\")\r\n"
+				+ "for $p in $col//persons/person\r\n"
+				+ "for $role in $p/roles/role\r\n"
+				+ "where $role/text()='REVIEWER_ROLE' " + "and 2=2 return $p";
+
+		return executeXQueryExpression(xqueryExpression);
 	}
 
 	public static Person getByID(String ID, String collectionId) throws Exception {
@@ -168,7 +199,7 @@ public class PersonDAO {
 
 			Person person = (Person) unmarshaller.unmarshal(sr);
 			person.addRole("USER_ROLE");
-			
+
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			person.setPassword(passwordEncoder.encode(person.getPassword()));
 
@@ -295,5 +326,84 @@ public class PersonDAO {
 		} else {
 			return col;
 		}
+	}
+
+	// pretraga
+	private static List<Person> executeXQueryExpression(String xqueryExpression) throws IOException,
+			ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException, JAXBException {
+		List<Person> people = new ArrayList<Person>();
+
+		ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+		String collectionId = "/db/sample/persons";
+
+		Class<?> cl = Class.forName(conn.driver);
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		Collection col = null;
+
+		try {
+
+			col = DatabaseManager.getCollection(conn.uri + collectionId);
+
+			// get an instance of xquery service
+			XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+			xqueryService.setProperty("indent", "yes");
+
+			// make the service aware of namespaces, using the default one
+			xqueryService.setNamespace("", TARGET_NAMESPACE);
+
+			// compile and execute the expression
+			CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+			ResourceSet result = xqueryService.execute(compiledXquery);
+
+			// handle the results
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+
+			while (i.hasMoreResources()) {
+				try {
+					res = i.nextResource();
+
+					JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+
+					Unmarshaller unmarshaller = context.createUnmarshaller();
+
+					Person person = (Person) unmarshaller
+							.unmarshal(((XMLResource) res).getContentAsDOM());
+
+					if (person == null) {
+						throw new InternalError("Unmarshaling failed");
+					}
+					people.add(person);
+
+				} finally {
+
+					// don't forget to cleanup resources
+					try {
+						((EXistResource) res).freeResources();
+					} catch (XMLDBException xe) {
+						xe.printStackTrace();
+					}
+				}
+			}
+
+		} finally {
+
+			// don't forget to cleanup
+			if (col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+
+		return people;
 	}
 }

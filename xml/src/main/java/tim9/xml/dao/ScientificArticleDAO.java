@@ -44,6 +44,7 @@ public class ScientificArticleDAO {
 	// -retrieve
 	// -store
 	// -search all published
+	// search all for review
 	// search by title, author, key_word, publisher
 	// search by author title
 
@@ -53,7 +54,7 @@ public class ScientificArticleDAO {
 	// za testiranje, obrisati ovo na kraju
 	public static void main(String[] args) {
 		try {
-			List<ScientificArticle> articles = ScientificArticleDAO.searchByAuthorTitle("1", true);
+			List<ScientificArticle> articles = ScientificArticleDAO.searchAllForReview();
 			for (ScientificArticle scientificArticle : articles) {
 				System.out.println(scientificArticle.getArticleInfo().getTitle().getValue());
 				for (Author auth : scientificArticle.getAuthors().getAuthor()) {
@@ -190,6 +191,8 @@ public class ScientificArticleDAO {
 			StringReader sr = new StringReader(articleString);
 
 			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(sr);
+			
+			article.setStatus("submitted");
 
 			// ************* setovanje ID-eva *********
 			article.setID(documentId);
@@ -456,6 +459,17 @@ public class ScientificArticleDAO {
 				+ "for $auth in $article/authors/author\r\n"
 				+ "where $article[@published='true'] " + "and $auth/title/text()='" + title + "' return $article";
 
+		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
+	}
+	
+	public static List<ScientificArticle> searchAllForReview() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException{
+		
+		String xqueryExpression = null;
+		
+		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
+				+ "for $article in $col//scientific_article\r\n" + "where $article[@status='submitted'] " + "and 2=2 "
+				+ "return $article";
+		
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
 	}
 
