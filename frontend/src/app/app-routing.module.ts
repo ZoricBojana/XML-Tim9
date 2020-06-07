@@ -8,6 +8,12 @@ import { ArticleHtmlComponent } from './article-html/article-html.component';
 import { ArticlePdfComponent } from './article-pdf/article-pdf.component';
 import { AuthorInfoComponent } from './author-info/author-info.component';
 import { KeyWordInfoComponent } from './key-word-info/key-word-info.component';
+import { PublicationsToReviewComponent } from './publications-to-review/publications-to-review.component';
+
+import { ReviewedPublicationsComponent } from './reviewed-publications/reviewed-publications.component';
+import { UnreviewedPublicationsComponent } from './unreviewed-publications/unreviewed-publications.component';
+import { FormReviewComponent } from './form-review/form-review.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -18,6 +24,7 @@ const routes: Routes = [
     path : 'home',
     component : HomeComponent
   },
+  
 
   {
     path : 'register',
@@ -42,6 +49,14 @@ const routes: Routes = [
   }, {
     path : 'articles/keyword/:kw',
     component : KeyWordInfoComponent
+  },
+  {path : 'unreviewedPub' , component : UnreviewedPublicationsComponent},
+  { path : 'reviewedPub', component : ReviewedPublicationsComponent},
+  { path : 'pubToReview', component : PublicationsToReviewComponent},
+
+  {
+    path : 'formRew',
+    component : FormReviewComponent
   }
 
 ];
