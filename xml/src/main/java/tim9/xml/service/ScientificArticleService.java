@@ -18,5 +18,7 @@ public interface ScientificArticleService {
 	
 	public List<ScientificArticle> searchByText(String value) throws Exception;
 	public List<ScientificArticle> searchByMetadata(SearchDTO dto) throws Exception;
-	public List<ScientificArticle> searchByAuthorsTitle(String value) throws Exception;
+	public List<ScientificArticle> searchByAuthorsUsername(String value) throws Exception;
+	public List<ScientificArticle> searchAuthorsPapers(String value) throws Exception;
+
 }

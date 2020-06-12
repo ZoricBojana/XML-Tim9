@@ -160,9 +160,15 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 	}
 
 	@Override
-	public List<ScientificArticle> searchByAuthorsTitle(String value) throws Exception {
+	public List<ScientificArticle> searchByAuthorsUsername(String value) throws Exception {
 
 		return scientificArticleRepository.searchAuthorsArticles(value);
+	}
+	
+	@Override
+	public List<ScientificArticle> searchAuthorsPapers(String value) throws Exception {
+
+		return scientificArticleRepository.searchAllAuthorsArticles(value);
 	}
 
 	@Override

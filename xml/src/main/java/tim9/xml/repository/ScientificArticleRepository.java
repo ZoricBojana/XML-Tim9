@@ -81,8 +81,13 @@ public class ScientificArticleRepository {
     	return ScientificArticleDAO.searchPublishedByMetadata(title, author, keyWord, publisher);
     }
     
+    // pretraga autorovih objavljenih radova - kada korisnik pretrazuje
     public List<ScientificArticle> searchAuthorsArticles(String value) throws Exception{
     	return ScientificArticleDAO.searchByAuthorTitle(value, true);
     }
     
+    // pretraga autorovih radova, kada autor pretrazuje svoje radove
+    public List<ScientificArticle> searchAllAuthorsArticles(String value) throws Exception{
+    	return ScientificArticleDAO.searchByAuthorTitle(value, false);
+    }
 }
