@@ -13,6 +13,8 @@ import { PublicationsToReviewComponent } from './publications-to-review/publicat
 import { ReviewedPublicationsComponent } from './reviewed-publications/reviewed-publications.component';
 import { UnreviewedPublicationsComponent } from './unreviewed-publications/unreviewed-publications.component';
 import { FormReviewComponent } from './form-review/form-review.component';
+import { ArticleTableComponent } from './article-table/article-table.component';
+import { UserArticlesComponent } from './user-articles/user-articles.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,10 @@ const routes: Routes = [
   {
     path : 'formRew',
     component : FormReviewComponent
+  },
+  {
+    path: 'myPapers',
+    component: UserArticlesComponent
   }
 
 ];

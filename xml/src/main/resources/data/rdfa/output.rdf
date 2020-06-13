@@ -1,1 +1,5 @@
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml"/>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.uns.ac.rs/MSB/Rade_Mitrovic">
+    <pred:write xmlns:pred="http://www.uns.ac.rs/MSB/predicate/" rdf:resource="http://www.uns.ac.rs/MSB/SA_26032020095311353"/>
+  </rdf:Description>
+</rdf:RDF>

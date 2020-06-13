@@ -10,6 +10,7 @@ package rs.ac.uns.msb;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -59,6 +60,8 @@ public class Author extends Person{
     protected String emailAddress;
     @XmlElement(required = true)
     protected String title;
+    @XmlAttribute(name = "username", required = true)
+    protected String username;
 
     /**
      * Gets the value of the firstName property.
@@ -179,5 +182,13 @@ public class Author extends Person{
     public void setTitle(String value) {
         this.title = value;
     }
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 }

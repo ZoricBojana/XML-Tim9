@@ -54,29 +54,15 @@ public class ScientificArticleDAO {
 	// za testiranje, obrisati ovo na kraju
 	public static void main(String[] args) {
 		try {
-			List<ScientificArticle> articles = ScientificArticleDAO.searchAllForReview();
+			List<ScientificArticle> articles = ScientificArticleDAO.searchByAuthorUsername("pera", false);
 			for (ScientificArticle scientificArticle : articles) {
 				System.out.println(scientificArticle.getArticleInfo().getTitle().getValue());
 				for (Author auth : scientificArticle.getAuthors().getAuthor()) {
 					System.out.println(auth.getTitle());
 				}
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XMLDBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -450,14 +436,21 @@ public class ScientificArticleDAO {
 		}
 	}
 
-	public static List<ScientificArticle> searchByAuthorTitle(String title, boolean onlyPublished) throws Exception {
+	public static List<ScientificArticle> searchByAuthorUsername(String title, boolean onlyPublished) throws Exception {
 
 		String xqueryExpression = null;
+		
+		String published = "";
+		
+		if(onlyPublished) {
+			published = "$article[@published='true'] and ";
+		}
 
 		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
 				+ "for $article in $col//scientific_article\r\n"
 				+ "for $auth in $article/authors/author\r\n"
-				+ "where $article[@published='true'] " + "and $auth/title/text()='" + title + "' return $article";
+				//+ "where $article[@published='true'] " + "and $auth/title/text()='" + title + "' return $article";
+				+ "where " + published + " $auth[@username='" + title + "'] and 2=2 return $article";
 
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
 	}
