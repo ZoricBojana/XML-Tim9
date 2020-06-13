@@ -5,7 +5,7 @@
         <h3>WELCOME</h3>
             <div>
                 <label for="username"> </label><br/>
-                <input type="text" id="username" name="username" placeholder="email"  formControlName="username">
+                <input type="text" id="username" name="username" placeholder="username"  formControlName="username">
                 <small class="text-danger"  *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors?.required">
                     This field can't be empty!</small>
             </div>
