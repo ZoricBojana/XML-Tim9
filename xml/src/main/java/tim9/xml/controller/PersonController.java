@@ -45,7 +45,7 @@ public class PersonController {
 	private AuthenticationManager authenticationManager;
 	
 	//registracija
-	@PostMapping(value = "/savePerson", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(value = "/savePerson")
 	public ResponseEntity<Person> save(@RequestBody String person){
 		
 		Person saved = null;
