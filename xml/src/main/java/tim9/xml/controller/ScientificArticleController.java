@@ -118,18 +118,17 @@ public class ScientificArticleController {
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/searchAllAuthorsArticles", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ScientificArticle>> searchAllAuthorsArticles(@RequestBody String value){
+	@GetMapping(value="/searchAllAuthorsArticles", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScientificArticle>> searchAllAuthorsArticles(){
 		
 		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		List<ScientificArticle> articles = null;
 		try {
-			articles = scientificArticleService.searchAuthorsPapers(value);
+			articles = scientificArticleService.searchAuthorsPapers(username);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
 }

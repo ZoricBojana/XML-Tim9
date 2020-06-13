@@ -16,13 +16,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class TokenUtils {
 	 @Value("mySecret")
-	    private String secret;
+	    private String SECRET;
 
-	    @Value("18000")
+	    @Value("180000")
 	    private Long expiration;
 	    
 		@Value("Authorization")
 		private String AUTH_HEADER;
+		
+		private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
 
 	    public String getEmailFromToken(String token) {
@@ -39,9 +41,10 @@ public class TokenUtils {
 	    private Claims getClaimsFromToken(String token) {
 	        Claims claims;
 	        try {
-	            claims = Jwts.parser().setSigningKey(this.secret)
+	            claims = Jwts.parser().setSigningKey(SECRET)
 	                    .parseClaimsJws(token).getBody();
 	        } catch (Exception e) {
+	        	e.printStackTrace();
 	            claims = null;
 	        }
 	        return claims;
@@ -70,13 +73,22 @@ public class TokenUtils {
 	    }
 
 	    public String generateToken(UserDetails userDetails) {
-	        Map<String, Object> claims = new HashMap<>();
+	        /*Map<String, Object> claims = new HashMap<>();
 	        claims.put("sub", userDetails.getUsername());
 	        claims.put("created", new Date(System.currentTimeMillis()));
+	        System.out.println("generate " + userDetails.getUsername());
 	        return Jwts.builder().setSubject(userDetails.getUsername())
 	        		.setClaims(claims)
 	                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-	                .signWith(SignatureAlgorithm.HS512, secret).compact();
+	                .signWith(SignatureAlgorithm.HS512, secret).compact();*/
+	    	Date now = new Date();
+			String token = Jwts.builder()
+					.setSubject(userDetails.getUsername())
+					.setIssuedAt(now)
+					.setExpiration(new Date(System.currentTimeMillis() + 3600000))
+					.signWith(SIGNATURE_ALGORITHM, SECRET)
+					.compact();
+			return token;
 	    }
 	    
 	    public String getUsernameFromToken(String token) {
@@ -84,10 +96,9 @@ public class TokenUtils {
 			try {
 				final Claims claims = this.getClaimsFromToken(token);
 				username = claims.getSubject();
-				System.out.println("try token " + username);
 			} catch (Exception e) {
+				e.printStackTrace();
 				username = null;
-				System.out.println("catch token");
 			}
 			return username;
 		}

@@ -83,11 +83,11 @@ public class ScientificArticleRepository {
     
     // pretraga autorovih objavljenih radova - kada korisnik pretrazuje
     public List<ScientificArticle> searchAuthorsArticles(String value) throws Exception{
-    	return ScientificArticleDAO.searchByAuthorTitle(value, true);
+    	return ScientificArticleDAO.searchByAuthorUsername(value, true);
     }
     
     // pretraga autorovih radova, kada autor pretrazuje svoje radove
     public List<ScientificArticle> searchAllAuthorsArticles(String value) throws Exception{
-    	return ScientificArticleDAO.searchByAuthorTitle(value, false);
+    	return ScientificArticleDAO.searchByAuthorUsername(value, false);
     }
 }

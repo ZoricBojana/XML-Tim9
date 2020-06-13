@@ -37,6 +37,10 @@ export class ServiceSaService {
     return this.http.post('http://localhost:8000/api/searchAuthorsArticles', value, {headers: this.headers, responseType: 'json'});
   }
 
+  getAuthorsPapers(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/searchAllAuthorsArticles', {headers: this.headers, responseType: 'json'});
+  }
+
   getHTML(id: string): Observable<any> {
 
 

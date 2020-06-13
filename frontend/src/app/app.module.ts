@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule,FormsModule  } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,9 @@ import { FormReviewComponent } from './form-review/form-review.component';
 import { ReviewedPublicationsComponent } from './reviewed-publications/reviewed-publications.component';
 import { UnreviewedPublicationsComponent } from './unreviewed-publications/unreviewed-publications.component';
 import { PublicationsToReviewComponent } from './publications-to-review/publications-to-review.component';
+import { InterceptService } from './interceptors/intercept.service';
+import { UserArticlesComponent } from './user-articles/user-articles.component';
+import { ArticleTableComponent } from './article-table/article-table.component';
 
 
 
@@ -38,7 +41,9 @@ import { PublicationsToReviewComponent } from './publications-to-review/publicat
     FormReviewComponent,
     ReviewedPublicationsComponent,
     UnreviewedPublicationsComponent,
-    PublicationsToReviewComponent
+    PublicationsToReviewComponent,
+    UserArticlesComponent,
+    ArticleTableComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +51,12 @@ import { PublicationsToReviewComponent } from './publications-to-review/publicat
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
-    
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
