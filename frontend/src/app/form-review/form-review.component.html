@@ -7,30 +7,25 @@
               <div class="col-md-6">
                 <form class="formR">
                  
-                  <h2>{{scientificArticle.title}}</h2>
+                  <h2>Titl</h2>
                  
-                  <h2 *ngFor="let author of scientificArticle.authorsDTO">
-                    {{author.name}} {{" "}} {{author.surname}}
-                  </h2>
+                  <h5>
+                   Author name:
+                   <br/>
+                   Author lastname:
+                  </h5>
                   <br>
                 
-                  <p><b>Purpose: </b><input type="text"/>{{scientificArticle.abstractDTO.purpose}}</p>
-                  <p><b>Design: </b> <input type="text"/> {{scientificArticle.abstractDTO.design}}</p>
+                  <p><b>Abstract: </b><input type="text"/></p>
+                  <p><b>Chapter: </b> <input type="text"/> </p>
                   
-                  <p><b>Findings: </b><input type="text"/>{{scientificArticle.abstractDTO.findings}}</p>
-                  <p><b>Limitations: </b>{{scientificArticle.abstractDTO.limitations}}</p>
-                  <p><b>Originality: </b>{{scientificArticle.abstractDTO.originality}}</p>
-                  <p><b>Type: </b>{{scientificArticle.abstractDTO.type}}</p>
+                   <p><b>Type: </b></p>
                   <b>Keywords: </b> 
-                    <p *ngFor="let key of scientificArticle.abstractDTO.keywords; let i = index" [attr.data-index]="i">
-                        {{key}}
-                    </p>
-                
-        
-                  <p *ngFor="let parag of scientificArticle.paragraphs; let i = index" [attr.data-index]="i">
-                      <b>{{parag}}</b>
-                      <textarea id= {{i}} class="form-control" name="comment"  rows="4" cols="50" placeholder="Comment"></textarea>
-                      <button class="btn btn-primary btn-block" (click)="addComment(i)" >Add comment</button>
+            
+                  <p>
+                      <b>parag</b>
+                      <textarea  class="form-control" name="comment"  rows="4" cols="50" placeholder="Comment"></textarea>
+                      <button class="btn btn-primary btn-block" (click)="addComment()" >Add comment</button>
                     
                   </p>
         
@@ -38,7 +33,7 @@
                 <table>
                     <tr>
                         <td>
-                            <b>Purpose: </b>
+                            <b>Chapter: </b>
                         </td>
                         <td>
                             <select  [(ngModel)] = "uniqueness" name="uniqueness">
@@ -92,20 +87,7 @@
                               </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <b>Experiments: </b>
-                        </td>
-                        <td>
-                            <select  [(ngModel)] = "experiments" name="experiments">
-                                <option [ngValue]="5">5</option>
-                                <option [ngValue]="4">4</option>
-                                <option [ngValue]="3">3</option>
-                                <option [ngValue]="2">2</option>
-                                <option [ngValue]="1">1</option>
-                              </select>
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <td>
                             <b>Layout: </b>
@@ -120,20 +102,7 @@
                               </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <b>Formality: </b>
-                        </td>
-                        <td>
-                            <select  [(ngModel)] = "formality" name="formality">
-                                <option [ngValue]="5">5</option>
-                                <option [ngValue]="4">4</option>
-                                <option [ngValue]="3">3</option>
-                                <option [ngValue]="2">2</option>
-                                <option [ngValue]="1">1</option>
-                              </select>
-                        </td>
-                    </tr>
+        
                     <tr>
                         <td>
                             <b>General grade: </b>

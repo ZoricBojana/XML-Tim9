@@ -22,6 +22,7 @@ import { PublicationsToReviewComponent } from './publications-to-review/publicat
 import { InterceptService } from './interceptors/intercept.service';
 import { UserArticlesComponent } from './user-articles/user-articles.component';
 import { ArticleTableComponent } from './article-table/article-table.component';
+import { ScArticlesComponent } from './sc-articles/sc-articles.component';
 
 
 
@@ -43,7 +44,8 @@ import { ArticleTableComponent } from './article-table/article-table.component';
     UnreviewedPublicationsComponent,
     PublicationsToReviewComponent,
     UserArticlesComponent,
-    ArticleTableComponent
+    ArticleTableComponent,
+    ScArticlesComponent
   ],
   imports: [
     BrowserModule,

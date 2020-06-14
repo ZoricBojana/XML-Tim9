@@ -15,7 +15,7 @@ import { UnreviewedPublicationsComponent } from './unreviewed-publications/unrev
 import { FormReviewComponent } from './form-review/form-review.component';
 import { ArticleTableComponent } from './article-table/article-table.component';
 import { UserArticlesComponent } from './user-articles/user-articles.component';
-
+import { ScArticlesComponent } from './sc-articles/sc-articles.component';
 const routes: Routes = [
   {
     path: '',
@@ -63,6 +63,11 @@ const routes: Routes = [
   {
     path: 'myPapers',
     component: UserArticlesComponent
+  },
+
+  {
+    path : 'addSc',
+    component : ScArticlesComponent
   }
 
 ];
