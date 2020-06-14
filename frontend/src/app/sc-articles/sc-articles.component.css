@@ -1,0 +1,17 @@
+.column {
+  float: left;
+  padding: 10px;
+  background: rgb(9, 54, 54);
+  color: white;
+}
+
+.left {
+  width: 50%;
+  
+}
+.right {
+  width: 50%;
+  float: left;
+  white-space: nowrap;
+  overflow-x: auto;
+}

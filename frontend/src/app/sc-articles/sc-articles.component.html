@@ -1,0 +1,66 @@
+
+<form class="bg">
+  <div style="overflow-x: auto;" class="column left">
+    <br/>
+    <br/>
+    <br/>
+  <h4>Title</h4>
+   <label for="title">Title</label>
+    <input type="text"class="form-control" id="title" name="title" [(ngModel)]="title" placeholder="Title">
+  
+    <h4 >Authors</h4>
+    <label for="author" >Name</label>
+    <input type="text" id="author" class="form-control" name="author" [(ngModel)]="authorName" placeholder="name"
+      required>
+
+      <label for="authorSurname" >Lastname</label>
+      <input type="text" id="authorSurname" class="form-control" name="author" [(ngModel)]="authorSurname" placeholder="lastname"
+        required>
+  
+      <label for="instName" >Institution name</label>
+      <input type="text" id="instName" class="form-control" name="instName" [(ngModel)]="instName" placeholder="Institution name"
+      required>
+
+      <label for="eAddress" >Email address</label>
+      <input type="text" id="eAddress" class="form-control" name="eAddress" [(ngModel)]="eAddress" placeholder="Author email address"
+      required>
+
+
+      <button class="btn btn-primary btn-block" (click)="addAuthor()">Add author</button>
+            <br/>
+            <h4 class>Abstract</h4>
+            <label for="chapter" >Chapter</label>
+            <textarea id="chapter" class="form-control" name="chapter" [(ngModel)]="chapter" rows="4" cols="50" placeholder="Chapter"></textarea>
+
+            <label for="type" >Type</label>
+            <textarea id="type" class="form-control" name="type" [(ngModel)]="type" rows="4" cols="50" placeholder="Type"></textarea>
+          
+            <label for="keyword" >Keyword</label>
+            <input type="text" id="keyword" class="form-control" name="keyword" [(ngModel)]="keyword" placeholder="Keyword"
+            required>
+            <button class="btn btn-primary btn-block" (click)="addKeyword()">Add keyword</button> 
+            <br/>
+            <h4 >Paragraphs</h4>
+            <label for="paragraph" >Paragraph</label>
+            <textarea id="paragraph" class="form-control" name="paragraph" [(ngModel)]="authorParagraph" rows="4" cols="50" placeholder="Paragraph"></textarea>
+            <h4>References</h4>
+            <label for="reference">References</label>
+            <button class="btn btn-primary btn-block" (click)="addParagraph()" >Add paragraph</button>
+            <br/>
+
+            <h2>Cover letter</h2>
+            <label for="cover_letter" >Cover letter</label>
+            <textarea id="paragraph" class="form-control" name="cover_letter" [(ngModel)]="coverLetter" rows="4" cols="50" placeholder="Cover letter"></textarea>
+          <button class="btn btn-primary btn-block" (click)="addArticle()">Add article</button>
+         
+            
+</div>
+<div class="column right">
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <p>Prikaz rada</p>
+       
+</div>
+</form>
