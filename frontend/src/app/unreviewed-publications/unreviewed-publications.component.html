@@ -1,3 +1,7 @@
+<div class="bg">
+ 
+    <div class="unreview-page">
+       
 <div class="container">
     <input style="width: 150px;" type="text" id="author"  name="author" [(ngModel)]="author" placeholder="Author"
     required autofocus/>
@@ -5,14 +9,54 @@
     required autofocus/>
     <input style="width: 150px; margin: 14px;" type="text" id="someText"  name="someText" [(ngModel)]="someText" placeholder="Text"
     required autofocus/>
-   
+     <button style="margin: 14px;" id = "search"class="btn btn-primary" (click)="search()">Search</button>
+     
+     
     
      <table class="table table-striped">
          <thead>
              <th>Title</th>
              <th>Status</th>
          </thead>
-                <td ><button id = "printa" class="btn btn-primary" (click)="submitReviewer(work)">Submit reviewer</button></td>
+         <tbody>
+             <tr>
+                  <td><button id = "button"class="btn btn-primary" (click)="download(article)">Download</button></td>
+                  <td><button style="background-color: red;" id = "button"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
+                  <td>
+                  <div class="dropdown">
+                    <button class="dropbtn">Select reviwer</button>
+                    <div class="dropdown-content">
+                      <a href="#">Rew 1</a>
+                      <a href="#">Rew 2</a>
+                      <a href="#">Rew 3</a>
+                    </div>
+                  </div>
+                  
+                </td>  
+                </tr>
+             <tr *ngFor="let article of forReviewing;let index;" >
+                 <td *ngIf="article.status != 'rejected'">{{article.title}}</td>
+                 <td *ngIf="article.status != 'rejected'">{{article.status}}</td>
+                 <td *ngIf="article.status != 'rejected'"><button id = "button"class="btn btn-primary" (click)="download(article)">Download</button></td>
+                 <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
+                <td *ngIf="article.status != 'accepted' && article.status != 'reviewing'">
+                  <select  [(ngModel)] = "selectedReviewer">
+                    <option [ngValue]="reviewer" *ngFor="let reviewer of allReviewers">{{reviewer.name}}</option>
+                  </select>
+                 
+                </td>
+                <td *ngIf="selectedReviewer != undefined"><button id = "printa" class="btn btn-primary" (click)="submitReviewer(work)">Submit reviewer</button></td>
+             </tr>
+             
+            
+         </tbody> 
      </table>
 
- </div>
+
+
+
+
+    
+ </div></div></div>
+
+ 
