@@ -23,6 +23,7 @@ import { InterceptService } from './interceptors/intercept.service';
 import { UserArticlesComponent } from './user-articles/user-articles.component';
 import { ArticleTableComponent } from './article-table/article-table.component';
 import { ScArticlesComponent } from './sc-articles/sc-articles.component';
+import { SubmitReviewComponent } from './submit-review/submit-review.component';
 
 
 
@@ -45,7 +46,8 @@ import { ScArticlesComponent } from './sc-articles/sc-articles.component';
     PublicationsToReviewComponent,
     UserArticlesComponent,
     ArticleTableComponent,
-    ScArticlesComponent
+    ScArticlesComponent,
+    SubmitReviewComponent
   ],
   imports: [
     BrowserModule,
