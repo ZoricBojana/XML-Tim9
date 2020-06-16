@@ -16,6 +16,7 @@ import { FormReviewComponent } from './form-review/form-review.component';
 import { ArticleTableComponent } from './article-table/article-table.component';
 import { UserArticlesComponent } from './user-articles/user-articles.component';
 import { ScArticlesComponent } from './sc-articles/sc-articles.component';
+import { SubmitReviewComponent } from './submit-review/submit-review.component';
 const routes: Routes = [
   {
     path: '',
@@ -68,6 +69,10 @@ const routes: Routes = [
   {
     path : 'addSc',
     component : ScArticlesComponent
+  },
+  {
+    path : 'submitReview',
+    component : SubmitReviewComponent
   }
 
 ];
