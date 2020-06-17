@@ -71,7 +71,7 @@ const routes: Routes = [
     component : ScArticlesComponent
   },
   {
-    path : 'submitReview',
+    path : 'submitReview/:id',
     component : SubmitReviewComponent
   }
 

@@ -28,11 +28,11 @@ public class ReviewController {
 
 	// TODO update, delete, PDF
 	
-	@PostMapping(value = "/saveReview", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> save(@RequestBody String review) {
+	@PostMapping(value = "/saveReview/{paperId}", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> save( @PathVariable("paperId") String paperId, @RequestBody String review) {
 		String id = null;
 		try {
-			id = reviewService.save(review);
+			id = reviewService.save(review, paperId);
 		} catch (UnmarshalException e) {
 			return new ResponseEntity<String>("Review is not formatted well", HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {

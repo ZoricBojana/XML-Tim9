@@ -64,7 +64,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "id", "articleId", "authorId", "reviews" })
+@XmlType(name = "", propOrder = { "id", "articleId", "editorId", "reviews" })
 @XmlRootElement(name = "bussiness_process")
 public class BussinessProcess {
 
@@ -72,8 +72,8 @@ public class BussinessProcess {
 	protected String id;
 	@XmlElement(name = "article_id", required = true)
 	protected String articleId;
-	@XmlElement(name = "author_id", required = true)
-	protected String authorId;
+	@XmlElement(name = "editor_id", required = true)
+	protected String editorId;
 	@XmlElement(required = true)
 	protected BussinessProcess.Reviews reviews;
 	@XmlAttribute(name = "phase")
@@ -125,8 +125,8 @@ public class BussinessProcess {
 	 * @return possible object is {@link String }
 	 * 
 	 */
-	public String getAuthorId() {
-		return authorId;
+	public String getEditorId() {
+		return editorId;
 	}
 
 	/**
@@ -135,8 +135,8 @@ public class BussinessProcess {
 	 * @param value allowed object is {@link String }
 	 * 
 	 */
-	public void setAuthorId(String value) {
-		this.authorId = value;
+	public void setEditorId(String value) {
+		this.editorId = value;
 	}
 
 	/**

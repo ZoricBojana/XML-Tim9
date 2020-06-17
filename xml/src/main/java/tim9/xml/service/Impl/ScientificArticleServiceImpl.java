@@ -176,4 +176,10 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		
 		return scientificArticleRepository.searchByMetadate(dto.getTitle(), dto.getAuthor(), dto.getKey_word(), dto.getPublisher());
 	}
+
+	@Override
+	public List<ScientificArticle> getAllForReview() throws Exception {
+		
+		return scientificArticleRepository.getAllForReview();
+	}
 }

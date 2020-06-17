@@ -26,7 +26,7 @@ public class ReviewServiceImpl implements ReviewService {
 	private MetadataExtractor metadataExtractor;
 	
 	@Override
-	public String save(String review) throws Exception{
+	public String save(String review, String paperId) throws Exception{
 		// TODO save metadata!
 		
 		StringWriter out = new StringWriter();
@@ -34,8 +34,8 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		metadataExtractor.extractMetadata(in, out);
 		
-		String ID = reviewRepository.save(review);
-		reviewRepository.saveMetadata(out, ID);
+		String ID = reviewRepository.save(review, paperId);
+		//reviewRepository.saveMetadata(out, ID);
 		return ID;
 	}
 

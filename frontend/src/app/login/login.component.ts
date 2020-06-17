@@ -29,10 +29,8 @@ export class LoginComponent implements OnInit {
     const dto = new LoginDto();
     this.personService.login(this.loginForm.value as LoginDto).subscribe(
       result => {
-        console.log('login ' + result);
         if (localStorage.getItem('user') !== null) {
           localStorage.removeItem('user');
-          console.log('removec');
         }
         localStorage.setItem('user', JSON.stringify(result));
         this.router.navigate(['home']);

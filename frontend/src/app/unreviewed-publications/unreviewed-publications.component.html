@@ -19,33 +19,19 @@
              <th>Status</th>
          </thead>
          <tbody>
-             <tr>
-                  <td><button id = "button"class="btn btn-primary" (click)="download(article)">Download</button></td>
-                  <td><button style="background-color: red;" id = "button"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
-                  <td>
-                  <div class="dropdown">
-                    <button class="dropbtn">Select reviwer</button>
-                    <div class="dropdown-content">
-                      <a href="#">Rew 1</a>
-                      <a href="#">Rew 2</a>
-                      <a href="#">Rew 3</a>
-                    </div>
-                  </div>
-                  
-                </td>  
-                </tr>
-             <tr *ngFor="let article of forReviewing;let index;" >
-                 <td *ngIf="article.status != 'rejected'">{{article.title}}</td>
-                 <td *ngIf="article.status != 'rejected'">{{article.status}}</td>
-                 <td *ngIf="article.status != 'rejected'"><button id = "button"class="btn btn-primary" (click)="download(article)">Download</button></td>
+             <tr *ngFor="let article of articles;let index;" > 
+                 <td>{{article.articleInfo.title.value}}</td>
+                 <td>{{article.status}}</td>
+                 <td><button id = "button"class="btn btn-primary" (click)="download(article)">View</button></td>
                  <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
-                <td *ngIf="article.status != 'accepted' && article.status != 'reviewing'">
-                  <select  [(ngModel)] = "selectedReviewer">
-                    <option [ngValue]="reviewer" *ngFor="let reviewer of allReviewers">{{reviewer.name}}</option>
+                 <td *ngIf="reviewers">
+                   {{selectedReviewers}}
+                  <select  [(ngModel)] = "selectedReviewers" multiple>
+                    <option *ngFor="let reviewer of reviewers">{{reviewer.username}}</option>
                   </select>
                  
                 </td>
-                <td *ngIf="selectedReviewer != undefined"><button id = "printa" class="btn btn-primary" (click)="submitReviewer(work)">Submit reviewer</button></td>
+                <td *ngIf="selectedReviewers != undefined"><button id = "printa" class="btn btn-primary" (click)="submitReviewers(article.id)">Submit reviewer</button></td>
              </tr>
              
             

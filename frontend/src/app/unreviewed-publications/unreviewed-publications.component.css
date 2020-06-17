@@ -15,6 +15,10 @@
   -moz-osx-font-smoothing: grayscale; 
 }
 th{color: aliceblue;}
+
+tr {
+  color: aliceblue;
+}
 .dropbtn {
   background-color: #4CAF50;
   color: white;

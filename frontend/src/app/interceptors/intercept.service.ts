@@ -10,7 +10,6 @@ export class InterceptService implements HttpInterceptor {
     const item = localStorage.getItem('user');
     const decodedItem = JSON.parse(item);
     if (item) {
-      console.log(item);
       const cloned = req.clone({
         setHeaders: {
           Authorization: `Bearer ${item.slice(1, -1)}`

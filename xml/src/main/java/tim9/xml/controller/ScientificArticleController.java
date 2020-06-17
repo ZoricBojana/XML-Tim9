@@ -3,7 +3,6 @@ package tim9.xml.controller;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -111,6 +110,19 @@ public class ScientificArticleController {
 		List<ScientificArticle> articles = null;
 		try {
 			articles = scientificArticleService.searchByAuthorsUsername(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getAllForReview", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScientificArticle>> getAllForReview(){
+		
+		List<ScientificArticle> articles = null;
+		try {
+			articles = scientificArticleService.getAllForReview();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -54,12 +54,15 @@ public class ScientificArticleDAO {
 	// za testiranje, obrisati ovo na kraju
 	public static void main(String[] args) {
 		try {
-			List<ScientificArticle> articles = ScientificArticleDAO.searchByAuthorUsername("pera", false);
+			List<String> idList = new ArrayList<String>();
+			idList.add("SA_15062020112806125");
+			idList.add("SA_11062020164824743");
+			List<ScientificArticle> articles = ScientificArticleDAO.findByIdList(idList);
 			for (ScientificArticle scientificArticle : articles) {
 				System.out.println(scientificArticle.getArticleInfo().getTitle().getValue());
-				for (Author auth : scientificArticle.getAuthors().getAuthor()) {
+				/*for (Author auth : scientificArticle.getAuthors().getAuthor()) {
 					System.out.println(auth.getTitle());
-				}
+				}*/
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -177,7 +180,7 @@ public class ScientificArticleDAO {
 			StringReader sr = new StringReader(articleString);
 
 			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(sr);
-			
+
 			article.setStatus("submitted");
 
 			// ************* setovanje ID-eva *********
@@ -304,12 +307,12 @@ public class ScientificArticleDAO {
 		if (!value.trim().equals("")) {
 			xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
 					+ "for $article in $col//scientific_article\r\n" + "where contains(lower-case(string($article)), \""
-					+ value.toLowerCase() + "\")" + "and $article[@published='true'] " + "return $article";
+					+ value.toLowerCase() + "\")" + "and $article[@status='published'] " + "return $article";
 		} else {
 
 			xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
-					+ "for $article in $col//scientific_article\r\n" + "where $article[@published='true'] " + "and 2=2 "
-					+ "return $article";
+					+ "for $article in $col//scientific_article\r\n" + "where $article[@status='published'] "
+					+ "and 2=2 " + "return $article";
 		}
 
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
@@ -378,9 +381,9 @@ public class ScientificArticleDAO {
 		// condition += " and ";
 
 		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
-				+ "for $article in $col//scientific_article\r\n" + "where $article[@published='true'] and " + condition
-				+ "\r\n" + "return $article";
-		
+				+ "for $article in $col//scientific_article\r\n" + "where $article[@status='published'] and "
+				+ condition + "\r\n" + "return $article";
+
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
 	}
 
@@ -439,30 +442,62 @@ public class ScientificArticleDAO {
 	public static List<ScientificArticle> searchByAuthorUsername(String title, boolean onlyPublished) throws Exception {
 
 		String xqueryExpression = null;
-		
+
 		String published = "";
-		
-		if(onlyPublished) {
-			published = "$article[@published='true'] and ";
+
+		if (onlyPublished) {
+			published = "$article[@status='published'] and ";
 		}
 
 		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
-				+ "for $article in $col//scientific_article\r\n"
-				+ "for $auth in $article/authors/author\r\n"
-				//+ "where $article[@published='true'] " + "and $auth/title/text()='" + title + "' return $article";
+				+ "for $article in $col//scientific_article\r\n" + "for $auth in $article/authors/author\r\n"
+				// + "where $article[@published='true'] " + "and $auth/title/text()='" + title +
+				// "' return $article";
 				+ "where " + published + " $auth[@username='" + title + "'] and 2=2 return $article";
 
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
 	}
-	
-	public static List<ScientificArticle> searchAllForReview() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException{
-		
+
+	public static List<ScientificArticle> searchAllForReview() throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, IOException, XMLDBException, JAXBException {
+
 		String xqueryExpression = null;
-		
+
 		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
 				+ "for $article in $col//scientific_article\r\n" + "where $article[@status='submitted'] " + "and 2=2 "
 				+ "return $article";
+
+		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
+	}
+
+	public static List<ScientificArticle> findByIdList(List<String> idList) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, IOException, XMLDBException, JAXBException {
+
+		String xqueryExpression = null;
 		
+		if(idList == null || idList.size()==0) {
+			return null;
+		}
+		
+		String condition = "(";
+		boolean hasPrev = false;
+		
+		for (String string : idList) {
+			if(hasPrev) {
+				condition = condition + ", ";
+			}
+		
+			condition = condition + "'" + string + "'";
+			hasPrev = true;
+		}
+		
+		condition = condition + " )";
+		System.out.println(condition);
+
+		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
+				+ "for $article in $col//scientific_article\r\n" + "where $article[@ID=" + condition + "] " + "and 2=2 "
+				+ "return $article";
+
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);
 	}
 

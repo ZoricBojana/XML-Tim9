@@ -104,7 +104,7 @@ public class ReviewDAO {
 	 * access documentId Should be the document ID to store in the collection
 	 * review should be XML review
 	 */
-	public static void store( String collectionId, String documentId, String reviewString)
+	public static void store( String collectionId, String documentId, String reviewString, String paperId)
 			throws Exception {
 		
 		conn = AuthenticationUtilities.loadProperties();
@@ -142,6 +142,8 @@ public class ReviewDAO {
 			StringReader sr = new StringReader(reviewString);
 			
 			Review review = (Review) unmarshaller.unmarshal(sr);
+			
+			review.setPaperId(paperId);
 
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());

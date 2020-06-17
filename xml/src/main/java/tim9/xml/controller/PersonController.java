@@ -1,6 +1,7 @@
 package tim9.xml.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 import rs.ac.uns.msb.Person;
 import tim9.xml.exception.RepositoryException;
@@ -71,6 +74,16 @@ public class PersonController {
 		}
 		
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getReviewers", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Person>> getReviewers() {
+		
+		List<Person> reviewers = null;
+		
+		reviewers = personService.getAllReviewers();
+		
+		return new ResponseEntity<List<Person>>(reviewers, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/login")

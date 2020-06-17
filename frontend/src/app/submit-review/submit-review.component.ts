@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewService } from '../services/review.service';
 import { Route } from '@angular/compiler/src/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var Xonomy: any;
 
@@ -13,7 +13,8 @@ declare var Xonomy: any;
 export class SubmitReviewComponent implements OnInit {
 
   constructor( private reviewService: ReviewService,
-               private router: Router) { }
+               private router: Router,
+               private route: ActivatedRoute) { }
 
   docSpec = {
     onchange() {
@@ -217,10 +218,13 @@ start() {
     Xonomy.render(xml, editor, this.docSpec);
     }
 submit() {
+
     const xml = Xonomy.harvest();
     // do something with xml...
     console.log(xml);
-    this.reviewService.add(xml as string).subscribe(
+
+    const articleId = this.route.snapshot.params.id;
+    this.reviewService.add(xml as string, articleId).subscribe(
       result => {
         this.router.navigate(['home']);
       }

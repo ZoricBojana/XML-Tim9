@@ -3,13 +3,17 @@ package tim9.xml.repository;
 import static tim9.xml.util.template.XUpdateTemplate.UPDATE;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.XMLDBException;
 
 import rs.ac.uns.msb.Person;
 import tim9.xml.dao.PersonDAO;
@@ -97,5 +101,10 @@ public class PersonRepository {
         marshaller.marshal(person, stream);
 
         return new String(stream.toByteArray());
+    }
+    
+    public List<Person> getAllReviewers() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
+    	
+    	return PersonDAO.findAllReviewers();
     }
 }

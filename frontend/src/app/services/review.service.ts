@@ -12,7 +12,7 @@ export class ReviewService {
 
   constructor(private http: HttpClient) { }
 
-  add(review: string): Observable<any> {
-    return this.http.post('http://localhost:8000/api/saveReview', review, {headers: this.headers, responseType: 'text'});
+  add(review: string, id: string): Observable<any> {
+    return this.http.post(`http://localhost:8000/api/saveReview/${id}`, review, {headers: this.headers, responseType: 'text'});
   }
 }

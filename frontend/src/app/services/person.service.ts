@@ -25,8 +25,12 @@ export class PersonService {
   register(dto: RegisterDto): Observable<any> {
     return this.http.post('http://localhost:8000/api/savePerson', dto, {headers: this.headers, responseType: 'text'});
   }
- 
 
+
+  getReviewers(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/getReviewers',
+    {headers: new HttpHeaders({'Content-Type': 'application/xml'}), responseType: 'json'});
+  }
 
   isLoggedIn(): boolean {
     if (!localStorage.getItem('user')) {

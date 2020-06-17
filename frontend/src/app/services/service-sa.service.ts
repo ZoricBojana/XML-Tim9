@@ -41,6 +41,11 @@ export class ServiceSaService {
     return this.http.get('http://localhost:8000/api/searchAllAuthorsArticles', {headers: this.headers, responseType: 'json'});
   }
 
+  getPapersForReview(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/getAllForReview', {headers: this.headers, responseType: 'json'});
+
+  }
+
   getHTML(id: string): Observable<any> {
 
 

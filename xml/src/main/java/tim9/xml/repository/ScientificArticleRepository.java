@@ -1,12 +1,16 @@
 package tim9.xml.repository;
 
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.XMLDBException;
 
 import rs.ac.uns.msb.ScientificArticle;
 import tim9.xml.dao.ScientificArticleDAO;
@@ -89,5 +93,9 @@ public class ScientificArticleRepository {
     // pretraga autorovih radova, kada autor pretrazuje svoje radove
     public List<ScientificArticle> searchAllAuthorsArticles(String value) throws Exception{
     	return ScientificArticleDAO.searchByAuthorUsername(value, false);
+    }
+    
+    public List<ScientificArticle> getAllForReview() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
+    	return ScientificArticleDAO.searchAllForReview();
     }
 }

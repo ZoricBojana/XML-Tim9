@@ -172,6 +172,9 @@ public class Review {
     protected Review.SecretComments secretComments;
     @XmlElement(required = true)
     protected String recommendation;
+    
+    @XmlAttribute(name = "paper_id", required = true)
+    protected String paperId;
 
     /**
      * Gets the value of the articleInfo property.
@@ -1026,6 +1029,14 @@ public class Review {
 			
 			builder.append("\n");
 		return builder.toString();
+	}
+
+	public String getPaperId() {
+		return paperId;
+	}
+
+	public void setPaperId(String paperId) {
+		this.paperId = paperId;
 	}
 
 }

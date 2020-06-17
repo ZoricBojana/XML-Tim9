@@ -1,22 +1,18 @@
 package tim9.xml.repository;
 
-import static tim9.xml.util.template.XUpdateTemplate.TARGET_NAMESPACE;
-
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.exist.xmldb.EXistResource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import org.xmldb.api.base.ResourceIterator;
-import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.modules.XMLResource;
 
+import rs.ac.uns.msb.BussinessProcess;
+import rs.ac.uns.msb.BussinessProcess.Reviews.ReviewData;
+import tim9.xml.dao.BussinessProcessDAO;
 import tim9.xml.dao.ReviewDAO;
 import tim9.xml.util.RDF.RDFStore;
-import tim9.xml.util.exist.RetriveData;
-import tim9.xml.util.exist.StoreData;
 import tim9.xml.util.exist.UpdateData;
 
 @Repository
@@ -25,9 +21,37 @@ public class ReviewRepository {
 	public static String reviewCollectionId = "/db/sample/reviews";
     //private String reviewCollectionId;
 	
-	public String save(String review) throws Exception {
+	@Autowired
+	private BussinessProcessRepository processRepository;
+	
+	public String save(String review, String paperId) throws Exception {
 		String ID = generateID();
-		ReviewDAO.store(reviewCollectionId, ID, review);
+		ReviewDAO.store(reviewCollectionId, ID, review, paperId);
+		
+		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		BussinessProcess process = BussinessProcessDAO.getProcessByUsernameAndPaperId(username, paperId);
+		
+		boolean done = true;
+		
+		for (ReviewData data : process.getReviews().getReviewData()) {
+			if(data.getReviewerId().equals(username)) {
+				data.setReviewId(ID);
+				continue;
+			}
+			
+			if(data.getReviewId() == null) {
+				done = false;
+			}
+			
+		}
+		
+		if(done) {
+			process.setPhase("done");
+		}
+		
+		this.processRepository.update(process.getId(), process);
+		
 		return ID;
 	}
 	
@@ -68,13 +92,13 @@ public class ReviewRepository {
     */
 	
 	// TODO testirati
-    public String update(String id, String review) throws Exception {
+    public String update(String id, String review, String paperId) throws Exception {
         String oldReviewData = this.findById(id);
         if (oldReviewData == null) {
             throw new Exception("Review with id: " + id);
         }
         this.delete(id);
-        ReviewDAO.store(reviewCollectionId, id, review);
+        ReviewDAO.store(reviewCollectionId, id, review, paperId);
         return id;
     }
 
