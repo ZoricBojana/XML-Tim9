@@ -36,7 +36,7 @@ public class ScientificArticleController {
 		// SECURITIJEM PROVERITI DA LI JE U PITANJU KORISNIK
 		String id = scientificArticleService.save(article);
 		System.out.println("Cover letter is successfully saved! ID is: " + id);
-		return new ResponseEntity<>("Cover letter is successfully saved! ID is: " + id, HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/updateScientificArticle/{id}", consumes = MediaType.APPLICATION_XML_VALUE,produces = MediaType.APPLICATION_XML_VALUE)
@@ -78,17 +78,14 @@ public class ScientificArticleController {
 	
 	@PostMapping(value="/searchArticles", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ScientificArticle>> searchByText(@RequestBody String value){
-		System.out.println("Kontroler");
 		List<ScientificArticle> articles = null;
 		try {
 			articles = scientificArticleService.searchByText(value);
-			System.out.println("Kontroler 2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("Kontroler 3");
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
 	

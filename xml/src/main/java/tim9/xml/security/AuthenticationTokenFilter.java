@@ -9,11 +9,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import tim9.xml.security.auth.TokenBasedAuthentication;
 import tim9.xml.service.Impl.UserDetailsServiceImpl;
@@ -45,11 +43,9 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 		
 		String username;
 		String authToken = tokenUtils.getToken((HttpServletRequest)request);
-		System.out.println("Token received " + authToken);
 		if (authToken != null) {
 			// uzmi username iz tokena
 			username = tokenUtils.getUsernameFromToken(authToken);
-			System.out.println("username " + username);
 			if (username != null) {
 				// uzmi user-a na osnovu username-a
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);

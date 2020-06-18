@@ -103,7 +103,7 @@ public class CoverLetterDAO {
 	 * access documentId Should be the document ID to store in the collection
 	 * review should be XML review
 	 */
-	public static void store( String collectionId, String documentId, String cvString)
+	public static void store( String collectionId, String documentId, String cvString, String paperId)
 			throws Exception {
 		
 		conn = AuthenticationUtilities.loadProperties();
@@ -141,6 +141,7 @@ public class CoverLetterDAO {
 			StringReader sr = new StringReader(cvString);
 			
 			CoverLetter cv = (CoverLetter) unmarshaller.unmarshal(sr);
+			cv.setPaperId(paperId);
 
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());

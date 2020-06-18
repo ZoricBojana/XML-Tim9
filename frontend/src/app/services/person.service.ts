@@ -19,8 +19,13 @@ export class PersonService {
     return this.http.post('http://localhost:8000/api/login', dto, {headers: this.headers, responseType: 'text'});
   }
 
-  logout(): Observable<any> {
+  /*logout(): Observable<any> {
     return this.http.get('http://localhost:8000/api/logOut', {headers: this.headers, responseType: 'text'});
+  }*/
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   register(dto: RegisterDto): Observable<any> {

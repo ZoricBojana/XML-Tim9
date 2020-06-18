@@ -20,9 +20,9 @@ public class CoverLetterRepository {
 	public static String coverLetterCollectionId = "/db/sample/coverLetters";
     
     
-    public String save(String coverLetter) throws Exception {
+    public String save(String coverLetter, String paperId) throws Exception {
     	String ID = generateID();
-		CoverLetterDAO.store(coverLetterCollectionId, ID, coverLetter);
+		CoverLetterDAO.store(coverLetterCollectionId, ID, coverLetter, paperId);
 		return ID;
 	}
     

@@ -28,6 +28,8 @@ import { AuthorNavComponent } from './core/author-nav/author-nav.component';
 import { UserNavComponent } from './core/user-nav/user-nav.component';
 import { ReviewerForReviewComponent } from './reviewer-for-review/reviewer-for-review.component';
 import { ReviewerNavComponent } from './core/reviewer-nav/reviewer-nav.component';
+import { CoverLetterComponent } from './cover-letter/cover-letter.component';
+import { EditorNavComponent } from './core/editor-nav/editor-nav.component';
 
 
 
@@ -55,7 +57,9 @@ import { ReviewerNavComponent } from './core/reviewer-nav/reviewer-nav.component
     AuthorNavComponent,
     UserNavComponent,
     ReviewerForReviewComponent,
-    ReviewerNavComponent
+    ReviewerNavComponent,
+    CoverLetterComponent,
+    EditorNavComponent
   ],
   imports: [
     BrowserModule,

@@ -433,7 +433,9 @@ submit() {
     console.log(xml);
     this.SAservice.add(xml as string).subscribe(
       result => {
-        this.router.navigate(['home']);
+        const paperId = result;
+        console.log(result);
+        this.router.navigate(['submitCL', paperId]);
       }
     );
     }

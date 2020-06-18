@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   constructor(private articleService: ServiceSaService, private router: Router) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        this.resetNavbar();
+        // this.resetNavbar();
       }
     });
 
@@ -45,12 +45,13 @@ export class HomeComponent implements OnInit {
   }
 
   render() {
-    this.homeBg1.nativeElement.style.transform = 'translateY(' + window.pageYOffset * 0.5  + 'px)';
+    // this.homeBg1.nativeElement.style.transform = 'translateY(' + window.pageYOffset * 0.5  + 'px)';
     // this.homeBg1.nativeElement.style.backgroundPositionY = window.pageYOffset * 0.5  + "px";
 
-    this.scrollAmount.nativeElement.style.width = ((window.pageYOffset / window.innerHeight) * 100 > 100 ? 100 : (window.pageYOffset / window.innerHeight) * 100) + '%';
+   // this.scrollAmount.nativeElement.style.width =
+   // ((window.pageYOffset / window.innerHeight) * 100 > 100 ? 100 : (window.pageYOffset / window.innerHeight) * 100) + '%';
 
-    requestAnimationFrame(this.render.bind(this));
+   // requestAnimationFrame(this.render.bind(this));
   }
 
   enter(event) {

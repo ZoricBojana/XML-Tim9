@@ -19,6 +19,7 @@ import { ScArticlesComponent } from './sc-articles/sc-articles.component';
 import { SubmitReviewComponent } from './submit-review/submit-review.component';
 import { RoleGuard } from './guards/role.service';
 import { ReviewerForReviewComponent } from './reviewer-for-review/reviewer-for-review.component';
+import { CoverLetterComponent } from './cover-letter/cover-letter.component';
 const routes: Routes = [
   {
     path: '',
@@ -74,6 +75,10 @@ const routes: Routes = [
   {
     path : 'submitReview/:id',
     component : SubmitReviewComponent
+  },
+  {
+    path : 'submitCL/:id',
+    component : CoverLetterComponent
   },
   {
     path : 'reviewer',

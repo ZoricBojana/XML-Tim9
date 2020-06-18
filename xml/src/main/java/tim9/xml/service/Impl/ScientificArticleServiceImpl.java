@@ -52,7 +52,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		
 		String ID = scientificArticleRepository.save(article);
 		System.out.println("Sacuvan rad");
-		scientificArticleRepository.saveMetadata(out, ID);
+		//scientificArticleRepository.saveMetadata(out, ID);
 		System.out.println("Sacuvani metapodaci");
 		return ID;
 	}

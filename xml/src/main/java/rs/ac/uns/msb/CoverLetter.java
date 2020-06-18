@@ -97,6 +97,9 @@ public class CoverLetter {
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+    
+    @XmlAttribute(name="paper_id", namespace = "http://www.uns.ac.rs/MSB", required = true)
+    protected String paperId;
 
     /**
      * Gets the value of the articleInfo property.
@@ -440,5 +443,22 @@ public class CoverLetter {
         }
 
     }
+
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPaperId() {
+		return paperId;
+	}
+
+	public void setPaperId(String paperId) {
+		this.paperId = paperId;
+	}
 
 }

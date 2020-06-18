@@ -35,14 +35,14 @@ public class CoverLetterServiceImpl implements CoverLetterService{
 	
 
 	@Override
-	public String save(String coverLetter) throws Exception {
+	public String save(String coverLetter, String paperId ) throws Exception {
 		// extract metadata
 		StringWriter out = new StringWriter(); 
 		StringReader in = new StringReader(coverLetter); 
 		metadataExtractor.extractMetadata(in, out);
 		
-		String ID = coverLetterRepository.save(coverLetter);
-		coverLetterRepository.saveMetadata(out, ID);
+		String ID = coverLetterRepository.save(coverLetter, paperId);
+		//coverLetterRepository.saveMetadata(out, ID);
 		return ID;
 	}
 	

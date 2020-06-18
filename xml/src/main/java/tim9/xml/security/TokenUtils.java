@@ -1,7 +1,5 @@
 package tim9.xml.security;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -73,14 +71,7 @@ public class TokenUtils {
 	    }
 
 	    public String generateToken(UserDetails userDetails) {
-	        /*Map<String, Object> claims = new HashMap<>();
-	        claims.put("sub", userDetails.getUsername());
-	        claims.put("created", new Date(System.currentTimeMillis()));
-	        System.out.println("generate " + userDetails.getUsername());
-	        return Jwts.builder().setSubject(userDetails.getUsername())
-	        		.setClaims(claims)
-	                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-	                .signWith(SignatureAlgorithm.HS512, secret).compact();*/
+
 	    	Date now = new Date();
 			String token = Jwts.builder()
 					.setSubject(userDetails.getUsername())
@@ -108,7 +99,6 @@ public class TokenUtils {
 
 		public String getToken(HttpServletRequest request) {
 			String authHeader = getAuthHeaderFromHeader(request);
-			System.out.println("Token " + authHeader);
 			if (authHeader != null && authHeader.startsWith("Bearer ")) {
 				return authHeader.substring(7);
 			}
