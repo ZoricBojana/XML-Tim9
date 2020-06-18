@@ -1,0 +1,29 @@
+import { Component, OnInit } from '@angular/core';
+import { ServiceSaService } from '../services/service-sa.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-reviewer-for-review',
+  templateUrl: './reviewer-for-review.component.html',
+  styleUrls: ['./reviewer-for-review.component.css']
+})
+export class ReviewerForReviewComponent implements OnInit {
+
+  articles: any;
+
+  constructor(private articleService: ServiceSaService, private router: Router) { }
+
+  ngOnInit() {
+    this.articleService.getPapersForReviewer().subscribe(
+      res => {
+        this.articles = res;
+        console.log(this.articles);
+      }
+    );
+  }
+
+  makeReview(articleId: string) {
+    this.router.navigate(['submitReview', articleId]);
+  }
+
+}

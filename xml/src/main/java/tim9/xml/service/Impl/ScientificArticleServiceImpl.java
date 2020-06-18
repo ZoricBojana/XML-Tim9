@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.msb.Author;
@@ -17,6 +18,7 @@ import rs.ac.uns.msb.ScientificArticle;
 import tim9.xml.dto.SearchDTO;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.exception.Unauthorized;
+import tim9.xml.repository.BussinessProcessRepository;
 import tim9.xml.repository.PersonRepository;
 import tim9.xml.repository.ScientificArticleRepository;
 import tim9.xml.service.ScientificArticleService;
@@ -38,7 +40,8 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 	@Autowired
 	private PersonRepository personRepository;
 	
-	
+	@Autowired
+	private BussinessProcessRepository processRepository;
 
 	@Override
 	public String save(String article) throws Exception {
@@ -138,7 +141,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		if(article == null){
 			throw new EntityNotFound(id);
 		}
-		String clHTML = xslFoTransformer.generateHTML(article, "src/main/resources/data/xslt/ScientificArticle.xsl");
+		String clHTML = xslFoTransformer.generateHTML(article, "src/main/resources/data/xslt/rad_pismo_rec/radToHTML.xsl");
 		return clHTML;
 	}
 
@@ -149,7 +152,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 			throw new EntityNotFound(id);
 		}
 		ByteArrayOutputStream clPDF = xslFoTransformer.generatePDF(coverLetter,
-				"src/main/resources/data/xslt/article_fo.xsl");
+				"src/main/resources/data/xslt/rad_pismo_rec/radToHTML.xsl");
 		return clPDF;
 	}
 
@@ -181,5 +184,13 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 	public List<ScientificArticle> getAllForReview() throws Exception {
 		
 		return scientificArticleRepository.getAllForReview();
+	}
+
+	@Override
+	public List<ScientificArticle> getAllForReviewer() throws Exception {
+		
+		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		return processRepository.getForReviewer(username);
 	}
 }

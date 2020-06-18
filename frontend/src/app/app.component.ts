@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +9,39 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent {
 
-  title = "sc-Publications | Homepage"
+  public role: string;
+
+  title = 'sc-Publications | Homepage';
   navbarOpen = false;
 
-  public constructor(private titleService: Title ) {
+  public constructor(private titleService: Title, private router: Router ) {
     this.setTitle(this.title);
+  }
+
+  checkRole() {
+    const user = localStorage.getItem('user');
+    if (!user) {
+     this.router.navigate(['login']);
+     this.role = undefined;
+     return;
+  }
+
+    const roles = JSON.parse(JSON.parse(user)).roles;
+    console.log(roles);
+
+    if (roles === null) {
+      this.role = 'USER';
+      return;
+    }
+
+    if (roles.indexOf('EDITOR_ROLE') > -1) {
+      this.role = 'EDITOR';
+    } else if (roles.indexOf('REVIEWER_ROLE') > -1) {
+      this.role = 'REVIEWER';
+    } else if (roles.indexOf('USER_ROLE') > -1) {
+      this.role = 'AUTHOR';
+    }
+    console.log('Role ' + this.role);
   }
 
   public setTitle( newTitle: string) {

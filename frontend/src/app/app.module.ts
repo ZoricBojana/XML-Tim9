@@ -25,6 +25,9 @@ import { ArticleTableComponent } from './article-table/article-table.component';
 import { ScArticlesComponent } from './sc-articles/sc-articles.component';
 import { SubmitReviewComponent } from './submit-review/submit-review.component';
 import { AuthorNavComponent } from './core/author-nav/author-nav.component';
+import { UserNavComponent } from './core/user-nav/user-nav.component';
+import { ReviewerForReviewComponent } from './reviewer-for-review/reviewer-for-review.component';
+import { ReviewerNavComponent } from './core/reviewer-nav/reviewer-nav.component';
 
 
 
@@ -49,7 +52,10 @@ import { AuthorNavComponent } from './core/author-nav/author-nav.component';
     ArticleTableComponent,
     ScArticlesComponent,
     SubmitReviewComponent,
-    AuthorNavComponent
+    AuthorNavComponent,
+    UserNavComponent,
+    ReviewerForReviewComponent,
+    ReviewerNavComponent
   ],
   imports: [
     BrowserModule,

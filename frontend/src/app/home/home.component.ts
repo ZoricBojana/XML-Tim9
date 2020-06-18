@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setNavbar();
+    //this.setNavbar();
     this.articleService.searchByText(' ')
     .subscribe (res => {
       console.log(res);

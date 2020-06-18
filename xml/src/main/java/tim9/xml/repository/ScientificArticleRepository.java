@@ -98,4 +98,5 @@ public class ScientificArticleRepository {
     public List<ScientificArticle> getAllForReview() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
     	return ScientificArticleDAO.searchAllForReview();
     }
+    
 }

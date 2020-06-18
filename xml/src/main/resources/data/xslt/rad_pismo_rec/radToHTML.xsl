@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msb="http://www.uns.ac.rs/MSB" 
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:sc="https://github.com/ZoricBojana/XML-Tim9" version="2.0">
     <xsl:import href="Templates.xsl"/>
     <xsl:template match="/">
         <html>
             <head>
-                <title><xsl:value-of select="sc:scientific_article/sc:title"/></title>
+                <title><xsl:value-of select="scientific_article/article_info/title"/></title>
             </head>
 
             <body style="padding-left:10%; padding-right:10%">
-                <br/><h1 align="center"><xsl:value-of select="sc:scientific_article/sc:title"/></h1>
+                <br/><h1 align="center"><xsl:value-of select="msb:scientific_article/msb:article_info/msb:title"/></h1>
 
                 <table width="100%" style="table-layout: fixed">
                     <tr>
-                        <xsl:for-each select="sc:scientific_article/sc:authors/sc:author">
+                        <xsl:for-each select="msb:scientific_article/msb:authors/msb:author">
                             <td>
                                 <div align="center" style="overflow-x:auto">
                                     <xsl:call-template name="Author">
@@ -26,8 +27,8 @@
                 </table><br/><br/>
 
                 <h2 style="margin-left: 10px; margin-bottom: 5px;">Abstract</h2><br/>
-                <xsl:for-each select="sc:scientific_article/sc:abstract/sc:abstract-item"><b><xsl:value-of select="@title"/>: </b><xsl:value-of select="."/><br/></xsl:for-each>
-                <br/><b>Keywords: </b><xsl:for-each select="sc:scientific_article/sc:metadata/sc:keywords/sc:keyword">
+                <xsl:for-each select="msb:scientific_article/msb:abstract/msb:paragraph"><b><xsl:value-of select="@title"/>: </b><xsl:value-of select="."/><br/></xsl:for-each>
+                <br/><b>Keywords: </b><xsl:for-each select="msb:scientific_article/msb:key_words/msb:key_word">
                 <xsl:value-of select="."/><xsl:if test="not(position()=last())">,&#160;</xsl:if></xsl:for-each>
                 <br/><br/>
 

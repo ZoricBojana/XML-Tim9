@@ -46,6 +46,11 @@ export class ServiceSaService {
 
   }
 
+  getPapersForReviewer(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/getAllForReviewer', {headers: this.headers, responseType: 'json'});
+
+  }
+
   getHTML(id: string): Observable<any> {
 
 

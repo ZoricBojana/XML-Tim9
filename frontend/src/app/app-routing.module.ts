@@ -17,6 +17,8 @@ import { ArticleTableComponent } from './article-table/article-table.component';
 import { UserArticlesComponent } from './user-articles/user-articles.component';
 import { ScArticlesComponent } from './sc-articles/sc-articles.component';
 import { SubmitReviewComponent } from './submit-review/submit-review.component';
+import { RoleGuard } from './guards/role.service';
+import { ReviewerForReviewComponent } from './reviewer-for-review/reviewer-for-review.component';
 const routes: Routes = [
   {
     path: '',
@@ -27,7 +29,6 @@ const routes: Routes = [
     path : 'home',
     component : HomeComponent
   },
-  
 
   {
     path : 'register',
@@ -53,7 +54,7 @@ const routes: Routes = [
     path : 'articles/keyword/:kw',
     component : KeyWordInfoComponent
   },
-  {path : 'unreviewedPub' , component : UnreviewedPublicationsComponent},
+  {path : 'unreviewedPub' , component : UnreviewedPublicationsComponent, canActivate: [RoleGuard]},
   { path : 'reviewedPub', component : ReviewedPublicationsComponent},
   { path : 'pubToReview', component : PublicationsToReviewComponent},
 
@@ -73,6 +74,10 @@ const routes: Routes = [
   {
     path : 'submitReview/:id',
     component : SubmitReviewComponent
+  },
+  {
+    path : 'reviewer',
+    component : ReviewerForReviewComponent
   }
 
 ];

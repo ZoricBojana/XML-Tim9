@@ -198,7 +198,7 @@ public class BussinessProcessDAO {
 
 		xqueryExpression = "let $col := collection(\"/db/sample/bussinessProcess\")\r\n"
 				+ "for $process in $col//bussiness_process\r\n" + "for $rev in $process/reviews/review_data "
-				+ "where $rev/reviewer_id='" + username + "' " + "and $process/phase='waiting' " + "return $process";
+				+ "where $rev/reviewer_id='" + username + "' " + "and $process[@phase='waiting'] " + "return $process";
 
 		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression);
 	}
