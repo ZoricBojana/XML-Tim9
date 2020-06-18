@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 import rs.ac.uns.msb.Person;
+import tim9.xml.dto.UserTokenState;
 import tim9.xml.exception.RepositoryException;
 import tim9.xml.exception.UsernameAlreadyExist;
 import tim9.xml.security.TokenUtils;
@@ -40,17 +41,17 @@ public class PersonController {
 
 	@Autowired
 	private PersonService personService;
-	
+
 	@Autowired
 	TokenUtils tokenUtils;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
-	//registracija
+
+	// registracija
 	@PostMapping(value = "/savePerson")
-	public ResponseEntity<Person> save(@RequestBody String person){
-		
+	public ResponseEntity<Person> save(@RequestBody String person) {
+
 		Person saved = null;
 		try {
 			saved = personService.savePerson(person);
@@ -59,12 +60,12 @@ public class PersonController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return new ResponseEntity<Person>(saved, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(value = "/getPersonByUsername/{username}", produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<Person> getOneByUsername(@PathVariable("username") String username){
+	public ResponseEntity<Person> getOneByUsername(@PathVariable("username") String username) {
 		Person person;
 		try {
 			person = personService.findByUsername(username);
@@ -72,42 +73,40 @@ public class PersonController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
 		}
-		
+
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/getReviewers", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Person>> getReviewers() {
-		
+
 		List<Person> reviewers = null;
-		
+
 		reviewers = personService.getAllReviewers();
-		
+
 		return new ResponseEntity<List<Person>>(reviewers, HttpStatus.OK);
 	}
-	
+
 	@PostMapping(value = "/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
 			HttpServletResponse response) throws AuthenticationException, IOException {
-		
-		System.out.println(authenticationRequest.getUsername() + " * " + authenticationRequest.getPassword());
-		
+
+		System.out.println("login");
 		if (authenticationRequest.getUsername().trim().equals("") || authenticationRequest.getUsername() == null
 				|| authenticationRequest.getPassword().trim().equals("")
 				|| authenticationRequest.getPassword() == null) {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		
+
 		Authentication authentication = null;
 		try {
-			authentication = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-							authenticationRequest.getPassword()));
+			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 		} catch (BadCredentialsException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
-		
+
 		// Ubaci username + password u kontext
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -115,9 +114,13 @@ public class PersonController {
 		Person user = (Person) authentication.getPrincipal();
 		String jwt = tokenUtils.generateToken(user);
 
-		//int expiresIn = tokenUtils.getExpiredIn();
+		// int expiresIn = tokenUtils.getExpiredIn();
 		// Vrati token kao odgovor na uspesno autentifikaciju
-		return ResponseEntity.ok(jwt);
+
+		UserTokenState tokenState = new UserTokenState(jwt, 43000L, "Bearer", user.getID(), user.getUsername(),
+				user.getEmail(), user.getRoles().getRole());
+
+		return ResponseEntity.ok(tokenState);
 	}
-	
+
 }

@@ -1,0 +1,29 @@
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand nav-white-color" routerLink="">
+      scPublications
+    </a>
+  
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+  
+    <div class="collapse navbar-collapse" [ngClass]="{'show' : navbarOpen}">
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        
+      </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link nav-white-color" routerLink="/myPapers">My articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-white-color" routerLink="/submitPost">Submit Post</a>
+        </li>
+       
+      </ul>
+      
+    
+    </div>
+  </nav>

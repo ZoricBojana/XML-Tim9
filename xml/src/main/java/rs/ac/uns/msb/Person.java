@@ -75,6 +75,8 @@ public class Person implements UserDetails{
     protected String username;
     @XmlAttribute(name = "password", required = true)
     protected String password;
+    @XmlAttribute(name = "email", required = true)
+    protected String email;
     @XmlElement(name = "roles", required = true)
     protected Roles roles;
     
@@ -256,5 +258,23 @@ public class Person implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public Roles getRoles() {
+		return roles;
+	}
+
+	public void setScientificArticle(List<ScientificArticle> scientificArticle) {
+		this.scientificArticle = scientificArticle;
+	}
+	
 
 }

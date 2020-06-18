@@ -8,15 +8,26 @@ import { PersonService } from '../services/person.service';
 export class RoleGuard implements CanActivate {
 
   constructor(
-    public auth: PersonService,
     public router: Router
   ) { }
 
-   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const expectedRoles: string = route.data.expectedRoles;
-    const token = localStorage.getItem('user');
+   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
+    const isLoggedIn = !!localStorage.getItem('token');
 
-    return true;
+    if (isLoggedIn) {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user) {
+        if (route.data.roles && !route.data.roles.some(r => user.roles.includes(r))) {
+          this.router.navigate(['/']);
+          return false;
+        }
+
+        return true;
+      }
+    }
+    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    return false;
   }
 }

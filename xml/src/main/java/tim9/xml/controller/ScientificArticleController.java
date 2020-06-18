@@ -78,15 +78,17 @@ public class ScientificArticleController {
 	
 	@PostMapping(value="/searchArticles", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ScientificArticle>> searchByText(@RequestBody String value){
-		
+		System.out.println("Kontroler");
 		List<ScientificArticle> articles = null;
 		try {
 			articles = scientificArticleService.searchByText(value);
+			System.out.println("Kontroler 2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		System.out.println("Kontroler 3");
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
 	

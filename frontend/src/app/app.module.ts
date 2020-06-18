@@ -24,6 +24,7 @@ import { UserArticlesComponent } from './user-articles/user-articles.component';
 import { ArticleTableComponent } from './article-table/article-table.component';
 import { ScArticlesComponent } from './sc-articles/sc-articles.component';
 import { SubmitReviewComponent } from './submit-review/submit-review.component';
+import { AuthorNavComponent } from './core/author-nav/author-nav.component';
 
 
 
@@ -47,7 +48,8 @@ import { SubmitReviewComponent } from './submit-review/submit-review.component';
     UserArticlesComponent,
     ArticleTableComponent,
     ScArticlesComponent,
-    SubmitReviewComponent
+    SubmitReviewComponent,
+    AuthorNavComponent
   ],
   imports: [
     BrowserModule,

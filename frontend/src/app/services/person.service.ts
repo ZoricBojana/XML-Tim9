@@ -15,6 +15,7 @@ export class PersonService {
   ) { }
 
   login(dto: LoginDto): Observable<any> {
+    console.log('servis');
     return this.http.post('http://localhost:8000/api/login', dto, {headers: this.headers, responseType: 'text'});
   }
 
