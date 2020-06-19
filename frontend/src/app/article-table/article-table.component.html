@@ -13,7 +13,7 @@
         <td>{{art.status}}</td>
         <td><button class="delete" *ngIf="art.status!='deleted'" (click)="delete(art.id)">Delete</button></td>
         <td><button class="btnHTML">View</button></td>
-        <td><button class="btnPDF">Pdf</button></td>
+        <td><button class="btnPDF" (click)="getPdf(art.id)">Pdf</button></td>
       </tr>
     </tbody>
   </table>

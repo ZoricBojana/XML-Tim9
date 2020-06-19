@@ -10,6 +10,7 @@ import { ServiceSaService } from '../services/service-sa.service';
 export class ArticleTableComponent implements OnInit {
 
   @Input() articles: any;
+  url: any;
 
   constructor(private articleService: ServiceSaService) { }
 
@@ -20,6 +21,19 @@ export class ArticleTableComponent implements OnInit {
     this.articleService.delete(id).subscribe(
       res => {
         console.log('deleted');
+      }
+    );
+  }
+
+  getPdf(id: string) {
+    this.articleService.getPDF(id)
+    .subscribe(
+      res => {
+        const file = new Blob([res], {type: 'application/pdf'});
+        const fileURL = URL.createObjectURL(file);
+        this.url = fileURL;
+        console.log(fileURL);
+        window.open(fileURL);
       }
     );
   }
