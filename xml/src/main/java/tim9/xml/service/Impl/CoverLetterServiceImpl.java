@@ -47,7 +47,7 @@ public class CoverLetterServiceImpl implements CoverLetterService{
 	}
 	
 	@Override
-	public String update(String ID, String coverLetter, String personID) throws Exception {
+	public String update(String ID, String coverLetter, String personUsernam) throws Exception {
 		// extract metadata
 		String old = coverLetterRepository.findById(ID);
 		JAXBContext jaxbContext;
@@ -56,7 +56,7 @@ public class CoverLetterServiceImpl implements CoverLetterService{
         	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
         	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         	CoverLetter _cl = (CoverLetter) jaxbUnmarshaller.unmarshal(new StringReader(old));
-			if(personID.equals(_cl.getAuthor().getID())){
+			if(personUsernam.equals(_cl.getAuthor().getUsername())){
 				allowed = true;
 			}
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class CoverLetterServiceImpl implements CoverLetterService{
 	}
 
 	@Override
-	public void delete(String id, String personID) throws Exception {
+	public void delete(String id, String personUsername) throws Exception {
 		String old = coverLetterRepository.findById(id);
 		JAXBContext jaxbContext;
         boolean allowed = false;
@@ -84,7 +84,7 @@ public class CoverLetterServiceImpl implements CoverLetterService{
         	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
         	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         	CoverLetter _cl = (CoverLetter) jaxbUnmarshaller.unmarshal(new StringReader(old));
-			if(personID.equals(_cl.getAuthor().getID())){
+			if(personUsername.equals(_cl.getAuthor().getUsername())){
 				allowed = true;
 			}
 		} catch (Exception e) {

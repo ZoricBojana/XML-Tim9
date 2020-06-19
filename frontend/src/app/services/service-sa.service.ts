@@ -33,7 +33,7 @@ export class ServiceSaService {
     {headers: new HttpHeaders({'Content-Type': 'application/json'}), responseType: 'json'});
   }
 
-  searchByAuthorTitle(value: string): Observable<any> {
+  searchByAuthorUsername(value: string): Observable<any> {
     return this.http.post('http://localhost:8000/api/searchAuthorsArticles', value, {headers: this.headers, responseType: 'json'});
   }
 

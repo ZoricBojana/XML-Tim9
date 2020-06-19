@@ -12,7 +12,10 @@ import javax.xml.bind.JAXBException;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.XMLDBException;
 
+import rs.ac.uns.msb.Author;
+import rs.ac.uns.msb.Person;
 import rs.ac.uns.msb.ScientificArticle;
+import tim9.xml.dao.PersonDAO;
 import tim9.xml.dao.ScientificArticleDAO;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.util.RDF.RDFStore;
@@ -27,20 +30,40 @@ public class ScientificArticleRepository {
 	public static String scientificArticleSchemaPath = "src/main/resources/data/ScienceArticleSchema.xsd";
 	public static String ScientificArticleXSLPath = "src/main/resources/data/xslt/scientificArticle.xsl";
 
-	public String save(String article) throws Exception {
+	public String save(String article, String username) throws Exception {
     	String ID = generateID();
-    	ScientificArticleDAO.store(scientificArticleCollectionId, ID, article);
+    	Person person = PersonDAO.getByUsername(username, "/db/sample/persons");
+    	
+    	Author author = new Author();
+    	
+    	author.setUsername(username);
+    	author.setFirstName(person.getFirstName());
+    	author.setLastName(person.getLastName());
+    	author.setEmailAddress(person.getEmailAddress());
+    	author.setID(person.getID());
+    	
+    	ScientificArticleDAO.store(scientificArticleCollectionId, ID, article, author);
 		return ID;
 	}
     
-    public String update(String id, String article, String authorID) throws Exception {
+    public String update(String id, String article, String username) throws Exception {
     	String oldArticle = this.findById(id);
         if (oldArticle == null) {
             throw new Exception("SA with id: " + id);
         }
         
-        this.delete(id, authorID);
-        ScientificArticleDAO.store(scientificArticleCollectionId, id, article);
+Person person = PersonDAO.getByUsername(username, "/db/sample/persons");
+    	
+    	Author author = new Author();
+    	
+    	author.setUsername(username);
+    	author.setFirstName(person.getFirstName());
+    	author.setLastName(person.getLastName());
+    	author.setEmailAddress(person.getEmailAddress());
+    	author.setID(person.getID());
+        
+        this.delete(id, username);
+        ScientificArticleDAO.store(scientificArticleCollectionId, id, article, author);
         return id;
 	}
     

@@ -19,7 +19,7 @@ export class AuthorInfoComponent implements OnInit {
     this.id = this.route.snapshot.params.id;
     console.log(this.id);
 
-    this.articleService.searchByAuthorTitle(this.id)
+    this.articleService.searchByAuthorUsername(this.id)
     .subscribe (res => {
       console.log(res);
       this.articles = res;

@@ -8,9 +8,7 @@
 
 package rs.ac.uns.msb;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -55,22 +53,35 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "author",
-    "scientificArticle",
-    "roles"
+		"firstName",
+	    "lastName",
+	    "institution",
+	    "emailAddress",
+	    "title",
+	    "roles"
 })
 @XmlRootElement(name = "person")
 public class Person implements UserDetails{
 
-    @XmlElement(required = true)
-    protected Author author;
-    @XmlElement(name = "scientific_article")
-    protected List<ScientificArticle> scientificArticle;
+    //@XmlElement(required = true)
+    //protected Author author;
+    /*@XmlElement(name = "scientific_article")
+    protected List<ScientificArticle> scientificArticle;*/
     @XmlAttribute(name = "ID", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+    @XmlElement(name = "first_name", required = true)
+    protected String firstName;
+    @XmlElement(name = "last_name", required = true)
+    protected String lastName;
+    @XmlElement(required = true)
+    protected Institution institution;
+    @XmlElement(name = "email_address", required = true)
+    protected String emailAddress;
+    @XmlElement(required = true)
+    protected String title;
     @XmlAttribute(name = "username", required = true)
     protected String username;
     @XmlAttribute(name = "password", required = true)
@@ -104,9 +115,10 @@ public class Person implements UserDetails{
      *     {@link Author }
      *     
      */
+    /*
     public Author getAuthor() {
         return author;
-    }
+    }*/
 
     /**
      * Sets the value of the author property.
@@ -116,9 +128,10 @@ public class Person implements UserDetails{
      *     {@link Author }
      *     
      */
+    /*
     public void setAuthor(Author value) {
         this.author = value;
-    }
+    }*/
 
     /**
      * Gets the value of the scientificArticle property.
@@ -142,13 +155,14 @@ public class Person implements UserDetails{
      * 
      * 
      */
+    /*
     public List<ScientificArticle> getScientificArticle() {
         if (scientificArticle == null) {
             scientificArticle = new ArrayList<ScientificArticle>();
         }
         return this.scientificArticle;
     }
-
+*/
     /**
      * Gets the value of the id property.
      * 
@@ -271,9 +285,57 @@ public class Person implements UserDetails{
 	public Roles getRoles() {
 		return roles;
 	}
-
+/*
 	public void setScientificArticle(List<ScientificArticle> scientificArticle) {
 		this.scientificArticle = scientificArticle;
+	}*/
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Institution getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 

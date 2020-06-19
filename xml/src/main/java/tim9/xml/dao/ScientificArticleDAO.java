@@ -32,6 +32,7 @@ import rs.ac.uns.msb.ChapterParagraph;
 import rs.ac.uns.msb.Paragraph;
 import rs.ac.uns.msb.Picture;
 import rs.ac.uns.msb.ScientificArticle;
+import rs.ac.uns.msb.ScientificArticle.Authors;
 import rs.ac.uns.msb.Table;
 import tim9.xml.exception.EntityNotFound;
 import tim9.xml.util.AuthenticationUtilities;
@@ -143,7 +144,7 @@ public class ScientificArticleDAO {
 	 * access documentId Should be the document ID to store in the collection
 	 * article should be XML article
 	 */
-	public static void store(String collectionId, String documentId, String articleString) throws Exception {
+	public static void store(String collectionId, String documentId, String articleString, Author author) throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
 
@@ -180,6 +181,11 @@ public class ScientificArticleDAO {
 			StringReader sr = new StringReader(articleString);
 
 			ScientificArticle article = (ScientificArticle) unmarshaller.unmarshal(sr);
+			
+			Authors authors = new Authors();
+			authors.getAuthor().add(author);
+			
+			article.setAuthors(authors);
 
 			article.setStatus("submitted");
 

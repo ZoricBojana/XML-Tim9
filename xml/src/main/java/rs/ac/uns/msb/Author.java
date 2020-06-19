@@ -12,8 +12,12 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -48,8 +52,11 @@ import javax.xml.bind.annotation.XmlType;
     "title"
 })
 @XmlRootElement(name = "author")
-public class Author extends Person{
+public class Author {
 
+	@XmlAttribute(name = "ID", required = true)
+    @XmlSchemaType(name = "ID")
+    protected String ID;
     @XmlElement(name = "first_name", required = true)
     protected String firstName;
     @XmlElement(name = "last_name", required = true)
@@ -189,6 +196,14 @@ public class Author extends Person{
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String id) {
+		this.ID = id;
 	}
 
 }

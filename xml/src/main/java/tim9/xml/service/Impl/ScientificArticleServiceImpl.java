@@ -46,23 +46,25 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 	@Override
 	public String save(String article) throws Exception {
 		// extract metadata
-		StringWriter out = new StringWriter(); 
-		StringReader in = new StringReader(article); 
-		metadataExtractor.extractMetadata(in, out);
+		//StringWriter out = new StringWriter(); 
+		//StringReader in = new StringReader(article); 
+		//metadataExtractor.extractMetadata(in, out);
 		
-		String ID = scientificArticleRepository.save(article);
+		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		String ID = scientificArticleRepository.save(article, username);
 		System.out.println("Sacuvan rad");
 		//scientificArticleRepository.saveMetadata(out, ID);
-		System.out.println("Sacuvani metapodaci");
+		//System.out.println("Sacuvani metapodaci");
 		return ID;
 	}
 	
 	@Override
-	public String update(String ID, String article, String authorID) throws Exception {
+	public String update(String ID, String article, String authorUsername) throws Exception {
 		// extract metadata
-		Person person = personRepository.findOneByID(authorID);
+		Person person = personRepository.findOneByUsername(authorUsername);
 		if(person == null){
-			throw new EntityNotFound(authorID);
+			throw new EntityNotFound(authorUsername);
 		}
 		
 		String oldArticle = scientificArticleRepository.findById(ID);
@@ -73,7 +75,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
         	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         	ScientificArticle _article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(oldArticle));
     		for(Author author : _article.getAuthors().getAuthor()){
-    			if(author.getID().equals(authorID)){
+    			if(author.getUsername().equals(authorUsername)){
     				allowed = true;
     			}
     		}
@@ -88,7 +90,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		StringReader in = new StringReader(article); 
 		metadataExtractor.extractMetadata(in, out);
 		
-		String id = scientificArticleRepository.update(ID, article, authorID);
+		String id = scientificArticleRepository.update(ID, article, authorUsername);
 		scientificArticleRepository.updateMetadata(out, ID);
 		return id;
 	}

@@ -5,7 +5,7 @@
         </span>
         <span class="by">by</span>
         <span class="author" *ngFor="let a of art.authors.author">
-            <a [routerLink]="['/articles/author', a.title]">{{' ' + a.firstName + ' ' + a.lastName + ' '}}</a>
+            <a [routerLink]="['/articles/author', a.username]">{{' ' + a.firstName + ' ' + a.lastName + ' '}}</a>
         </span>
         <hr />
         <span class="by">Key Words:</span>
