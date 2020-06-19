@@ -62,23 +62,23 @@ public class ScientificArticleRepository {
     	author.setEmailAddress(person.getEmailAddress());
     	author.setID(person.getID());
         
-        this.remove(id, username);
+        this.remove(id);
         ScientificArticleDAO.store(scientificArticleCollectionId, id, article, author);
         return id;
 	}
     
-    public void delete(String id, ScientificArticle article) throws Exception {
+    public void changeStatur(String id, ScientificArticle article, String status) throws Exception {
 		
-		ScientificArticleDAO.delete(scientificArticleCollectionId, id, article);
+		ScientificArticleDAO.changeStatus(scientificArticleCollectionId, id, article, status);
 	}
     
-    public void remove(String id, String username) throws Exception {
+    public void remove(String id/*, String username*/) throws Exception {
     	String xpathExp = "/scientificArticle";
 		long mods = UpdateData.delete(scientificArticleCollectionId, id, xpathExp);
 		if (mods == 0) {
 			throw new EntityNotFound(id);
 		}
-		deleteMetadata(id);
+		//deleteMetadata(id);
     }
     
     public String findById(String id) throws Exception {

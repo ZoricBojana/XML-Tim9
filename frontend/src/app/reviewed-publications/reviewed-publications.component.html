@@ -1,1 +1,42 @@
-<p>reviewed-publications works!</p>
+<div class="bg">
+ 
+    <div class="unreview-page">
+       
+<div class="container">
+    <input style="width: 150px;" type="text" id="author"  name="author" [(ngModel)]="author" placeholder="Author"
+    required autofocus/>
+    <input style="width: 150px; margin: 14px;" type="text" id="title"  name="title" [(ngModel)]="title" placeholder="Title"
+    required autofocus/>
+    <input style="width: 150px; margin: 14px;" type="text" id="someText"  name="someText" [(ngModel)]="someText" placeholder="Text"
+    required autofocus/>
+     <button style="margin: 14px;" id = "search"class="btn btn-primary" (click)="search()">Search</button>
+     
+     
+    
+     <table class="table table-striped">
+         <thead>
+             <th>Title</th>
+             <th>Status</th>
+         </thead>
+         <tbody>
+             <tr *ngFor="let article of articles;let index;" > 
+                 <td>{{article.articleInfo.title.value}}</td>
+                 <td>{{article.status}}</td>
+                 <td><button id = "button"class="btn btn-primary" (click)="download(article)">View</button></td>
+                 <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
+
+                <td *ngIf="selectedReviewers != undefined"><button id = "printa" class="btn btn-primary" (click)="submitReviewers(article.id)">Sub</button></td>
+             </tr>
+             
+            
+         </tbody> 
+     </table>
+
+
+
+
+
+    
+ </div></div></div>
+
+ 

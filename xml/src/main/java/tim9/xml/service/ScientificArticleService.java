@@ -22,4 +22,5 @@ public interface ScientificArticleService {
 	public List<ScientificArticle> searchAuthorsPapers(String value) throws Exception;
 	public List<ScientificArticle> getAllForReview() throws Exception;
 	public List<ScientificArticle> getAllForReviewer() throws Exception;
+	public List<ScientificArticle> getAllReviewedForEditor() throws Exception;
 }

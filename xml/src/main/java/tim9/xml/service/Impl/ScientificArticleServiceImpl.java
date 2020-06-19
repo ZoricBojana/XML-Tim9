@@ -125,7 +125,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		}
 		
 		try {
-			scientificArticleRepository.delete(id, _article);
+			scientificArticleRepository.changeStatur(id, _article, "reviewing");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -197,5 +197,13 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		return processRepository.getForReviewer(username);
+	}
+	
+	@Override
+	public List<ScientificArticle> getAllReviewedForEditor() throws Exception {
+		
+		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		return processRepository.getReviewedForEditor(username);
 	}
 }

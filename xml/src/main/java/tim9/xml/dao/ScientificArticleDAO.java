@@ -586,7 +586,7 @@ public class ScientificArticleDAO {
 		return articles;
 	}
 	
-	public static void delete(String collectionId, String documentId, ScientificArticle article) throws Exception {
+	public static void changeStatus(String collectionId, String documentId, ScientificArticle article, String status) throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
 
@@ -619,7 +619,7 @@ public class ScientificArticleDAO {
 			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 
 
-			article.setStatus("deleted");
+			article.setStatus(status);
 
 
 			Marshaller marshaller = context.createMarshaller();

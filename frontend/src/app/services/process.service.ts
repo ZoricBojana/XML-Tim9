@@ -19,4 +19,5 @@ export class ProcessService {
   rejectReview(paperId: string): Observable<any> {
     return this.http.put(`http://localhost:8000/api/rejectReview/${paperId}`, null);
   }
+
 }

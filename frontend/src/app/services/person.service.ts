@@ -35,7 +35,7 @@ export class PersonService {
 
   getReviewers(): Observable<any> {
     return this.http.get('http://localhost:8000/api/getReviewers',
-    {headers: new HttpHeaders({'Content-Type': 'application/xml'}), responseType: 'json'});
+    { responseType: 'json'});
   }
 
   isLoggedIn(): boolean {

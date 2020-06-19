@@ -39,8 +39,8 @@ public class BussinessProcessDAO {
 	public static void main(String[] args) {
 
 		try {
-			BussinessProcess bp = BussinessProcessDAO.getProcessByUsernameAndPaperId("reg", "SA_11062020203402335"); 
-				System.out.println(bp.getArticleId());
+			BussinessProcess bp = BussinessProcessDAO.getProcessByUsernameAndPaperId("reg", "SA_11062020203402335");
+			System.out.println(bp.getArticleId());
 
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException | XMLDBException
 				| JAXBException e) {
@@ -203,6 +203,19 @@ public class BussinessProcessDAO {
 		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression);
 	}
 
+	// id editora
+	public static List<BussinessProcess> getDoneProcesses(String username) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
+
+		String xqueryExpression = null;
+
+		xqueryExpression = "let $col := collection(\"/db/sample/bussinessProcess\")\r\n"
+				+ "for $process in $col//bussiness_process\r\n"
+				+ "where $process/editor_id='" + username + "' " + "and $process[@phase='done'] " + "return $process";
+
+		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression);
+	}
+
 	public static BussinessProcess getProcessByUsernameAndPaperId(String username, String paperId)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, XMLDBException,
 			JAXBException {
@@ -211,7 +224,8 @@ public class BussinessProcessDAO {
 
 		xqueryExpression = "let $col := collection(\"/db/sample/bussinessProcess\")\r\n"
 				+ "for $process in $col//bussiness_process\r\n" + "for $rev in $process/reviews/review_data "
-				+ "where $rev/reviewer_id='" + username + "' " + "and $process/article_id='" + paperId + "' " + "return $process";
+				+ "where $rev/reviewer_id='" + username + "' " + "and $process/article_id='" + paperId + "' "
+				+ "return $process";
 
 		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression).get(0);
 	}

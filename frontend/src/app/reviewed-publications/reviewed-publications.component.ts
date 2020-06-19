@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProcessService } from '../services/process.service';
+import { ServiceSaService } from '../services/service-sa.service';
 
 @Component({
   selector: 'app-reviewed-publications',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewedPublicationsComponent implements OnInit {
 
-  constructor() { }
+  articles: any;
+
+  constructor(private saService: ServiceSaService) { }
 
   ngOnInit() {
+    this.saService.getReviewedForEditor().subscribe(
+      res => {
+        this.articles = res;
+      }
+    );
   }
 
 }

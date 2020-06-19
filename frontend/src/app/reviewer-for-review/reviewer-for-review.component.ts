@@ -15,6 +15,10 @@ export class ReviewerForReviewComponent implements OnInit {
   constructor(private articleService: ServiceSaService, private processService: ProcessService , private router: Router) { }
 
   ngOnInit() {
+    this.getPapers();
+  }
+
+  getPapers() {
     this.articleService.getPapersForReviewer().subscribe(
       res => {
         this.articles = res;
@@ -31,6 +35,7 @@ export class ReviewerForReviewComponent implements OnInit {
     this.processService.rejectReview(articleId).subscribe(
       res => {
         console.log('rejected');
+        this.getPapers();
       }
     );
   }

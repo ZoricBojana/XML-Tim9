@@ -52,6 +52,11 @@ export class ServiceSaService {
 
   }
 
+  getReviewedForEditor(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/getReviewed', {responseType: 'json'});
+
+  }
+
   getPapersForReviewer(): Observable<any> {
     return this.http.get('http://localhost:8000/api/getAllForReviewer', {headers: this.headers, responseType: 'json'});
 

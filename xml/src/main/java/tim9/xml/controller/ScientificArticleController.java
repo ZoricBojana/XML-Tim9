@@ -156,4 +156,17 @@ public class ScientificArticleController {
 		
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/getReviewed", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ScientificArticle>> getReviewedForEditor(){
+		
+		List<ScientificArticle> articles = null;
+		try {
+			articles = scientificArticleService.getAllReviewedForEditor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
+	}
 }
