@@ -16,7 +16,7 @@
                     <fo:block text-indent="10px">
 						<xsl:for-each
 							select="msb:reviews/msb:review">
-							<xsl:value-of select="."></xsl:value-of>
+
 							<fo:block>
 							Tehnical grade: 
 							<xsl:value-of select="msb:review_form/msb:tehnical_grade/msb:grade_value"></xsl:value-of>
@@ -37,6 +37,14 @@
 							Bad sides: 
 							<xsl:value-of select="msb:review_form/msb:bad_sides"></xsl:value-of>
 							</fo:block>
+							
+							<xsl:for-each select="msb:questionnaire/msb:item">
+							<fo:block>
+							<xsl:value-of select="msb:question"></xsl:value-of>
+							</fo:block><fo:block>
+							<xsl:value-of select="msb:response"></xsl:value-of>
+							</fo:block>
+							</xsl:for-each>
 							
 							**********************************
 						</xsl:for-each>

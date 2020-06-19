@@ -68,4 +68,17 @@ export class UnreviewedPublicationsComponent implements OnInit {
       );
   }
 
+  view(id: string) {
+    this.articleService.getPDF(id)
+    .subscribe(
+      res => {
+        const file = new Blob([res], {type: 'application/pdf'});
+        const fileURL = URL.createObjectURL(file);
+        this.url = fileURL;
+        console.log(fileURL);
+        window.open(fileURL);
+      }
+    );
+  }
+
 }

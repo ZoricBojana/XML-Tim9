@@ -22,7 +22,7 @@
              <tr *ngFor="let article of articles;let index;" > 
                  <td>{{article.articleInfo.title.value}}</td>
                  <td>{{article.status}}</td>
-                 <td><button id = "button"class="btn btn-primary" (click)="download(article)">View</button></td>
+                 <td><button id = "button"class="btn btn-primary" (click)="view(article.id)">View</button></td>
                  <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article.id)">Reject</button></td>
                  <td ><button style="background-color: red;" id = "publish"class="btn btn-primary" (click)="publish(article.id)">Publish</button></td>
                  <td ><button style="background-color: red;" id = "publish"class="btn btn-primary" (click)="getReviews(article.id)">Reviews</button></td>
