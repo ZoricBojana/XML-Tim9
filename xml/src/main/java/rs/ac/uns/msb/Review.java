@@ -175,6 +175,8 @@ public class Review {
     
     @XmlAttribute(name = "paper_id", required = true)
     protected String paperId;
+    @XmlAttribute(name = "id", required = true)
+    protected String id;
 
     /**
      * Gets the value of the articleInfo property.
@@ -1037,6 +1039,14 @@ public class Review {
 
 	public void setPaperId(String paperId) {
 		this.paperId = paperId;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

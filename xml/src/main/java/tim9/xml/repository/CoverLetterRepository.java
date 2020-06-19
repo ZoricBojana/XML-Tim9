@@ -21,9 +21,9 @@ public class CoverLetterRepository {
     
     
     public String save(String coverLetter, String paperId) throws Exception {
-    	String ID = generateID();
-		CoverLetterDAO.store(coverLetterCollectionId, ID, coverLetter, paperId);
-		return ID;
+    	//String ID = generateID();
+		CoverLetterDAO.store(coverLetterCollectionId, paperId, coverLetter, paperId);
+		return paperId;
 	}
     
     public String update(String id, String coverLetter) throws Exception {

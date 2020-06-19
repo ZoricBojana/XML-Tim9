@@ -125,7 +125,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		}
 		
 		try {
-			scientificArticleRepository.changeStatur(id, _article, "reviewing");
+			scientificArticleRepository.changeStatur(id, _article, "deleted");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -157,7 +157,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 			throw new EntityNotFound(id);
 		}
 		ByteArrayOutputStream clPDF = xslFoTransformer.generatePDF(coverLetter,
-				"src/main/resources/data/xslt/rad_pismo_rec/radToHTML.xsl");
+				"src/main/resources/data/xslt/article_fo.xsl");
 		return clPDF;
 	}
 
@@ -205,5 +205,56 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		
 		return processRepository.getReviewedForEditor(username);
+	}
+
+	@Override
+	public void rejectArticle(String articleId) throws Exception {
+		String articleString = scientificArticleRepository.findById(articleId);
+		JAXBContext jaxbContext;
+ 
+        ScientificArticle article = null;
+        try {
+        	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
+        	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        	article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(articleString));
+    		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+	
+		}
+
+		
+		try {
+			scientificArticleRepository.changeStatur(articleId, article, "rejected");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void publishArticle(String articleId) throws Exception {
+		String articleString = scientificArticleRepository.findById(articleId);
+		JAXBContext jaxbContext;
+
+        ScientificArticle article = null;
+        try {
+        	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
+        	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        	article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(articleString));
+    		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+	
+		}
+
+		try {
+			scientificArticleRepository.changeStatur(articleId, article, "published");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

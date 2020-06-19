@@ -501,7 +501,7 @@ public class ScientificArticleDAO {
 		System.out.println(condition);
 
 		xqueryExpression = "let $col := collection(\"/db/sample/scientificArticle\")\r\n"
-				+ "for $article in $col//scientific_article\r\n" + "where $article[@ID=" + condition + "] " + "and 2=2 "
+				+ "for $article in $col//scientific_article\r\n" + "where $article[@ID=" + condition + "] " + "and $article[@status='reviewing'] "
 				+ "return $article";
 
 		return ScientificArticleDAO.executeXQueryExpression(xqueryExpression);

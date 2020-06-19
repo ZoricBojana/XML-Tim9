@@ -126,7 +126,7 @@ public class CoverLetterServiceImpl implements CoverLetterService{
 			throw new EntityNotFound(id);
 		}
 		ByteArrayOutputStream clPDF = xslFoTransformer.generatePDF(coverLetter,
-				"src/main/resources/data/xsl-fo/coverLetter_fo.xsl");
+				"src/main/resources/data/xslt/letter_fo.xsl");
 		return clPDF;
 	}
 

@@ -203,6 +203,18 @@ public class BussinessProcessDAO {
 		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression);
 	}
 
+	public static List<BussinessProcess> getProcesByPaperId(String paperId) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
+
+		String xqueryExpression = null;
+
+		xqueryExpression = "let $col := collection(\"/db/sample/bussinessProcess\")\r\n"
+				+ "for $process in $col//bussiness_process\r\n" 
+				+ "where $process/article_id='" + paperId + "' " + "and 2=2 " + "return $process";
+
+		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression);
+	}
+
 	// id editora
 	public static List<BussinessProcess> getDoneProcesses(String username) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException, IOException, XMLDBException, JAXBException {
@@ -210,8 +222,8 @@ public class BussinessProcessDAO {
 		String xqueryExpression = null;
 
 		xqueryExpression = "let $col := collection(\"/db/sample/bussinessProcess\")\r\n"
-				+ "for $process in $col//bussiness_process\r\n"
-				+ "where $process/editor_id='" + username + "' " + "and $process[@phase='done'] " + "return $process";
+				+ "for $process in $col//bussiness_process\r\n" + "where $process/editor_id='" + username + "' "
+				+ "and $process[@phase='done'] " + "return $process";
 
 		return BussinessProcessDAO.executeXQueryExpression(xqueryExpression);
 	}

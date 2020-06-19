@@ -399,6 +399,10 @@ public class ObjectFactory {
     	return new Persons();
     }
     
+    public Reviews createReviews() {
+    	return new Reviews();
+    }
+    
     public Roles createRoles() {
     	return new Roles();
     }

@@ -169,4 +169,28 @@ public class ScientificArticleController {
 		
 		return new ResponseEntity<List<ScientificArticle>>(articles, HttpStatus.OK);
 	}
+	
+	@PutMapping(value = "/rejectArticle/{id}")
+	public ResponseEntity<?> rejectArticle(@PathVariable("id")String id){
+		
+		try {
+			this.scientificArticleService.rejectArticle(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity(HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/publishArticle/{id}")
+	public ResponseEntity<?> publishArticle(@PathVariable("id")String id){
+		
+		try {
+			this.scientificArticleService.publishArticle(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		return new ResponseEntity(HttpStatus.OK);
+	}
 }

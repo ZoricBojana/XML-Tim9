@@ -62,6 +62,7 @@ public class CoverLetterController {
 		return new ResponseEntity<>(coverLetter, HttpStatus.OK);
 	}
 
+	// id- paper id
 	@GetMapping(value="/getCoverLetter/PDF/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> getPDF(@PathVariable("id") String id) throws Exception{
 		ByteArrayOutputStream coverLetter = coverLetterService.findByIdPDF(id);

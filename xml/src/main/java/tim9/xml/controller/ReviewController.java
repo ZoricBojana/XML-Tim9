@@ -1,5 +1,7 @@
 package tim9.xml.controller;
 
+import java.io.ByteArrayOutputStream;
+
 import javax.xml.bind.UnmarshalException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +79,12 @@ public class ReviewController {
 		}
 
 		return new ResponseEntity<String>(retVal, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/getReviewsPDF/{paperId}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> getPDF(@PathVariable("paperId") String paperId) throws Exception{
+		ByteArrayOutputStream reviews = reviewService.getReviewsForPaper(paperId);
+		return new ResponseEntity<>(reviews.toByteArray(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/deleteReview/{id}")

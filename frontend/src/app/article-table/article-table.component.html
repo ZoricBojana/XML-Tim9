@@ -11,7 +11,7 @@
       <tr *ngFor="let art of articles">
         <td>{{art.articleInfo.title.value}}</td>
         <td>{{art.status}}</td>
-        <td><button class="delete" (click)="delete(art.id)">Delete</button></td>
+        <td><button class="delete" *ngIf="art.status!='deleted'" (click)="delete(art.id)">Delete</button></td>
         <td><button class="btnHTML">View</button></td>
         <td><button class="btnPDF">Pdf</button></td>
       </tr>

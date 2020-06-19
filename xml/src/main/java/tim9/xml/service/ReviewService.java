@@ -1,5 +1,7 @@
 package tim9.xml.service;
 
+import java.io.ByteArrayOutputStream;
+
 public interface ReviewService {
 	
 	
@@ -10,4 +12,6 @@ public interface ReviewService {
 	public void delete(String id) throws Exception;
 
 	public String save(String review, String paperId) throws Exception;
+	
+	public ByteArrayOutputStream getReviewsForPaper(String paperId) throws Exception;
 }

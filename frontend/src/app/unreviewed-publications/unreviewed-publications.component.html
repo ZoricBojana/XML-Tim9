@@ -22,7 +22,9 @@
              <tr *ngFor="let article of articles;let index;" > 
                  <td>{{article.articleInfo.title.value}}</td>
                  <td>{{article.status}}</td>
-                 <td><button id = "button"class="btn btn-primary" (click)="download(article)">View</button></td>
+                 <td><button id = "button"class="btn btn-primary" >View</button></td>
+                 <td><button id = "button"class="btn btn-primary" (click)="showCoverLetter(article.id)">Cover letter</button></td>
+
                  <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
                  <td *ngIf="reviewers">
                    {{selectedReviewers}}

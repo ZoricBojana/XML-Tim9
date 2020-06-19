@@ -23,9 +23,10 @@
                  <td>{{article.articleInfo.title.value}}</td>
                  <td>{{article.status}}</td>
                  <td><button id = "button"class="btn btn-primary" (click)="download(article)">View</button></td>
-                 <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article)">Reject</button></td>
-
-                <td *ngIf="selectedReviewers != undefined"><button id = "printa" class="btn btn-primary" (click)="submitReviewers(article.id)">Sub</button></td>
+                 <td ><button style="background-color: red;" id = "reject"class="btn btn-primary" (click)="reject(article.id)">Reject</button></td>
+                 <td ><button style="background-color: red;" id = "publish"class="btn btn-primary" (click)="publish(article.id)">Publish</button></td>
+                 <td ><button style="background-color: red;" id = "publish"class="btn btn-primary" (click)="getReviews(article.id)">Reviews</button></td>
+                 <td *ngIf="selectedReviewers != undefined"><button id = "printa" class="btn btn-primary" (click)="submitReviewers(article.id)">Sub</button></td>
              </tr>
              
             

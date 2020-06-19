@@ -87,4 +87,12 @@ export class ServiceSaService {
   delete(id: string): Observable<any> {
     return this.http.delete(`http://localhost:8000/api/deleteScientificArticle/${id}`);
   }
+
+  reject(id: string): Observable<any> {
+    return this.http.put(`http://localhost:8000/api/rejectArticle/${id}`, null);
+  }
+
+  publish(id: string): Observable<any> {
+    return this.http.put(`http://localhost:8000/api/publishArticle/${id}`, null);
+  }
 }
