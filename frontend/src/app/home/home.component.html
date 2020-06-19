@@ -1,6 +1,52 @@
 
 <div class="home-splash-bg">
     <div class="bg">
+        <div class="search">
+            <form (ngSubmit)="onSubmitSearch()" #searchForm="ngForm" novalidate>
+                <table style="margin-top: 10;">
+                    <tr>
+                        <td>
+                <input type="text" placeholder="Search by text"
+                name="search" [(ngModel)]="searchValue" #search="ngModel">
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                <input type="submit" value="Search">
+            </td>
+            </tr>
+                </table>
+            </form>
+        </div>
+
+        <div class="filter">
+            <form (ngSubmit)="onFilterSearch()" id="filterForm" #filterForm="ngForm" novalidate>
+                <table >
+                    <tr>
+                        <td>
+                <input type="text" placeholder="Title"
+                name="title" [(ngModel)]="filter.title" #title="ngModel">
+                </td>
+            </tr><tr>
+                <td>
+                    <input type="text" placeholder="Author"
+                    name="author" [(ngModel)]="filter.author" #author="ngModel">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+            <input type="text" placeholder="Key words"
+            name="key_word" [(ngModel)]="filter.key_word" #key_word="ngModel">
+            </td></tr>
+                <tr>
+                    <td>
+                <input type="submit" value="Filter">
+            </td>
+            </tr>
+                </table>
+            </form>
+        </div>
+
         <div class="container">
             <h2>Prikaz rada</h2>
             <app-article-list [articles]="articles"></app-article-list> 

@@ -178,7 +178,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 
 	@Override
 	public List<ScientificArticle> searchByMetadata(SearchDTO dto) throws Exception {
-		
+
 		return scientificArticleRepository.searchByMetadate(dto.getTitle(), dto.getAuthor(), dto.getKey_word(), dto.getPublisher());
 	}
 

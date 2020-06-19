@@ -24,3 +24,8 @@
     transform: translate(-50%, -50%);
     overflow-y: scroll;
 }
+
+.filter {
+    margin-top: 10;
+    padding-top: 10;
+}
