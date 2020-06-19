@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceSaService } from '../services/service-sa.service';
 import { Router } from '@angular/router';
+import { ProcessService } from '../services/process.service';
 
 @Component({
   selector: 'app-reviewer-for-review',
@@ -11,7 +12,7 @@ export class ReviewerForReviewComponent implements OnInit {
 
   articles: any;
 
-  constructor(private articleService: ServiceSaService, private router: Router) { }
+  constructor(private articleService: ServiceSaService, private processService: ProcessService , private router: Router) { }
 
   ngOnInit() {
     this.articleService.getPapersForReviewer().subscribe(
@@ -24,6 +25,14 @@ export class ReviewerForReviewComponent implements OnInit {
 
   makeReview(articleId: string) {
     this.router.navigate(['submitReview', articleId]);
+  }
+
+  rejectReview(articleId: string) {
+    this.processService.rejectReview(articleId).subscribe(
+      res => {
+        console.log('rejected');
+      }
+    );
   }
 
 }

@@ -9,12 +9,13 @@
              <th>Title</th>
              <th>Status</th>
              <th> </th>
+             <th></th>
          </thead>
          <tbody>
              <tr *ngFor="let article of articles;let index;" > 
                  <td>{{article.articleInfo.title.value}}</td>
                  <td>{{article.status}}</td>
-
+                 <td><button class="btn" id='reject' (click)="rejectReview(article.id)">Reject</button></td>
                 <td><button id = "printa" class="btn btn-primary" (click)="makeReview(article.id)">Review</button></td>
              </tr>
              

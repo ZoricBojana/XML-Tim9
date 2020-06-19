@@ -60,3 +60,8 @@
       color: black;
       background-color: white;
   }
+
+  #reject{
+    background-color: tomato;
+    color: white;
+  }

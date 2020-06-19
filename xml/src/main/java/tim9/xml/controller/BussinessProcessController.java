@@ -53,4 +53,10 @@ public class BussinessProcessController {
 		return new ResponseEntity<>(bussinessProcess, HttpStatus.OK);
 	}
 
+	@PutMapping(value="/rejectReview/{id}")
+	public ResponseEntity<String> rejectReview(@PathVariable("id") String id) throws Exception{
+
+		bpService.rejectReview(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

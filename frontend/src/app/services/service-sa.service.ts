@@ -78,4 +78,8 @@ export class ServiceSaService {
 
     return this.http.get(`http://localhost:8000/api/getScientificArticle/PDF/${id}`, httpOptions);
   }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete(`http://localhost:8000/api/deleteScientificArticle/${id}`);
+  }
 }

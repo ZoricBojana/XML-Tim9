@@ -97,7 +97,7 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 
 	@Override
 	public void delete(String id, String authorID) throws Exception {
-		Person person = personRepository.findOneByID(authorID);
+		Person person = personRepository.findOneByUsername(authorID);
 		if(person == null){
 			throw new EntityNotFound(authorID);
 		}
@@ -105,24 +105,27 @@ public class ScientificArticleServiceImpl implements ScientificArticleService{
 		String article = scientificArticleRepository.findById(id);
 		JAXBContext jaxbContext;
         boolean allowed = false;
+        ScientificArticle _article = null;
         try {
         	jaxbContext = JAXBContext.newInstance(ScientificArticle.class);
         	Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-        	ScientificArticle _article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(article));
+        	_article = (ScientificArticle) jaxbUnmarshaller.unmarshal(new StringReader(article));
     		for(Author author : _article.getAuthors().getAuthor()){
-    			if(author.getID().equals(authorID)){
+    			if(author.getUsername().equals(authorID)){
     				allowed = true;
     			}
     		}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+	
 		}
         if(!allowed){
 			throw new Unauthorized();
 		}
 		
 		try {
-			scientificArticleRepository.delete(id, authorID);
+			scientificArticleRepository.delete(id, _article);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -57,4 +57,12 @@ public class BussinessProcessServiceImpl implements BussinessProcessService {
 		return null;
 	}
 
+	@Override
+	public void rejectReview(String paperId) throws Exception {
+		
+		String username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+		bpRepository.rejectReview(paperId, username);
+		
+	}
+
 }

@@ -52,7 +52,7 @@ public class ScientificArticleRepository {
             throw new Exception("SA with id: " + id);
         }
         
-Person person = PersonDAO.getByUsername(username, "/db/sample/persons");
+        Person person = PersonDAO.getByUsername(username, "/db/sample/persons");
     	
     	Author author = new Author();
     	
@@ -62,19 +62,24 @@ Person person = PersonDAO.getByUsername(username, "/db/sample/persons");
     	author.setEmailAddress(person.getEmailAddress());
     	author.setID(person.getID());
         
-        this.delete(id, username);
+        this.remove(id, username);
         ScientificArticleDAO.store(scientificArticleCollectionId, id, article, author);
         return id;
 	}
     
-    public void delete(String id, String authorID) throws Exception {
-		String xpathExp = "/scientificArticle";
+    public void delete(String id, ScientificArticle article) throws Exception {
+		
+		ScientificArticleDAO.delete(scientificArticleCollectionId, id, article);
+	}
+    
+    public void remove(String id, String username) throws Exception {
+    	String xpathExp = "/scientificArticle";
 		long mods = UpdateData.delete(scientificArticleCollectionId, id, xpathExp);
 		if (mods == 0) {
 			throw new EntityNotFound(id);
 		}
 		deleteMetadata(id);
-	}
+    }
     
     public String findById(String id) throws Exception {
     	return ScientificArticleDAO.retrieve(scientificArticleCollectionId, id);

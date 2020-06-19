@@ -53,7 +53,8 @@ public class ScientificArticleController {
 		// implementirati da ovo moze raditi samo autor rada
 		// ovo se koristi kada autor rada odbacuje svoj rad
 		// PREUZETI AUTOROV ID SECURITIJEM I PREPRAVITI OVO
-		String authorID = "aaa";
+		//String authorID = "aaa";
+		String authorID = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		scientificArticleService.delete(id, authorID);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

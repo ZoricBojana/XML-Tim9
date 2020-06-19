@@ -12,5 +12,5 @@ public interface BussinessProcessService {
 
 	public void delete(String id) throws Exception;
 
-	
+	public void rejectReview(String paperId) throws Exception;
 }

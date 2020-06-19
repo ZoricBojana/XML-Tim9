@@ -99,5 +99,20 @@ public static String bussinessProcessCollectionId = "/db/sample/bussinessProcess
     	
     	return articles;
     }
+    
+    public void rejectReview(String paperId, String username) throws Exception {
+    	BussinessProcess process = BussinessProcessDAO.getProcessByUsernameAndPaperId(username, paperId);
+    	
+    	for (ReviewData data : process.getReviews().getReviewData()) {
+			if(data.getReviewerId().equals(username)) {
+				data.setReviewId("-1");
+				break;
+			}
+		}
+    	
+    	String processId = process.getId();
+    	this.delete(processId);
+    	BussinessProcessDAO.store(bussinessProcessCollectionId, processId, process);
+    }
 
 }

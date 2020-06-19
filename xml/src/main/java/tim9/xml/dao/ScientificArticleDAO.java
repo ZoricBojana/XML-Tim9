@@ -585,4 +585,73 @@ public class ScientificArticleDAO {
 
 		return articles;
 	}
+	
+	public static void delete(String collectionId, String documentId, ScientificArticle article) throws Exception {
+
+		conn = AuthenticationUtilities.loadProperties();
+
+		// initialize database driver
+
+		Class<?> cl = Class.forName(conn.driver);
+
+		// encapsulation of the database driver functionality
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		// entry point for the API which enables you to get the Collection reference
+		DatabaseManager.registerDatabase(database);
+
+		// a collection of Resources stored within an XML database
+		Collection col = null;
+		XMLResource res = null;
+		OutputStream os = new ByteArrayOutputStream();
+
+		try {
+
+			col = getOrCreateCollection(collectionId);
+
+			/*
+			 * create new XMLResource with a given id an id is assigned to the new resource
+			 * if left empty (null)
+			 */
+			res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
+
+			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
+
+
+			article.setStatus("deleted");
+
+
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+			// marshal the contents to an output stream
+			marshaller.marshal(article, os);
+
+			// link the stream to the XML resource
+			res.setContent(os);
+
+			col.storeResource(res);
+
+		} finally {
+
+			// don't forget to cleanup
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+
+			if (col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+	}
 }

@@ -15,4 +15,8 @@ export class ProcessService {
   sendProcessData(process: ProcessDto): Observable<any> {
     return this.http.post('http://localhost:8000/api/saveBussinessProcess', process, {headers: this.headers});
   }
+
+  rejectReview(paperId: string): Observable<any> {
+    return this.http.put(`http://localhost:8000/api/rejectReview/${paperId}`, null);
+  }
 }
