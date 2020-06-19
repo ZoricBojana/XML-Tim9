@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from 'src/app/services/person.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-author-nav',
@@ -8,13 +9,14 @@ import { PersonService } from 'src/app/services/person.service';
 })
 export class AuthorNavComponent implements OnInit {
 
-  constructor(private personService: PersonService) { }
+  constructor(private personService: PersonService, private router: Router) { }
 
   ngOnInit() {
   }
 
   logout() {
     this.personService.logout();
+    this.router.navigate(['login']);
   }
 
 }

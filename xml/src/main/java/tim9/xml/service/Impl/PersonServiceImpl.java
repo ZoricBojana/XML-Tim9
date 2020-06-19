@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
 import rs.ac.uns.msb.Person;
+import tim9.xml.dto.RegisterDTO;
 import tim9.xml.exception.RepositoryException;
 import tim9.xml.repository.PersonRepository;
 import tim9.xml.service.PersonService;
@@ -24,9 +25,9 @@ public class PersonServiceImpl implements PersonService, UserDetailsService {
 	private PersonRepository personRepository;
 	
 	@Override
-	public Person savePerson(String personString) throws Exception {
+	public Person savePerson(RegisterDTO person) throws Exception {
 		
-		return personRepository.save(personString);
+		return personRepository.save(person);
 	
 	}
 

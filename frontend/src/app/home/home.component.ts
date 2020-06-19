@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.articleService.searchByText(' ')
     .subscribe (res => {
-      console.log(res);
       this.articles = res;
     });
   }

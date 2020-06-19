@@ -44,13 +44,10 @@ export class RegisterComponent implements OnInit {
     }
     const dto = new RegisterDto();
     this.loading = true;
+    console.log(this.registerForm.value as RegisterDto);
     this.personService.register(this.registerForm.value as RegisterDto).subscribe(
       result => {
         console.log('register' + result);
-        if (localStorage.getItem('user') !== null) {
-          localStorage.removeItem('user');
-        }
-        localStorage.setItem('user', JSON.stringify(result));
         this.router.navigate(['login']);
       },
       error => {

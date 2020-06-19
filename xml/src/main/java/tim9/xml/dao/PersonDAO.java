@@ -160,7 +160,7 @@ public class PersonDAO {
 	 * access documentId Should be the document ID to store in the collection review
 	 * should be XML review
 	 */
-	public static void store(String collectionId, String documentId, String personString) throws Exception {
+	public static void store(String collectionId, String documentId, Person person) throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
 
@@ -193,11 +193,11 @@ public class PersonDAO {
 
 			JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 
-			Unmarshaller unmarshaller = context.createUnmarshaller();
+			//Unmarshaller unmarshaller = context.createUnmarshaller();
 
-			StringReader sr = new StringReader(personString);
+			//StringReader sr = new StringReader(personString);
 
-			Person person = (Person) unmarshaller.unmarshal(sr);
+			//Person person = (Person) unmarshaller.unmarshal(sr);
 			person.addRole("USER_ROLE");
 
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,9 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-
 import rs.ac.uns.msb.Person;
+import tim9.xml.dto.RegisterDTO;
 import tim9.xml.dto.UserTokenState;
 import tim9.xml.exception.RepositoryException;
 import tim9.xml.exception.UsernameAlreadyExist;
@@ -50,11 +48,11 @@ public class PersonController {
 
 	// registracija
 	@PostMapping(value = "/savePerson")
-	public ResponseEntity<Person> save(@RequestBody String person) {
+	public ResponseEntity<Person> save(@RequestBody RegisterDTO dto) {
 
 		Person saved = null;
 		try {
-			saved = personService.savePerson(person);
+			saved = personService.savePerson(dto);
 		} catch (UsernameAlreadyExist e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {

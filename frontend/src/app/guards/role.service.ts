@@ -5,12 +5,12 @@ import { PersonService } from '../services/person.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuard implements CanActivate {
+export class RoleGuard /*implements CanActivate*/ {
 
   constructor(
     public router: Router
   ) { }
-
+/*
    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
     const isLoggedIn = !!localStorage.getItem('token');
@@ -29,5 +29,5 @@ export class RoleGuard implements CanActivate {
     }
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
-  }
+  }*/
 }

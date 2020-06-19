@@ -7,6 +7,7 @@ export class InterceptService implements HttpInterceptor {
 
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     const item = localStorage.getItem('token');
     const decodedItem = JSON.parse(item);
     if (item) {

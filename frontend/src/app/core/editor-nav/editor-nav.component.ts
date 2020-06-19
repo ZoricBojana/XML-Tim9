@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PersonService } from 'src/app/services/person.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editor-nav',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private personService: PersonService, private router: Router) { }
 
   ngOnInit() {
   }
 
+  logout() {
+    this.personService.logout();
+    this.router.navigate(['login']);
+  }
 }

@@ -55,7 +55,7 @@ const routes: Routes = [
     path : 'articles/keyword/:kw',
     component : KeyWordInfoComponent
   },
-  {path : 'unreviewedPub' , component : UnreviewedPublicationsComponent, canActivate: [RoleGuard]},
+  {path : 'unreviewedPub' , component : UnreviewedPublicationsComponent},
   { path : 'reviewedPub', component : ReviewedPublicationsComponent},
   { path : 'pubToReview', component : PublicationsToReviewComponent},
 

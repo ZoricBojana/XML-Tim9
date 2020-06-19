@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const dto = new LoginDto();
-    console.log('sumbit');
     this.personService.login(this.loginForm.value as LoginDto).subscribe(
       result => {
         if (localStorage.getItem('user') !== null) {
@@ -36,7 +35,6 @@ export class LoginComponent implements OnInit {
         }
         localStorage.setItem('user', JSON.stringify(result));
         localStorage.setItem('token', '"' + JSON.parse(result).accessToken + '"');
-        console.log(result);
         this.router.navigate(['home']);
       },
       error => {

@@ -21,10 +21,10 @@ export class AppComponent {
   checkRole() {
     const user = localStorage.getItem('user');
     if (!user) {
-     this.router.navigate(['login']);
-     this.role = undefined;
+    // this.router.navigate(['login']);
+     this.role = 'USER';
      return;
-  }
+   }
 
     const roles = JSON.parse(JSON.parse(user)).roles;
     console.log(roles);

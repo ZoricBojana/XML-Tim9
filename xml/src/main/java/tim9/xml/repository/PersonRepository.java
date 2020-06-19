@@ -17,6 +17,7 @@ import org.xmldb.api.base.XMLDBException;
 
 import rs.ac.uns.msb.Person;
 import tim9.xml.dao.PersonDAO;
+import tim9.xml.dto.RegisterDTO;
 import tim9.xml.exception.RepositoryException;
 import tim9.xml.exception.UsernameAlreadyExist;
 import tim9.xml.util.exist.UpdateData;
@@ -54,23 +55,30 @@ public class PersonRepository {
         }
     }
 
-    public Person save(String personString) throws Exception {
+    public Person save(RegisterDTO dto) throws Exception {
         //try {
         	JAXBContext context = JAXBContext.newInstance("rs.ac.uns.msb");
 
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 
-			StringReader sr = new StringReader(personString);
+			//StringReader sr = new StringReader(personString);
 			
 			Person person = null;
-			person = (Person) unmarshaller.unmarshal(sr);
+			//person = (Person) unmarshaller.unmarshal(sr);
 			
+			person = new Person();
+			person.setUsername(dto.getUsername());
+			person.setPassword(dto.getPassword());
+			person.setFirstName(dto.getFirstname());
+			person.setLastName(dto.getLastName());
+			person.setEmailAddress(dto.getEmail());
+			person.setEmail(dto.getEmail());
 			
             if (findOneByUsername(person.getUsername()) != null)
                 throw new UsernameAlreadyExist();
 
             
-            PersonDAO.store(personCollectionId, "persons", personString);
+            PersonDAO.store(personCollectionId, "persons", person);
 
             return findOneByUsername(person.getUsername());
 
